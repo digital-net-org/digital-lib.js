@@ -1,0 +1,12 @@
+node_modules
+build
+dist
+.next
+
+.vscode
+.idea
+
+*/**/*.tsbuildinfo
+*/**/*.env
+*/**/vite.config.ts.timestamp-*
+*storybook.log
