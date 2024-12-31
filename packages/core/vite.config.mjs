@@ -10,7 +10,6 @@ export default defineConfig({
             insertTypesEntry: true,
         }),
     ],
-    // @ts-expect-error - Seems to be an issue with the vitest types, works as expected
     test: {
         globals: true,
         environment: 'jsdom',
@@ -22,6 +21,7 @@ export default defineConfig({
             },
         },
         lib: {
+            // eslint-disable-next-line no-undef
             entry: resolve(__dirname, 'src/index.ts'),
             fileName: (format, filename) => `${filename}.js`,
             formats: ['es'],

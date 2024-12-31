@@ -10,8 +10,8 @@
  * ```
  */
 const get = (key: string) =>
-    // @ts-expect-error
-    process?.env?.[key] ?? import.meta?.env?.[key];
+    // env is not defined in the module scope but will be available at runtime
+    process?.env?.[key] ?? (import.meta as unknown as { env: Record<string, unknown> })?.env?.[key];
 
 /**
  * Check if the environment is development
