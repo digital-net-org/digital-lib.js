@@ -1,17 +1,22 @@
 import React, { type PropsWithChildren } from 'react';
+import type { Position } from '../../../core';
+import './DevWidget.styles.css';
+import { Text } from '../../../react-ui';
 
 export interface DevWidgetProps extends PropsWithChildren {
-    states?: Record<string, any>;
+    appVersion?: string;
+    position: Position;
+    onMove: (position: Position) => void;
+    offset: Position;
+    onDrag: (offset: Position) => void;
 }
 
-export default function DevWidget({ children, states }: DevWidgetProps) {
-    const [position, setPosition] = React.useState({ x: 0, y: 0 });
+export default function DevWidget({ children, appVersion, position, offset, onDrag, onMove }: DevWidgetProps) {
     const [isDragging, setIsDragging] = React.useState(false);
-    const [offset, setOffset] = React.useState({ x: 0, y: 0 });
 
     const handleMouseDown = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
         setIsDragging(true);
-        setOffset({
+        onDrag({
             x: e.clientX - position.x,
             y: e.clientY - position.y,
         });
@@ -19,7 +24,7 @@ export default function DevWidget({ children, states }: DevWidgetProps) {
 
     const handleMouseMove = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
         if (!isDragging) return;
-        setPosition({
+        onMove({
             x: e.clientX - offset.x,
             y: e.clientY - offset.y,
         });
@@ -31,36 +36,20 @@ export default function DevWidget({ children, states }: DevWidgetProps) {
 
     return (
         <div
-            style={{
-                position: 'absolute',
-                top: position.y,
-                left: position.x,
-                zIndex: 9999,
-                maxWidth: '400px',
-                backgroundColor: 'rgba(86,169,160,0.49)',
-                color: 'white',
-                cursor: isDragging ? 'grabbing' : 'grab',
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'center',
-                padding: '.5rem 1rem',
-                gap: '10px',
-            }}
-            onMouseDown={handleMouseDown}
-            onMouseMove={handleMouseMove}
-            onMouseUp={handleMouseUp}
-            onMouseLeave={handleMouseUp}
+            className="DevWidget"
+            style={{ top: position.y, left: position.x }}
         >
-            <div>
-                {Object.entries(states ?? {}).map(([key, value]) => (
-                    <pre key={key}>
-                        {key}
-                        :
-                        {JSON.stringify(value, null, 2)}
-                    </pre>
-                ))}
+            <div
+                className={`DevWidget-title ${isDragging ? 'DevWidget-grabbing' : 'DevWidget-grab'}`}
+                onMouseDown={handleMouseDown}
+                onMouseMove={handleMouseMove}
+                onMouseUp={handleMouseUp}
+                onMouseLeave={handleMouseUp}
+            >
+                <Text variant="caption">devtool</Text>
+                {appVersion && <Text>{appVersion}</Text>}
             </div>
-            <div>            
+            <div className="DevWidget-content">
                 {children}
             </div>
         </div>

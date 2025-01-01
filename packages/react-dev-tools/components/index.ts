@@ -1,5 +1,1 @@
-import DevWidget from './DevWidget/DevWidget';
-
-export const DevTool = Object.assign({}, {
-    Widget: DevWidget,
-});
+export { default as DevToolProvider } from './DevToolProvider';
