@@ -1,0 +1,51 @@
+.SafariUi-User {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: .75rem;
+
+    & span {
+        user-select: none;
+        display: block;
+    }
+
+    & .SafariUi-Button-content {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        gap: var(--spacing-1);
+    }
+
+    & .SafariUi-User-row {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        gap: var(--spacing-1);
+        padding: 5px 5px; /* FIXME: can't use var() for some reason */
+    }
+}
+
+.SafariUi-User-inverted {
+    & .SafariUi-Button-content {
+        flex-direction: row-reverse;
+    }
+    & .SafariUi-User-row {
+        flex-direction: row-reverse;
+    }
+}
+
+.SafariUi-User-size-small span {
+    font-size: 1rem;
+}
+
+.SafariUi-User-size-medium span {
+    font-size: 1.1rem;
+}
+
+.SafariUi-User-size-large span {
+    font-size: 1.3rem;
+}
+

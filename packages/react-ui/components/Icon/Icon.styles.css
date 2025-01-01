@@ -1,0 +1,68 @@
+.SafariUi-Icon {
+    line-height: 0;
+    --icon-transition: 0s;
+    --icon-color: currentColor;
+    --icon-size: 1rem;
+}
+
+.SafariUi-Icon-action {
+    cursor: pointer;
+}
+
+.SafariUi-Icon-animation {
+    --icon-transition: 0.4s;
+}
+
+.SafariUi-Icon-color-primary {
+    --icon-color: var(--palette-primary);
+}
+
+.SafariUi-Icon-color-text {
+    --icon-color: var(--palette-text);
+}
+
+.SafariUi-Icon-color-disabled {
+    --icon-color: var(--palette-text-disabled);
+}
+
+.SafariUi-Icon-size-small {
+    --icon-size: calc((var(--font-size-regular) * 1.125));
+}
+
+.SafariUi-Icon-size-medium {
+    --icon-size: calc((var(--font-size-regular) * 1.75));
+}
+
+.SafariUi-Icon-size-large {
+    --icon-size: calc((var(--font-size-regular) * 3));
+}
+
+.SafariUi-Icon-fullWidth {
+    --icon-size: 100%;
+}
+
+.SafariUi-Icon[direction="up"] {
+    --icon-transform: rotate(360deg);
+}
+
+.SafariUi-Icon[direction="down"] {
+    --icon-transform: rotate(180deg);
+}
+
+.SafariUi-Icon[direction="left"] {
+    --icon-transform: rotate(270deg);
+}
+
+.SafariUi-Icon[direction="right"] {
+    --icon-transform: rotate(90deg);
+}
+
+.SafariUi-Icon {
+    color: var(--icon-color);
+    fill: var(--icon-color);
+    width: var(--icon-size);
+    height: var(--icon-size);
+    transform: var(--icon-transform);
+    -webkit-transition: var(--icon-transition);
+    transition: var(--icon-transition);
+}

@@ -1,6 +1,6 @@
 import { expect, test } from 'vitest';
 import EntityHelper from './EntityHelper';
-import { Entity } from './Entity';
+import type { Entity } from './Entity';
 
 test('EntityHelper: build(), Should build the entity correctly from the json object.', () => {
     const jsonObject = EntityHelper.build({ id: 1, createdAt: '2021-10-01T00:00:00.000Z', updatedAt: null });

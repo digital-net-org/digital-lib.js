@@ -1,0 +1,63 @@
+.SafariUi-InputText {
+    --input-padding: calc(var(--spacing-1) * 0.5) calc(var(--spacing-2) * 0.5);
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: .5rem;
+    width: 250px;
+    height: fit-content;
+    border: 1px solid var(--palette-border);
+    border-radius: var(--spacing-radius-1);
+    background-color: var(--palette-paper);
+    color: var(--palette-text);
+    padding: var(--input-padding);
+
+    &.SafariUi-InputText-fullWidth {
+        width: 100%;
+    }
+
+    &.SafariUi-InputText-disabled {
+        background-color: var(--palette-background-disabled);
+        border-color: var(--palette-border-disabled);
+
+        & input {
+            color: var(--palette-text-disabled);
+            width: 100%;
+        }
+    }
+
+    &.SafariUi-InputText-loading {
+        outline: none;
+
+        & input {
+            color: var(--palette-text-disabled);
+            caret-color: transparent;
+            cursor: default;
+        }
+    }
+}
+
+
+.SafariUi-InputText-error {
+    border-color: var(--palette-error);
+    outline: 1px solid var(--palette-error);
+}
+
+.SafariUi-InputText-selected {
+    outline: 1px solid var(--palette-primary);
+
+    &.SafariUi-InputText-error {
+        outline-color: var(--palette-error);
+    }
+}
+
+.SafariUi-InputText input {
+    width: 100%;
+    border: none;
+    background-color: transparent;
+
+    &:focus {
+        outline: none;
+    }
+}

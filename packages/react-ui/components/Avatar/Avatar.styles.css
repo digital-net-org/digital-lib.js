@@ -1,0 +1,51 @@
+.SafariUi-Avatar {
+    width: var(--avatar-size);
+    height: var(--avatar-size);
+
+    & .SafariUi-Avatar-container {
+        position: relative;
+        border-radius: 100%;
+        height: var(--avatar-size);
+        aspect-ratio: 1/1;
+        overflow: hidden;
+    }
+
+    & img {
+        position: absolute;
+        display: block;
+        width: var(--avatar-size);
+        height: var(--avatar-size);
+        object-fit: cover;
+        left: 0;
+        top: 50%;
+        bottom: 50%;
+        transform: translateY(-50%);
+    }
+}
+
+.SafariUi-Avatar-action {
+    cursor: pointer;
+}
+
+.SafariUi-Avatar-color-disabled {
+    & img {
+        -webkit-filter: grayscale(100%);
+        filter: grayscale(100%);
+    }
+}
+
+.SafariUi-Avatar-size-small {
+    --avatar-size: calc((var(--font-size-regular) * 1.125));
+}
+
+.SafariUi-Avatar-size-medium {
+    --avatar-size: calc((var(--font-size-regular) * 1.75));
+}
+
+.SafariUi-Avatar-size-large {
+    --avatar-size: calc((var(--font-size-regular) * 3));
+}
+
+.SafariUi-Avatar-fullWidth {
+    --avatar-size: 100%;
+}

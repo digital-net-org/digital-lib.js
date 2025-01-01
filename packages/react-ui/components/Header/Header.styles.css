@@ -1,0 +1,27 @@
+.SafariUi-Header {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: calc(var(--spacing-2) * 0.75) var(--spacing-2);
+    box-shadow: 0 2px 4px 0 var(--palette-shadow);
+    border-bottom: 1px solid var(--palette-shadow-light);
+}
+
+.SafariUi-Header > div {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.SafariUi-Header > div:first-child {
+    justify-content: left;
+}
+
+.SafariUi-Header > div:last-child {
+    justify-content: right;
+}
