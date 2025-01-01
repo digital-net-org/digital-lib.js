@@ -9,6 +9,9 @@
             "DOM.Iterable"
         ],
         "composite": true,
+        "outDir": "./dist",
+        "rootDir": "./packages",
+        "declaration": true,
         "declarationMap": true,
         "removeComments": true,
         "noEmit": true,
@@ -19,7 +22,6 @@
         "allowSyntheticDefaultImports": true,
         "forceConsistentCasingInFileNames": true,
         "sourceMap": true,
-        "declaration": true,
         "experimentalDecorators": true,
         "emitDecoratorMetadata": true,
         "allowJs": true,
@@ -27,6 +29,9 @@
         "strict": true,
         "jsx": "preserve"
     },
+    "include": [
+        "packages/**/*"
+    ],
     "exclude": [
         "node_modules",
         "dist"

@@ -22,8 +22,8 @@ git@github.com:Safari-digital/digital-net.git packages/digital-net
 Then update your `tsconfig.json` file to include the new package and add aliases:
 ```json
 "paths": {
-    "@digital-net/core/*": ["packages/digital-net/packages/core/src/*"],
-    "@digital-net/core": ["packages/digital-net/packages/core/src/index.ts"],
+    "@digital-net/core/*": ["packages/digital-net/packages/core/*"],
+    "@digital-net/core": ["packages/digital-net/packages/core/index.ts"],
 },
 "include": ["src", "packages"]
 ```
@@ -32,7 +32,7 @@ Update your `vite.config.ts` with the new aliases:
 ```typescript
 resolve: {
     alias: {
-        '@digital-net/core': resolve(__dirname, 'packages/digital-net/packages/core/src/'),
+        '@digital-net/core': resolve(__dirname, 'packages/digital-net/packages/core/'),
     },
 },
 ```
