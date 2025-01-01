@@ -7,10 +7,24 @@
 </div>
 
 ## Packages
-
 - **digital-net/core** 
     
     Is a collection of low-level utilities and helpers for Javascript/Typescript and a **Digital.Net** SDK.
+- **digital-net/react-dev-tools** 
+    
+    Is a collection of React Dev Tools for debugging and development.
+
+- **digital-net/react-elements**
+
+    Is a collection of hooks and utilities to handle React elements/nodes.
+
+- **digital-net/react-storage**
+
+    Is a collection of hooks and utilities to handle access to local storages (Indexed DB, LocalStorage...).
+
+- **digital-net/react-ui**
+
+    Is a collection of React UI components and utilities.
 
 ### Installation
 #### Submodules
