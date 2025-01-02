@@ -8,3 +8,4 @@ export { type IDbStoreCallbacks } from './types/IDbStoreCallbacks';
 export { type IDbAccessorCallbacks } from './types/IDbAccessorCallbacks';
 export { default as IdbProvider } from './context/IdbProvider';
 export { default as useIDbStore } from './context/useIDbStore';
+export { default as useStoredEntity } from './context/useStoredEntity';

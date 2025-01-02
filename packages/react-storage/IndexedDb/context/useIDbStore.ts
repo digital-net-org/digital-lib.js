@@ -12,7 +12,7 @@ export default function useIDbStore<T extends Entity>(store: string) {
     const { setIsLoading, ...context }: IdbContextState = React.useContext(IdbContext);
     const [result, setResult] = React.useState<Array<T> | undefined>(undefined);
 
-    const get = React.useCallback(async (id: string) => {
+    const get = React.useCallback(async (id: string | number) => {
         if (context.isLoading) {
             return;
         }

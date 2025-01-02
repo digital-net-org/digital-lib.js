@@ -17,7 +17,7 @@ export default class IDbStore {
         if (!data.id) {
             throw new Error('IDbStore: error saving data: id is required');
         }
-        return { ...data, id: String(data.id) };
+        return { ...data, updatedAt: new Date(Date.now()), id: String(data.id) };
     }
 
     private static getStore(db: IDBDatabase, store: string, mode?: IDBTransactionMode): IDBObjectStore {
@@ -31,18 +31,18 @@ export default class IDbStore {
      * @param accessor - database configuration, contains name, version and available stores
      * @param store - store name
      * @param id - entity id
-     * @param onProcessed - callback to process the retrieved data
+     * @param callbacks - callbacks to handle success, error and resolve
      */
     public static async get<T extends Entity>(
         accessor: IDbInfo,
         store: string,
-        id: string,
+        id: string | number,
         callbacks: IDbStoreCallbacks<T>,
     ): Promise<void> {
         await IDbAccessor.accessDatabase(accessor, {
             onsuccess: ({ db }, resolve) => {
                 this.validateStore(db, store);
-                const result = this.getStore(db, store, 'readonly').get(id);
+                const result = this.getStore(db, store, 'readonly').get(String(id));
                 result.onsuccess = () => callbacks.onSuccess?.(result?.result);
                 result.onerror = () => callbacks.onSuccess?.(undefined);
                 resolve();
@@ -57,6 +57,7 @@ export default class IDbStore {
      * @param accessor - database configuration, contains name, version and available stores
      * @param store - store name
      * @param data - entity data
+     * @param callbacks - callbacks to handle success, error and resolve
      */
     public static async save<T extends Entity>(
         accessor: IDbInfo,
@@ -101,12 +102,12 @@ export default class IDbStore {
     public static async delete(
         accessor: IDbInfo,
         store: string,
-        id: string,
+        id: string | number,
     ): Promise<void> {
         await IDbAccessor.accessDatabase(accessor, {
             onsuccess: ({ db }, resolve) => {
                 this.validateStore(db, store);
-                this.getStore(db, store, 'readwrite').delete(id);
+                this.getStore(db, store, 'readwrite').delete(String(id));
                 resolve();
             },
             onerror: ({ event }) => {
