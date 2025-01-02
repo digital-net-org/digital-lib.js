@@ -21,11 +21,12 @@ export default class EntityHelper {
     /**
      * Gets the most recently created entity from a list of entities.
      * @param entities The entities to search.
+     * @param key The key to compare the entities by (default to 'createdAt').
      * @returns The most recently created entity.
      */
-    public static getLatest<T extends Entity>(entities: T[]): T | undefined {
+    public static getLatest<T extends Entity>(entities: T[], key?: 'updatedAt' | 'createdAt'): T | undefined {
         return entities.find(
-            entity => entity.createdAt.getTime() === Math.max(...entities.map(e => e.createdAt.getTime())),
+            entity => entity[key ?? 'createdAt']?.getTime() === Math.max(...entities.map(e => e.createdAt.getTime())),
         );
     }
 
