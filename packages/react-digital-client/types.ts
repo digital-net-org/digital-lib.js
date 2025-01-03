@@ -11,7 +11,7 @@ export interface QueryConfig<T, E> extends RequestConfig {
 export interface MutationConfig<T, E> extends RequestConfig {
     onSuccess?: SuccessCallback<T>;
     onError?: ErrorCallback<E>;
-    method?: MutationMethod;
+    method?: Method;
     retry?: number;
 }
 
@@ -27,6 +27,6 @@ export interface PatchOperation {
     value: any;
 }
 
-export type MutationMethod = 'POST' | 'PUT' | 'DELETE' | 'PATCH';
+export type Method = 'POST' | 'PUT' | 'DELETE' | 'PATCH' | 'GET';
 export type ErrorCallback<E> = (error: E | any) => Promise<void> | void;
 export type SuccessCallback<T> = (data: T) => Promise<void> | void;

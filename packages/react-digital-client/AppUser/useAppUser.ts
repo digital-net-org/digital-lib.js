@@ -7,7 +7,7 @@ import { AppUserContext } from './AppUserProvider';
 import useDigitalClient from '../useDigitalClient';
 import useDigitalMutation from '../useDigitalMutation';
 
-export default function useApiUser(): AppUser {
+export default function useAppUser(): AppUser {
     const navigate = useNavigate();
     const client = useDigitalClient();
 

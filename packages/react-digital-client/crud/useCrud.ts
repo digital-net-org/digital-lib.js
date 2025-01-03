@@ -8,23 +8,29 @@ import useDelete from './useDelete';
 import useSchema from './useSchema';
 
 export default function useCrud<T extends Entity>(config: CrudConfig) {
-    const { schema } = useSchema(config);
-    const { invalidateQuery, ...query } = useGet(config);
-    const create = useCreate<T>({ ...config, invalidateQuery });
-    const patch = usePatch<T>({ ...config, invalidateQuery });
-    const remove = useDelete<T>({ ...config, invalidateQuery });
+    const { schema, isLoading: isSchemaLoading } = useSchema(config);
+    const { invalidateQuery, ...queryApi } = useGet(config);
+    const createApi = useCreate<T>({ ...config, invalidateQuery });
+    const deleteApi = useDelete<T>({ ...config, invalidateQuery });
+    const patchApi = usePatch<T>({ ...config, invalidateQuery });
 
     const isLoading = React.useMemo(
-        () => query.isQuerying || create.isCreating || patch.isPatching,
-        [query.isQuerying, create.isCreating, patch.isPatching],
+        () =>
+            queryApi.isQuerying
+            || createApi.isCreating
+            || patchApi.isPatching
+            || deleteApi.isDeleting
+            || isSchemaLoading,
+        [queryApi.isQuerying, createApi.isCreating, patchApi.isPatching, deleteApi.isDeleting, isSchemaLoading],
     );
 
     return {
         isLoading,
         schema,
-        ...query,
-        ...create,
-        ...remove,
-        ...patch,
+        isSchemaLoading,
+        ...queryApi,
+        ...createApi,
+        ...deleteApi,
+        ...patchApi,
     };
 }

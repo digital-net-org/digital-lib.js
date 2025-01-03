@@ -5,7 +5,9 @@ import type { CrudConfig } from './types';
 
 export default function useCreate<T extends Entity>(config: CrudConfig & { invalidateQuery: () => Promise<void> }) {
     const { mutate, isPending: isCreating } = useDigitalMutation<Result<T>>(config.endpoint, {
-        onSuccess: async () => await config.invalidateQuery(),
+        onSuccess: async () => {
+            await config.invalidateQuery();
+        },
     });
 
     const create = React.useCallback((body: Partial<T>) => mutate({ body }), [mutate]);

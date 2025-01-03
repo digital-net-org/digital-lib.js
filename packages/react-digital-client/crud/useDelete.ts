@@ -8,7 +8,9 @@ export default function useDelete<T extends Entity>(config: CrudConfig & { inval
         ({ id }) => `${config.endpoint}/${id}`,
         {
             method: 'DELETE',
-            onSuccess: async () => await config.invalidateQuery(),
+            onSuccess: async () => {
+                await config.invalidateQuery();
+            },
         },
     );
 

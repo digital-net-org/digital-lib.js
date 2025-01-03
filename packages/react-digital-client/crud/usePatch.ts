@@ -8,7 +8,9 @@ export default function usePatch<T extends Entity>(config: CrudConfig & { invali
         ({ id }) => `${config.endpoint}/${id}`,
         {
             method: 'PATCH',
-            onSuccess: async () => await config.invalidateQuery(),
+            onSuccess: async () => {
+                await config.invalidateQuery();
+            },
         },
     );
 
