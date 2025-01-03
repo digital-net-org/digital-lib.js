@@ -14,6 +14,10 @@
     
     Is a collection of React Dev Tools for debugging and development.
 
+- **digital-net/react-digital-client**
+    
+    Is a collection of hooks and utilities to handle authentication and API requests.
+
 - **digital-net/react-elements**
 
     Is a collection of hooks and utilities to handle React elements/nodes.
