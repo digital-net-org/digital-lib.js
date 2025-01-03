@@ -21,9 +21,9 @@ export default function useLocalStorage<T>(key: string, defaultValue?: T) {
     });
 
     React.useEffect(() => {
-        LocalStorage.onSet<T>(key, value => value !== undefined ? setState(value) : void 0);
+        LocalStorage.onSet<T>(key, value => setState(value));
         return () => LocalStorage.clearListeners(key);
     }, [key]);
 
-    return [state as T, (value: T) => LocalStorage.set(key, value)] as const;
+    return [state as T, (value: T | undefined) => LocalStorage.set(key, value)] as const;
 }
