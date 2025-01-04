@@ -10,7 +10,7 @@ import React from 'react';
  *  the resolved entity (default to payload if not found in store),
  *  a setter for the entity, and a boolean indicating if the entity is being edited.
  */
-export default function useStoredEntity<T extends Entity>(entity: T, store: string) {
+export default function useStoredEntity<T extends Entity>(entity: T | undefined, store: string) {
     const dbStore = useIDbStore<T>(store);
     const storedEntity = React.useMemo(() => dbStore.result?.[0], [dbStore.result]);
 

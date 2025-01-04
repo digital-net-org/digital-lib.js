@@ -2,7 +2,7 @@ import React from 'react';
 import type { SafariNodeWithChildren } from '../types';
 import { useOnOpen } from './useOnOpen';
 import { useAnchor } from './useAnchor';
-import { useClassName, useProps } from '../../../react-elements';
+import { useClassName, useProps } from '../../../react-digital';
 import './PopOver.styles.css';
 
 export interface PopOverProps extends SafariNodeWithChildren {

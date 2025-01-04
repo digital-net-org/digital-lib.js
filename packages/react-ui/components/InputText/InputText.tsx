@@ -1,6 +1,6 @@
 import React from 'react';
 import type { ControlledHandler, SafariInputNode } from '../types';
-import { useClassName } from '../../../react-elements';
+import { useClassName } from '../../../react-digital';
 import './InputText.styles.css';
 
 export interface InputTextProps extends SafariInputNode {

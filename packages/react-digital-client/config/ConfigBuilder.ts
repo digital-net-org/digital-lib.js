@@ -1,19 +1,11 @@
 import axios from 'axios';
 import { QueryClient } from '@tanstack/react-query';
 import type { ClientConfig } from './ClientConfig';
-import { defaultClientContextState, type ClientContextState } from './ClientContextState';
+import { type ClientContextState } from './ClientContextState';
 
 export default class ConfigBuilder {
     public static build(config: ClientConfig): ClientContextState {
         return {
-            authConfig: {
-                ...defaultClientContextState.authConfig,
-                ...config.authConfig ?? {},
-                refreshTokenApi: {
-                    ...defaultClientContextState.authConfig.refreshTokenApi,
-                    ...config.authConfig?.refreshTokenApi ?? {},
-                },
-            },
             axiosInstance: axios.create({
                 baseURL: 'http://localhost',
                 withCredentials: true,

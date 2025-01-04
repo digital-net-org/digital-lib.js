@@ -2,7 +2,7 @@ import React from 'react';
 import { Box } from '../Box';
 import { InputText, type InputTextProps } from '../InputText';
 import type { ControlledHandler } from '../types';
-import { useClassName } from '../../../react-elements';
+import { useClassName } from '../../../react-digital';
 import './Form.styles.css';
 
 export interface FormFieldProps extends Omit<InputTextProps, 'value' | 'onChange'> {

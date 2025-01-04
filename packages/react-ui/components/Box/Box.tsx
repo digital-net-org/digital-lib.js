@@ -1,7 +1,7 @@
 import React from 'react';
 import type { SafariNodeWithChildren } from '../types';
 import './Box.styles.css';
-import { useClassName } from '../../../react-elements';
+import { useClassName } from '../../../react-digital';
 
 type BaseBoxProps = React.HTMLAttributes<HTMLDivElement> & SafariNodeWithChildren;
 

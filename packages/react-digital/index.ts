@@ -1,3 +1,4 @@
+export { default as ReactDigitalApp, type ReactDigitalConfig } from './ReactDigitalApp';
 export * from './Children';
 export * from './ClassName';
 export * from './Color';
@@ -6,3 +7,5 @@ export * from './Element';
 export * from './Image';
 export * from './Property';
 export * from './Spacing';
+export * from './IndexedDb';
+export * from './LocalStorage';

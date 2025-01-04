@@ -1,6 +1,6 @@
 import React from 'react';
 import type { SafariNodeWithChildren } from '../types';
-import { useClassName } from '../../../react-elements';
+import { useClassName } from '../../../react-digital';
 import './Text.styles.css';
 
 export interface TextProps extends SafariNodeWithChildren {

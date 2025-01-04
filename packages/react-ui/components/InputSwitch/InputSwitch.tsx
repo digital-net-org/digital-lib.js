@@ -1,6 +1,6 @@
 import React from 'react';
 import type { SafariInputNode } from '../types';
-import { useClassName, useProps } from '../../../react-elements';
+import { useClassName, useProps } from '../../../react-digital';
 import './InputSwitch.styles.css';
 
 export interface InputSwitchProps extends SafariInputNode {

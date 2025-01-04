@@ -2,7 +2,7 @@ import React from 'react';
 import { Box } from '../Box';
 import { Button } from '../Button';
 import type { SafariNodeWithChildren } from '../types';
-import { useClassName, useProps } from '../../../react-elements';
+import { useClassName, useProps } from '../../../react-digital';
 import './Form.styles.css';
 
 export interface FormProps extends SafariNodeWithChildren {

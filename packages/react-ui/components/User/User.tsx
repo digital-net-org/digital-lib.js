@@ -2,7 +2,7 @@ import React from 'react';
 import { Button } from '../Button';
 import { Avatar } from '../Avatar';
 import type { SafariNode } from '../types';
-import { useClassName } from '../../../react-elements';
+import { useClassName } from '../../../react-digital';
 import './User.styles.css';
 
 export interface UserProps extends SafariNode {

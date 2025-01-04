@@ -1,19 +1,19 @@
 import React from 'react';
-import { type Result } from '../../core';
-import { LocalStorage } from '../../react-storage';
-import { Jwt } from '../utils';
-import useDigitalClient from '../useDigitalClient';
-import { AppUserContext } from './AppUserProvider';
-import type { StoredAppUser } from './StoredAppUser';
+import { type Result } from '../core';
+import { LocalStorage } from '../react-digital';
+import { useDigitalClient } from '../react-digital-client';
+import { Jwt } from './Jwt';
+import { DigitalUserContext } from './DigitalUserProvider';
+import type { StoredDigitalUser } from './StoredDigitalUser';
 
 export default function AuthInterceptor() {
-    const { axiosInstance, authConfig } = useDigitalClient();
-    const { update, remove } = React.useContext(AppUserContext);
+    const { axiosInstance } = useDigitalClient();
+    const { update, remove, authStorageKey, refreshTokenApi } = React.useContext(DigitalUserContext);
 
     React.useEffect(() => {
         const onRequest = axiosInstance.interceptors.request.use(
             async (config) => {
-                const user = LocalStorage.get<StoredAppUser>(authConfig.authStorageKey);
+                const user = LocalStorage.get<StoredDigitalUser>(authStorageKey);
                 if (user?.token) config.headers['Authorization'] = `Bearer ${user.token}`;
                 return config;
             },
@@ -29,7 +29,7 @@ export default function AuthInterceptor() {
             async (error) => {
                 const originalRequest = error.config;
                 const isUnauthorized = error.response?.status === 401;
-                const isRefreshing = originalRequest.url === authConfig.refreshTokenApi.endpoint;
+                const isRefreshing = originalRequest.url === refreshTokenApi.endpoint;
 
                 if (isRefreshing) {
                     remove();
@@ -42,8 +42,8 @@ export default function AuthInterceptor() {
 
                 originalRequest._retry = true;
                 const { status, data } = await axiosInstance.request<Result<string>>({
-                    method: authConfig.refreshTokenApi.method,
-                    url: authConfig.refreshTokenApi.endpoint,
+                    method: refreshTokenApi.method,
+                    url: refreshTokenApi.endpoint,
                     withCredentials: true,
                 });
                 if (status !== 200 || !data.value) {
@@ -65,7 +65,14 @@ export default function AuthInterceptor() {
             axiosInstance.interceptors.request.eject(onRequest);
             axiosInstance.interceptors.response.eject(onResponse);
         };
-    }, [axiosInstance, authConfig, remove, update]);
+    }, [
+        authStorageKey,
+        axiosInstance,
+        refreshTokenApi.endpoint,
+        refreshTokenApi.method,
+        remove,
+        update,
+    ]);
 
     return null;
 }

@@ -1,7 +1,7 @@
 /* eslint react-hooks/rules-of-hooks: 0 */
 import type { Meta, StoryObj } from '@storybook/react';
 import React from 'react';
-import { Color } from '../../../react-elements';
+import { Color } from '../../../react-digital';
 import { Box } from '../Box';
 import { Button } from '../Button';
 import { Icon } from '../Icon';

@@ -1,5 +1,5 @@
 import React from 'react';
-import { useElement } from '../../../react-elements';
+import { useElement } from '../../../react-digital';
 import type { PopOverProps } from './PopOver';
 
 export function useOnOpen(open: boolean, anchor: PopOverProps['anchor'], callback?: () => void) {

@@ -9,7 +9,9 @@
 ## Packages
 - **digital-net/core** 
     
-    Is a collection of low-level utilities and helpers for Javascript/Typescript and a **Digital.Net** SDK.
+    Is a collection of low-level utilities and helpers for Javascript/Typescript. 
+    It also contains all basics **Digital.Net** types and interfaces.
+
 - **digital-net/react-dev-tools** 
     
     Is a collection of React Dev Tools for debugging and development.
@@ -18,11 +20,11 @@
     
     Is a collection of hooks and utilities to handle authentication and API requests.
 
-- **digital-net/react-elements**
+- **digital-net/react-digital**
 
-    Is a collection of hooks and utilities to handle React elements/nodes.
+    Is a collection of low-level hooks and utilities to handle React elements/nodes and DOM api.
 
-- **digital-net/react-storage**
+- **digital-net/react-digital**
 
     Is a collection of hooks and utilities to handle access to local storages (Indexed DB, LocalStorage...).
 

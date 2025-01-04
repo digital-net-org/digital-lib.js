@@ -1,6 +1,6 @@
-import type { StoredAppUser } from './StoredAppUser';
+import type { StoredDigitalUser } from './StoredDigitalUser';
 
-export interface AppUser extends StoredAppUser {
+export interface DigitalUser extends StoredDigitalUser {
     login: (body: Record<string, any>) => void;
     logout: () => void;
     loading: boolean;

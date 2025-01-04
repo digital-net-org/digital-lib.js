@@ -1,6 +1,6 @@
 import React from 'react';
 import type { SafariNodeWithChildren } from '../types';
-import { useClassName } from '../../../react-elements';
+import { useClassName } from '../../../react-digital';
 import './Loader.styles.css';
 
 type BaseLoaderProps = Omit<React.HTMLAttributes<HTMLDivElement>, 'children'> & SafariNodeWithChildren;

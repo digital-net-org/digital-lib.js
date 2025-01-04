@@ -1,7 +1,7 @@
 import React, { type PropsWithChildren } from 'react';
 import { Icon } from '../Icon';
 import type { SafariNode } from '../types';
-import { useClassName, useImage, useProps } from '../../../react-elements';
+import { useClassName, useImage, useProps } from '../../../react-digital';
 import './Avatar.styles.css';
 
 export interface AvatarProps extends SafariNode {

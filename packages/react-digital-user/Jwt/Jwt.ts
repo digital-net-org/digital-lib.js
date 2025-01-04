@@ -1,4 +1,4 @@
-import { safeParse } from '../../../core';
+import { safeParse } from '../../core';
 import { type JwtContent } from './JwtContent';
 import { type DecodedJwt } from './DecodedJwt';
 

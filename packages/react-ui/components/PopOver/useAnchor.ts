@@ -1,5 +1,5 @@
 import React from 'react';
-import { useElement, useWindow } from '../../../react-elements';
+import { useElement, useWindow } from '../../../react-digital';
 import { type PopOverProps } from './PopOver';
 
 export function useAnchor(

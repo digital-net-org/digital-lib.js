@@ -1,6 +1,6 @@
 import React, { type ReactNode, type PropsWithChildren } from 'react';
 import { DevToolContext } from './DevToolContext';
-import { useLocalStorage } from '../../react-storage';
+import { useLocalStorage } from '../../react-digital';
 import { type Position } from '../../core';
 import DevWidget from './DevWidget/DevWidget';
 

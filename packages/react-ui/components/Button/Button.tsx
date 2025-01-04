@@ -1,6 +1,6 @@
 import React from 'react';
 import { Loader } from '../Loader';
-import { useClassName, useProps } from '../../../react-elements';
+import { useClassName, useProps } from '../../../react-digital';
 import './Button.styles.css';
 
 export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement | HTMLAnchorElement> {
