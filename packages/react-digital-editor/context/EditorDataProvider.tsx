@@ -3,7 +3,7 @@ import { EditorDataContext } from './EditorDataContext';
 import type { EditorConfig } from './EditorConfig';
 import type { Entity } from '../../core';
 import { useCrud } from '../../react-digital-client';
-import { useStoredEntity } from '../../react-digital';
+import { useStoredEntity } from '../../react-digital-idb';
 
 export default function EditorDataProvider<T extends Entity>({ children, ...config }: PropsWithChildren<EditorConfig>) {
     // const [currentEntity, setCurrentEntity] = useUrlState('model');

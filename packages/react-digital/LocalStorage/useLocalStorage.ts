@@ -8,7 +8,7 @@ import { useFirstRender } from '../../react-digital';
  * @returns state and setter
  */
 export default function useLocalStorage<T>(key: string, defaultValue?: T) {
-    const [state, setState] = React.useState<T | undefined>();
+    const [state, setState] = React.useState<T | undefined | null>(LocalStorage.get<T>(key));
 
     useFirstRender(() => {
         const currentValue = LocalStorage.get<T>(key);

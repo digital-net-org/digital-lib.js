@@ -1,7 +1,7 @@
 /* eslint react-hooks/rules-of-hooks: 0 */
 import React from 'react';
 import useWindow from './useWindow';
-import { Box } from '../../react-ui/components/Box';
+import { Box } from '../../react-digital-ui/components/Box';
 import type { StoryObj } from '@storybook/react';
 import { Color } from '../Color';
 

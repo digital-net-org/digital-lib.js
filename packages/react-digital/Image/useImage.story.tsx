@@ -1,7 +1,7 @@
 /* eslint react-hooks/rules-of-hooks: 0 */
 import React from 'react';
 import useImage from './useImage';
-import { Box } from '../../react-ui/components/Box';
+import { Box } from '../../react-digital-ui/components/Box';
 import type { StoryObj } from '@storybook/react';
 
 export default { title: 'Utilities/ReactHooks' };

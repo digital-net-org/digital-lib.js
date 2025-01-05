@@ -1,6 +1,4 @@
-export { default as useDigitalUser } from './useDigitalUser';
-export { default as DigitalUserProvider } from './DigitalUserProvider';
-export { type DigitalUser } from './DigitalUser';
-export { type DigitalUserConfig } from './DigitalUserConfig';
-export { type StoredDigitalUser } from './StoredDigitalUser';
+export { default as DigitalUserPlugin } from './DigitalUserPlugin';
+export { type DigitalUserConfig } from './config';
+export * from './DigitalUser';
 export * from './Jwt';

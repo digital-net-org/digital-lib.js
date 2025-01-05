@@ -8,29 +8,35 @@
 
 ## Packages
 - **digital-net/core** 
-    
-    Is a collection of low-level utilities and helpers for Javascript/Typescript. 
-    It also contains all basics **Digital.Net** types and interfaces.
+  - Collection of low-level utilities and helpers for Javascript/Typescript. 
+  - Contains all basics **Digital.Net** types and interfaces.
 
-- **digital-net/react-dev-tools** 
-    
-    Is a collection of React Dev Tools for debugging and development.
+- **digital-net/react-digital-debug** 
+  - Collection of React Dev/debugging Tools.
+
+- **digital-net/react-digital**
+  - ReactDigital class that handles the initialization of the React app. 
+  - Collection of low-level hooks and utilities to handle React elements/nodes and DOM api.
+  - Collection of tools to handle LocalStorage and IndexedDB.
 
 - **digital-net/react-digital-client**
-    
-    Is a collection of hooks and utilities to handle authentication and API requests.
+  - Collection of hooks and utilities to handle data fetching and state management _(require @tanstack/react-query)_.
+  - Crud hooks to handle data fetching and state management.
 
-- **digital-net/react-digital**
+- **digital-net/react-digital-editor**
 
-    Is a collection of low-level hooks and utilities to handle React elements/nodes and DOM api.
+    // TODO
 
-- **digital-net/react-digital**
+- **digital-net/react-digital-router**
+  - Collection of hooks and utilities to handle routing and navigation.
+  - Handles dynamic page creation based on folder structure.
 
-    Is a collection of hooks and utilities to handle access to local storages (Indexed DB, LocalStorage...).
+- **digital-net/react-digital-user**
+  - Handles user authentication and authorization.
+  - Require *@digital-net/react-digital-router* and *@digital-net/react-digital-client*.
 
-- **digital-net/react-ui**
-
-    Is a collection of React UI components and utilities.
+- **digital-net/react-digital-ui**
+  - Collection of React UI components and utilities.
 
 ### Installation
 #### Submodules
