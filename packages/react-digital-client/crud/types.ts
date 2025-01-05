@@ -2,7 +2,6 @@ import type { Entity } from '../../core';
 import type useCrud from './useCrud';
 
 export interface CrudConfig {
-    api: string;
     endpoint: string;
 }
 

@@ -36,10 +36,23 @@ export default function useIDbStore<T extends Entity>(store: string) {
         });
     }, [context, setIsLoading, store]);
 
+    const _delete = React.useCallback(async (id: string | number) => {
+        if (context.isLoading) {
+            return;
+        }
+        setIsLoading(true);
+        await IDbStore.delete(context, store, id, {
+            onSuccess: () => setResult(undefined),
+            onError: error => console.error(error),
+            onResolve: () => setIsLoading(false),
+        });
+    }, [context, setIsLoading, store]);
+
     return {
         ...context,
         result,
         get,
         set,
+        delete: _delete,
     };
 }

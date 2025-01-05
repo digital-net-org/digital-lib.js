@@ -23,6 +23,7 @@ export interface BoxProps extends BaseBoxProps {
     align?: 'start' | 'center' | 'end';
     justify?: 'start' | 'center' | 'end' | 'space-between' | 'space-around';
     color?: string;
+    overflow?: 'hidden' | 'scroll' | 'auto';
 }
 
 const Box = React.forwardRef<HTMLDivElement, BoxProps>(

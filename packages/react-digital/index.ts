@@ -9,5 +9,6 @@ export * from './Element';
 export * from './Image';
 export * from './Property';
 export * from './Spacing';
+export * from './State';
 export * from './Router';
 export * from './LocalStorage';

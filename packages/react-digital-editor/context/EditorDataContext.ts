@@ -1,34 +1,28 @@
 import React from 'react';
 import type { Entity, EntitySchema } from '../../core';
-import type { CrudApiState } from '../../react-digital-client';
-import type { EditorConfig } from './EditorConfig';
 
-export interface EditorDataContextState<T extends Entity> extends EditorConfig, CrudApiState<T> {
+export interface EditorDataContextState<T extends Entity> {
     entity: T | undefined;
     setEntity: (id?: Entity['id']) => void;
     editEntity: (payload: Partial<T>) => void;
     entities: T[];
     schema: EntitySchema | undefined;
+    isLoading: boolean;
+    save: () => void;
+    create: () => void;
+    delete: () => void;
 }
 
 export const defaultValues: EditorDataContextState<any> = {
-    isLoading: false,
-    isCreating: false,
-    isDeleting: false,
-    isPatching: false,
-    isQuerying: false,
-    isSchemaLoading: false,
-    get: () => void 0,
-    patch: () => void 0,
-    delete: () => void 0,
-    create: () => void 0,
-    refetchQuery: async () => void 0,
-    schema: [],
-    store: '',
     entity: undefined,
     setEntity: () => void 0,
     editEntity: () => void 0,
     entities: [],
+    schema: [],
+    isLoading: false,
+    save: () => void 0,
+    create: () => void 0,
+    delete: () => void 0,
 };
 
 export const EditorDataContext = React.createContext<EditorDataContextState<any>>(defaultValues);

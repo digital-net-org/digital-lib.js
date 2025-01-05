@@ -31,11 +31,16 @@ export default function useStoredEntity<T extends Entity>(entity: T | undefined,
 
     const editEntity = React.useCallback(async (payload: Partial<T>) => {
         if (resolved?.id !== undefined && !dbStore.isLoading) {
-            console.log('set', { ...resolved, ...payload });
             return await dbStore.set({ ...resolved, ...payload });
         }
     },
     [dbStore, resolved]);
 
-    return [resolved, editEntity, isEditing] as const;
+    const deleteEntity = React.useCallback(async () => {
+        if (resolved?.id !== undefined && !dbStore.isLoading) {
+            return await dbStore.delete(resolved.id);
+        }
+    }, [dbStore, resolved]);
+
+    return { resolved, editEntity, deleteEntity, isEditing };
 }

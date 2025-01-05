@@ -9,7 +9,7 @@ import useSchema from './useSchema';
 
 export default function useCrud<T extends Entity>(config: CrudConfig) {
     const { schema, isLoading: isSchemaLoading } = useSchema(config);
-    const { invalidateQuery, ...queryApi } = useGet(config);
+    const { invalidateQuery, ...queryApi } = useGet<T>(config);
     const createApi = useCreate<T>({ ...config, invalidateQuery });
     const deleteApi = useDelete<T>({ ...config, invalidateQuery });
     const patchApi = usePatch<T>({ ...config, invalidateQuery });

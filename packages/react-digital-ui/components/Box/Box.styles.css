@@ -17,6 +17,18 @@
     overflow: auto;
 }
 
+.SafariUi-Box-overflow-hidden {
+    overflow: hidden;
+}
+
+.SafariUi-Box-overflow-auto {
+    overflow: auto;
+}
+
+.SafariUi-Box-overflow-scroll {
+    overflow: scroll;
+}
+
 .SafariUi-Box-wrap {
     flex-wrap: wrap;
 }

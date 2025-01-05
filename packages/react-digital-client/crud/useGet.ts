@@ -34,7 +34,7 @@ export default function useGet<T extends Entity>(config: CrudConfig) {
         },
     );
 
-    const get = React.useCallback((id: string | number) => mutate({ params: { id: String(id) } }), [mutate]);
+    const get = React.useCallback((id: Entity['id']) => mutate({ params: { id: String(id) } }), [mutate]);
 
     return {
         entity,

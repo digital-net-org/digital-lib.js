@@ -1,7 +1,7 @@
 import React from 'react';
 
 export default function useChildren(children: React.ReactNode) {
-    const getByType = React.useCallback(
+    const getTypeOf = React.useCallback(
         (type: React.ElementType, id?: string | null) =>
             React.Children.toArray(children).find(
                 c =>
@@ -12,14 +12,14 @@ export default function useChildren(children: React.ReactNode) {
         [children],
     );
 
-    const mapByType = React.useCallback(
+    const mapTypeOf = React.useCallback(
         (type: React.ElementType, id?: string | null, props?: Record<string, any>) => {
-            const child = getByType(type, id);
+            const child = getTypeOf(type, id);
             if (!React.isValidElement(child)) return null;
             return React.cloneElement(child, props);
         },
-        [getByType],
+        [getTypeOf],
     );
 
-    return { getByType, mapByType };
+    return { getTypeOf, mapTypeOf };
 }

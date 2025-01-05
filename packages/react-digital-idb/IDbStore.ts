@@ -99,19 +99,23 @@ export default class IDbStore {
      * @param store - store name
      * @param id - entity id
      */
-    public static async delete(
+    public static async delete<T extends Entity>(
         accessor: IDbInfo,
         store: string,
         id: string | number,
+        callbacks: IDbStoreCallbacks<T>,
     ): Promise<void> {
         await IDbAccessor.accessDatabase(accessor, {
             onsuccess: ({ db }, resolve) => {
                 this.validateStore(db, store);
                 this.getStore(db, store, 'readwrite').delete(String(id));
+                callbacks.onSuccess?.(undefined);
+                callbacks.onResolve?.();
                 resolve();
             },
-            onerror: ({ event }) => {
-                throw new Error(`useCrud: error deleting data: ${event}`);
+            onerror: () => {
+                callbacks.onError?.(new Error(`IDbStore: Unhandled error while deleting data from store "${store}"`));
+                callbacks.onResolve?.();
             },
         });
     };
