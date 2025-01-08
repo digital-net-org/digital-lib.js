@@ -18,8 +18,11 @@ export default function useStoredEntity<T extends Entity>(entity: T | undefined,
         (async () => entity?.id !== undefined ? await dbStore.get(entity.id) : void 0)();
     }, [dbStore, entity?.id]);
 
-    const isEditing = React.useMemo(
-        () => ObjectMatcher.deepEquality<T>(entity, storedEntity, ['createdAt', 'updatedAt']),
+    const hasChanged = React.useMemo(
+        () => {
+            console.log('hasChanged', entity, storedEntity);
+            return !ObjectMatcher.deepEquality<T>(entity, storedEntity, ['createdAt', 'updatedAt']);
+        },
         [entity, storedEntity],
     );
 
@@ -42,5 +45,5 @@ export default function useStoredEntity<T extends Entity>(entity: T | undefined,
         }
     }, [dbStore, resolved]);
 
-    return { resolved, editEntity, deleteEntity, isEditing };
+    return { resolved, editEntity, deleteEntity, hasChanged };
 }

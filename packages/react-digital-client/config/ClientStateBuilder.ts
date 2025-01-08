@@ -24,7 +24,7 @@ export default class ClientStateBuilder {
                         refetchOnMount: false,
                         refetchOnReconnect: false,
                         retry: 0,
-                        staleTime: 5000,
+                        staleTime: 60000,
                         ...config.tanstackConfig?.queries ?? {},
                     },
                     mutations: {

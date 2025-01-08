@@ -22,7 +22,7 @@ export default function PuckEditor<T extends Entity>() {
             entity={entity}
             renderName={renderEntityName}
             actions={[
-                { action: editorState.save, icon: Icon.FloppyIcon },
+                { action: editorState.save, icon: Icon.FloppyIcon, disabled: !editorState.hasChanged },
                 { action: editorState.delete, icon: Icon.TrashIcon },
             ]}
             tools={

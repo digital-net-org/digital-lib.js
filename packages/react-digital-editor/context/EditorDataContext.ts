@@ -3,6 +3,7 @@ import type { Entity, EntitySchema } from '../../core';
 
 export interface EditorDataContextState<T extends Entity> {
     entity: T | undefined;
+    hasChanged: boolean;
     setEntity: (id?: Entity['id']) => void;
     editEntity: (payload: Partial<T>) => void;
     entities: T[];
@@ -15,6 +16,7 @@ export interface EditorDataContextState<T extends Entity> {
 
 export const defaultValues: EditorDataContextState<any> = {
     entity: undefined,
+    hasChanged: false,
     setEntity: () => void 0,
     editEntity: () => void 0,
     entities: [],

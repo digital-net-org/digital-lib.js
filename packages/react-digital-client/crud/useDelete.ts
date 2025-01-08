@@ -1,15 +1,14 @@
 import React from 'react';
 import type { Entity, Result } from '../../core';
 import useDigitalMutation from '../useDigitalMutation';
-import type { CrudConfig } from './types';
 
-export default function useDelete<T extends Entity>(config: CrudConfig & { invalidateQuery: () => Promise<void> }) {
+export default function useDelete<T extends Entity>(endpoint: string, invalidateQuery?: () => Promise<void>) {
     const { mutate, isPending: isDeleting } = useDigitalMutation<Result, { id: string }>(
-        ({ id }) => `${config.endpoint}/${id}`,
+        ({ id }) => `${endpoint}/${id}`,
         {
             method: 'DELETE',
             onSuccess: async () => {
-                await config.invalidateQuery();
+                await invalidateQuery?.();
             },
         },
     );
