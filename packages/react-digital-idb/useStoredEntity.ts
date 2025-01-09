@@ -7,43 +7,26 @@ import React from 'react';
  * @param entity - entity to interact with
  * @param store - store name (table)
  * @returns
- *  the resolved entity (default to payload if not found in store),
- *  a setter for the entity, and a boolean indicating if the entity is being edited.
+ *  Stored state of the entity.
  */
 export default function useStoredEntity<T extends Entity>(entity: T | undefined, store: string) {
-    const dbStore = useIDbStore<T>(store);
-    const storedEntity = React.useMemo(() => dbStore.result?.[0], [dbStore.result]);
+    const { stored, isLoading, ...idbStore } = useIDbStore<T>(store);
 
     React.useEffect(() => {
-        (async () => entity?.id !== undefined ? await dbStore.get(entity.id) : void 0)();
-    }, [dbStore, entity?.id]);
+        (async () => entity?.id !== undefined && entity.id !== stored?.id
+            ? idbStore.get(entity.id)
+            : void 0
+        )();
+    }, [entity, idbStore, stored]);
 
-    const hasChanged = React.useMemo(
-        () => {
-            console.log('hasChanged', entity, storedEntity);
-            return !ObjectMatcher.deepEquality<T>(entity, storedEntity, ['createdAt', 'updatedAt']);
-        },
-        [entity, storedEntity],
+    const _delete = React.useCallback(
+        async () => stored?.id ? idbStore.delete(stored.id) : void 0,
+        [idbStore, stored],
     );
 
-    const resolved = React.useMemo( // TODO: Should be able to merge and manage conflicts
-        // () => EntityHelper.getLatest([entity, ...(storedEntity ? [storedEntity] : [])], 'updatedAt'),
-        () => storedEntity ?? entity,
-        [entity, storedEntity],
-    );
-
-    const editEntity = React.useCallback(async (payload: Partial<T>) => {
-        if (resolved?.id !== undefined && !dbStore.isLoading) {
-            return await dbStore.set({ ...resolved, ...payload });
-        }
-    },
-    [dbStore, resolved]);
-
-    const deleteEntity = React.useCallback(async () => {
-        if (resolved?.id !== undefined && !dbStore.isLoading) {
-            return await dbStore.delete(resolved.id);
-        }
-    }, [dbStore, resolved]);
-
-    return { resolved, editEntity, deleteEntity, hasChanged };
+    return {
+        stored,
+        ...idbStore,
+        delete: _delete,
+    };
 }

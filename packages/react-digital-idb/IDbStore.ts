@@ -1,7 +1,4 @@
 import type { Entity } from '../core';
-import type { IDbInfo } from './types/IDbInfo';
-import IDbAccessor from './IDbAccessor';
-import type { IDbStoreCallbacks } from './types/IDbStoreCallbacks';
 
 /**
  * Indexed database store accessor utilities
@@ -28,95 +25,78 @@ export default class IDbStore {
 
     /**
      * Retrieve Entity from the store
-     * @param accessor - database configuration, contains name, version and available stores
+     * @param db - database instance
      * @param store - store name
      * @param id - entity id
-     * @param callbacks - callbacks to handle success, error and resolve
      */
     public static async get<T extends Entity>(
-        accessor: IDbInfo,
+        db: IDBDatabase,
         store: string,
         id: string | number,
-        callbacks: IDbStoreCallbacks<T>,
-    ): Promise<void> {
-        await IDbAccessor.accessDatabase(accessor, {
-            onsuccess: ({ db }, resolve) => {
+    ): Promise<T | undefined> {
+        return new Promise<T | undefined>((resolve, reject) => {
+            try {
                 this.validateStore(db, store);
-                const result = this.getStore(db, store, 'readonly').get(String(id));
-                result.onsuccess = () => callbacks.onSuccess?.(result?.result);
-                result.onerror = () => callbacks.onSuccess?.(undefined);
-                resolve();
-            },
-            onerror: () =>
-                callbacks.onError?.(new Error(`IDbStore: Unhandled error while getting data from store "${store}"`)),
+                const request = this.getStore(db, store, 'readonly').get(String(id));
+                request.onsuccess = () => resolve(request.result as T);
+                request.onerror = () => reject(request.error);
+            } catch (error) {
+                reject(error);
+            };
         });
     };
 
     /**
      * Save Entity to the store
-     * @param accessor - database configuration, contains name, version and available stores
+     * @param db - database instance
      * @param store - store name
      * @param data - entity data
-     * @param callbacks - callbacks to handle success, error and resolve
      */
     public static async save<T extends Entity>(
-        accessor: IDbInfo,
+        db: IDBDatabase,
         store: string,
         data: Partial<T>,
-        callbacks: IDbStoreCallbacks<T>,
     ): Promise<void> {
-        await IDbAccessor.accessDatabase(accessor, {
-            onsuccess: ({ db }, resolve) => {
+        return new Promise<void>((resolve, reject) => {
+            try {
                 this.validateStore(db, store);
                 const payload = this.validatePayload(data);
                 const storeObject = this.getStore(db, store);
                 const result = storeObject.get(String(payload.id));
-
                 result.onsuccess = () => {
-                    const updatedData = { ...(result?.result ?? {}), ...payload };
-                    storeObject.put(updatedData);
-                    callbacks.onSuccess?.(updatedData);
-                    callbacks.onResolve?.();
+                    if (result?.result !== undefined) {
+                        storeObject.put({ ...(result?.result ?? {}), ...payload });
+                    } else {
+                        storeObject.add(payload);
+                    }
                     resolve();
                 };
-                result.onerror = () => {
-                    storeObject.add(payload);
-                    callbacks.onSuccess?.(payload as T);
-                    callbacks.onResolve?.();
-                    resolve();
-                };
-            },
-            onerror: () => {
-                callbacks.onError?.(new Error(`IDbStore: Unhandled error while getting data from store "${store}"`));
-                callbacks.onResolve?.();
-            },
+                result.onerror = () => console.error(result.error);
+            } catch (error) {
+                reject(error);
+            };
         });
     };
 
     /**
      * Delete Entity from the store
-     * @param accessor - database configuration, contains name, version and available stores
+     * @param db - database instance
      * @param store - store name
      * @param id - entity id
      */
     public static async delete<T extends Entity>(
-        accessor: IDbInfo,
+        db: IDBDatabase,
         store: string,
         id: string | number,
-        callbacks: IDbStoreCallbacks<T>,
     ): Promise<void> {
-        await IDbAccessor.accessDatabase(accessor, {
-            onsuccess: ({ db }, resolve) => {
+        return new Promise<void>((resolve, reject) => {
+            try {
                 this.validateStore(db, store);
                 this.getStore(db, store, 'readwrite').delete(String(id));
-                callbacks.onSuccess?.(undefined);
-                callbacks.onResolve?.();
                 resolve();
-            },
-            onerror: () => {
-                callbacks.onError?.(new Error(`IDbStore: Unhandled error while deleting data from store "${store}"`));
-                callbacks.onResolve?.();
-            },
+            } catch (error) {
+                reject(error);
+            };
         });
     };
 }

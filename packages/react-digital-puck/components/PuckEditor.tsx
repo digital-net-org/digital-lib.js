@@ -1,28 +1,66 @@
 import React from 'react';
-import { Puck } from '@measured/puck';
+import type { Data } from '@measured/puck';
 import type { Entity } from '../../core';
 import { useClassName, useUrlSelect } from '../../react-digital';
+import { useIDbStore } from '../../react-digital-idb';
 import { Box, Icon } from '../../react-digital-ui';
 import { Editor } from '../../react-digital-editor';
-import { tools } from './Tools';
-import usePuckDataResolver from './usePuckDataResolver';
 import usePuckEditor from '../context/usePuckEditor';
+import useDigitalPuck from '../useDigitalPuck';
+import { tools } from './Tools';
+import PuckRender from './PuckRender';
+import EntityRender from './EntityRender';
 import './PuckEditor.styles.css';
 
 export default function PuckEditor<T extends Entity>() {
     const [currentTool, setCurrentTool] = useUrlSelect(tools, { store: 'tool', accessor: 'id' });
-    const { entity, editEntity, accessor, renderEntityName, ...editorState } = usePuckEditor<T>();
+    const { store, entity, patch, accessor, renderEntityName, isLoading, ...editorState } = usePuckEditor<T>();
+    const iDbStore = useIDbStore<T>(store);
+    const { dispatchData, data } = useDigitalPuck();
     const className = useClassName({}, 'PuckEditor');
+        
+    // entity?.updatedAt !== undefined && (stored?.updatedAt || entity.createdAt) < entity.updatedAt
 
-    usePuckDataResolver({ accessor, entity, editEntity });
-
+    React.useEffect(() => {
+        (async () => {
+            if (!entity || isLoading || iDbStore.isLoading || entity.id === data.id) {
+                return;
+            }
+            const stored = await iDbStore.get(entity.id);
+            const resolved = stored?.[accessor] ?? entity[accessor];
+            if (!resolved) {
+                return;
+            }
+            dispatchData({ id: String(entity.id), ...(resolved as unknown as Data) });
+        })();
+    }, [accessor, data, dispatchData, entity, iDbStore, isLoading]);
+    
+    const handlePatch = React.useCallback(
+        async () => {
+            if (!entity || isLoading) {
+                return;
+            }
+            const stored = await iDbStore.get(entity.id);
+            patch(stored);
+            await iDbStore.delete(entity.id);
+        },
+        [entity, iDbStore, isLoading, patch],
+    );
+    
     return (
         <Editor<T>
             className={className}
             entity={entity}
             renderName={renderEntityName}
+            isLoading={isLoading}
             actions={[
-                { action: editorState.save, icon: Icon.FloppyIcon, disabled: !editorState.hasChanged },
+                {
+                    action: () => accessor && (entity)
+                        ? handlePatch()
+                        : void 0,
+                    icon: Icon.FloppyIcon,
+                    disabled: false,
+                },
                 { action: editorState.delete, icon: Icon.TrashIcon },
             ]}
             tools={
@@ -37,18 +75,8 @@ export default function PuckEditor<T extends Entity>() {
             {currentTool && React.createElement(currentTool.component)}
             <Box direction="row" fullHeight fullWidth>
                 {currentTool && !currentTool.isDefault
-                    ? (
-                            <React.Fragment>
-                                <Puck.Preview />
-                                <Puck.Fields />
-                            </React.Fragment>
-                        )
-                    : (
-                            <Box>
-                                <h4>View Config</h4>
-                                <pre>{JSON.stringify(entity, null, 2)}</pre>
-                            </Box>
-                        )}
+                    ? (<PuckRender />)
+                    : (<EntityRender entity={entity} store={store} />)}
             </Box>
         </Editor>
     );

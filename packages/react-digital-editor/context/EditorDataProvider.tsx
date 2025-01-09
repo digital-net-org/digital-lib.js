@@ -1,56 +1,49 @@
 import React, { type PropsWithChildren } from 'react';
 import { EditorDataContext } from './EditorDataContext';
 import { type EditorConfig } from '../config/EditorConfig';
-import { type Entity } from '../../core';
+import { type Entity, ObjectMatcher } from '../../core';
 import { useCrud, useGetById } from '../../react-digital-client';
-import { useStoredEntity } from '../../react-digital-idb';
 import { useUrlState } from '../../react-digital';
 
-// TODO: handle on save local storage clear
 export default function EditorDataProvider<T extends Entity>({ children, ...config }: PropsWithChildren<EditorConfig<T>>) {
     const [currentEntityId, setCurrentEntityId] = useUrlState('entity');
     const { entity } = useGetById<T>(config.store, currentEntityId);
-    const { entities, schema, isLoading, ...crudApi } = useCrud<T>(config.store);
-    const { resolved, editEntity, deleteEntity, hasChanged } = useStoredEntity<T>(entity, config.store);
-
-    const isCurrentEntityReady = React.useMemo(
-        () => currentEntityId !== undefined && currentEntityId === resolved?.id,
-        [currentEntityId, resolved?.id],
+    const crudApi = useCrud<T>(config.store);
+    
+    const crudActionEnabled = React.useMemo(
+        () => (currentEntityId && currentEntityId === entity?.id) && !crudApi.isLoading, 
+        [currentEntityId, entity, crudApi.isLoading],
     );
 
-    const save = React.useCallback(() => {
-        console.log('save', resolved?.id);
-        console.log('isReady', isCurrentEntityReady);
-        console.log('isEditing', hasChanged);
-        // @ts-ignore
-        console.log('resolved-data', resolved['data']);
+    const checkEquality = React.useCallback(
+        (payload?: Partial<T>) => ObjectMatcher.deepEquality<T>(entity, payload, ['createdAt', 'updatedAt']),
+        [entity],
+    );
 
-        if (isCurrentEntityReady && hasChanged) {
-            crudApi.patch(currentEntityId, resolved!);
-        }
-    }, [isCurrentEntityReady, hasChanged, crudApi, currentEntityId, resolved]);
+    const create = React.useCallback(
+        async (payload?: Partial<T>) => crudActionEnabled ? crudApi.create(payload ?? {}) : void 0,
+        [crudApi, crudActionEnabled],
+    );
+    
+    const patch = React.useCallback(
+        async (payload?: Partial<T>) => crudActionEnabled ? crudApi.patch(currentEntityId, payload ?? {}) : void 0,
+        [currentEntityId, crudApi, crudActionEnabled],
+    );
 
-    const create = React.useCallback(() => {
-        crudApi.create(config.onCreate());
-    }, [config, crudApi]);
-
-    const _delete = React.useCallback(() => {
-        if (isCurrentEntityReady) {
-            crudApi.delete(currentEntityId);
-        }
-    }, [isCurrentEntityReady, crudApi, currentEntityId]);
-
+    const _delete = React.useCallback(
+        async () => crudActionEnabled ? crudApi.delete(currentEntityId) : void 0,
+        [currentEntityId, crudApi, crudActionEnabled],
+    );
+    
     return (
         <EditorDataContext.Provider value={{
-            isLoading,
+            store: config.store,
+            checkEquality,
+            ...crudApi,
             create,
-            save,
+            patch,
             delete: _delete,
-            schema,
-            entity: resolved,
-            hasChanged,
-            entities,
-            editEntity,
+            entity,
             setEntity: setCurrentEntityId,
         }}
         >

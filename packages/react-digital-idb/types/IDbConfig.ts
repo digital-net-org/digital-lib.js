@@ -1,5 +1,5 @@
-import type { IDbInfo } from './IDbInfo';
-
-export interface IDbConfig extends IDbInfo {
+export interface IDbConfig {
     stores: Array<string>;
+    name: string;
+    version?: number;
 }

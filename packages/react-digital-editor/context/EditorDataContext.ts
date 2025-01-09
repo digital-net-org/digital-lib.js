@@ -2,29 +2,29 @@ import React from 'react';
 import type { Entity, EntitySchema } from '../../core';
 
 export interface EditorDataContextState<T extends Entity> {
+    store: string;
     entity: T | undefined;
-    hasChanged: boolean;
-    setEntity: (id?: Entity['id']) => void;
-    editEntity: (payload: Partial<T>) => void;
     entities: T[];
-    schema: EntitySchema | undefined;
+    setEntity: (id?: Entity['id']) => void;
     isLoading: boolean;
-    save: () => void;
-    create: () => void;
+    checkEquality: (payload?: Partial<T>) => boolean;
+    patch: (payload?: Partial<T>) => void;
+    create: (payload?: Partial<T>) => void;
     delete: () => void;
+    schema: EntitySchema | undefined;
 }
 
 export const defaultValues: EditorDataContextState<any> = {
+    store: '',
     entity: undefined,
-    hasChanged: false,
-    setEntity: () => void 0,
-    editEntity: () => void 0,
     entities: [],
-    schema: [],
+    setEntity: () => void 0,
     isLoading: false,
-    save: () => void 0,
+    checkEquality: () => false,
+    patch: () => void 0,
     create: () => void 0,
     delete: () => void 0,
+    schema: [],
 };
 
 export const EditorDataContext = React.createContext<EditorDataContextState<any>>(defaultValues);

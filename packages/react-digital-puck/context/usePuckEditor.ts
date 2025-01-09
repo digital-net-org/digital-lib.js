@@ -5,7 +5,7 @@ import { type PuckEditorContextState, PuckEditorContext } from './PuckEditorCont
 
 export default function usePuckEditor<T extends Entity>() {
     const puckState = React.useContext(PuckEditorContext) as PuckEditorContextState<T>;
-    const editorState = useEditor();
+    const editorState = useEditor<T>();
     return {
         ...editorState,
         ...puckState,

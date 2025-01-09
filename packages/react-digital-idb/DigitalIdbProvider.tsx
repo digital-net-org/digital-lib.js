@@ -5,31 +5,38 @@ import IDbAccessor from './IDbAccessor';
 
 /**
  * Indexed database provider
- * @param children - child components
  * @param idbConfig - database configuration object
  */
 export default function DigitalIdbProvider({ children, ...idbConfig }: PropsWithChildren<IDbConfig>) {
     const [isLoading, setIsLoading] = React.useState(false);
-    const [isInitialized, setIsInitialized] = React.useState(false);
+    const [hasError, setHasError] = React.useState(false);
+    const [database, setDatabase] = React.useState<IDBDatabase | null>(null);
 
     React.useEffect(() => {
         (async () => {
-            if (isInitialized || isLoading) {
+            if (isLoading || database !== null || hasError) {
                 return;
             }
-
             setIsLoading(true);
-            await IDbAccessor.initDatabase({
-                ...idbConfig,
-                onSuccess: () => setIsInitialized(true),
-                onError: e => console.error(e.message),
-                onResolve: () => setIsLoading(false),
-            });
+            try {
+                const result = await IDbAccessor.initDatabase(idbConfig);
+                setDatabase(result);
+            } catch (error) {
+                setHasError(true);
+            } finally {
+                setIsLoading(false);
+            }
         })();
-    }, [idbConfig, isInitialized, isLoading]);
+    }, [database, hasError, idbConfig, isLoading]);
 
     return (
-        <DigitalIdbContext.Provider value={{ isLoading, setIsLoading, ...idbConfig }}>
+        <DigitalIdbContext.Provider value={{
+            isLoading,
+            hasError,
+            database,
+            ...idbConfig,
+        }}
+        >
             {children}
         </DigitalIdbContext.Provider>
     );

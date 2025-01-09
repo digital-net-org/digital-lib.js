@@ -3,7 +3,8 @@ import { type IDbConfig } from './types/IDbConfig';
 
 export interface DigitalIdbContextState extends IDbConfig {
     isLoading: boolean;
-    setIsLoading: (isLoading: boolean) => void;
+    hasError: boolean;
+    database: IDBDatabase | null;
 }
 
 export const defaultIdbConfig: IDbConfig = {
@@ -15,5 +16,6 @@ export const defaultIdbConfig: IDbConfig = {
 export const DigitalIdbContext = React.createContext<DigitalIdbContextState>({
     ...defaultIdbConfig,
     isLoading: false,
-    setIsLoading: () => {},
+    hasError: false,
+    database: null,
 });

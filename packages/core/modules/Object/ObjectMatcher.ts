@@ -111,8 +111,8 @@ export default class ObjectMatcher {
      * @returns true if both objects are equal
      */
     public static deepEquality<T>(
-        a: T | undefined | null,
-        b: T | undefined | null,
+        a: T | Partial<T> | undefined | null,
+        b: T | Partial<T> | undefined | null,
         ignoreKeys?: Array<keyof T>,
     ) {
         if (!this.isObject(a, b)) {
