@@ -1,3 +1,7 @@
+export interface PartialDigitalUserConfig extends Omit<DigitalUserConfig, 'authStorageKey'> {
+    authStorageKey?: string;
+}
+
 export interface DigitalUserConfig {
     authStorageKey: string;
     userApi: {

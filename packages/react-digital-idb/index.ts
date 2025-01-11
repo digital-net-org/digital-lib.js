@@ -4,7 +4,6 @@ export { default as IDbAccessor } from './IDbAccessor';
 export { default as IDbStore } from './IDbStore';
 
 export { type DigitalIdbContextState, defaultIdbConfig, DigitalIdbContext } from './DigitalIdbContext';
-export { default as IdbProvider } from './DigitalIdbProvider';
 export { default as useIDbStore } from './useIDbStore';
 export { default as useStoredEntity } from './useStoredEntity';
 

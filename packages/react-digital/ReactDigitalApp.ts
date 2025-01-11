@@ -3,6 +3,11 @@ import ReactDOM from 'react-dom/client';
 import type { ReactDigitalConfig } from './ReactDigitalConfig';
 import type { ReactDigitalPlugin } from './ReactDigitalPlugin';
 import { type RouteObject, Router, type RouterProps } from './Router';
+import { DigitalClientPlugin } from '../react-digital-client';
+import { DigitalIdbPlugin } from '../react-digital-idb';
+import { DigitalUserPlugin } from '../react-digital-user';
+import { DigitalLocalizePlugin } from '../react-digital-localize';
+import { DigitalUiPlugin } from '../react-digital-ui';
 
 /**
  * Utility class to create a React tree.
@@ -10,9 +15,8 @@ import { type RouteObject, Router, type RouterProps } from './Router';
 export default class ReactDigitalApp {
     private readonly _strictMode: boolean;
     private readonly _rootElement: HTMLElement | null;
-    private readonly _providers: Array<React.ReactNode> = [];
-    private readonly _plugins: Array<ReactDigitalPlugin<any>> = [];
     private readonly _router: Array<RouteObject> = [];
+    private readonly _plugins: Array<ReactDigitalPlugin<any>> = [];
 
     private _buildAppRoot = () => this._strictMode ? React.StrictMode : React.Fragment;
 
@@ -22,10 +26,17 @@ export default class ReactDigitalApp {
      * @param config.rootElement - The root element to append the react tree.
      * @param config.strictMode - If true, the react tree will be wrapped in a React.StrictMode component.
      */
-    public constructor(config?: Partial<ReactDigitalConfig>) {
+    public constructor(config: ReactDigitalConfig) {
         this._strictMode = config?.strictMode !== undefined ? config?.strictMode : true;
         this._rootElement = config?.rootElement ?? document.getElementById('root');
         this._router = config?.router ?? [];
+        this._plugins.push(...[
+            new DigitalIdbPlugin(config.idbConfig),
+            new DigitalUserPlugin(config),
+            new DigitalClientPlugin(config),
+            new DigitalLocalizePlugin(config.i18nConfig),
+            new DigitalUiPlugin(),
+        ]);
     }
 
     /**
@@ -48,21 +59,6 @@ export default class ReactDigitalApp {
             ));
     }
 
-    public addPlugin(...plugin: Array<ReactDigitalPlugin<any>>) {
-        this._plugins.push(...plugin);
-        return this;
-    }
-
-    /**
-     * Takes a list of React.Node as parameters. Each element will be appended to the DOM tree as children of the
-     * previous one when the renderReactTree method is called.
-     * @param elements - A list of React.Node to append to the react DOM tree.
-     */
-    public addProviders(...elements: Array<React.ReactNode>) {
-        this._providers.push(...elements);
-        return this;
-    }
-
     private appendProviders(renderLayout: RouterProps['renderLayout']) {
         const middlewares: Array<React.FunctionComponentElement<any>> = [];
         return this._plugins.reduceRight(
@@ -71,17 +67,6 @@ export default class ReactDigitalApp {
                 return React.createElement(Provider, { children: acc, ...config });
             },
             React.createElement(Router, { renderLayout, middlewares, router: this._router }),
-            // this.appendProvidersLegacy(),
-            // React.createElement(React.Fragment, null),
         );
     }
-
-    private appendProvidersLegacy = (): React.ReactNode =>
-        this._providers.reduceRight((acc, element) => element !== undefined
-            ? React.cloneElement(
-                    element as React.ReactElement<any, string | React.JSXElementConstructor<any>>,
-                    { children: acc },
-                )
-            : null,
-        null);
 }

@@ -1,13 +1,18 @@
 import { type ReactDigitalPlugin } from '../react-digital';
-import { ConfigBuilder, type DigitalUserConfig, DigitalUserConfigProvider } from './config';
 import { AuthInterceptor, AuthRedirect } from './middlewares';
+import {
+    type PartialDigitalUserConfig,
+    type DigitalUserConfig,
+    DigitalUserConfigProvider,
+    ConfigBuilder,
+} from './config';
 
 export default class DigitalClientPlugin implements ReactDigitalPlugin<DigitalUserConfig> {
     public readonly config: DigitalUserConfig;
     public readonly Provider = DigitalUserConfigProvider;
     public readonly Middlewares = [AuthInterceptor, AuthRedirect];
 
-    constructor(config?: Partial<DigitalUserConfig>) {
+    constructor(config?: PartialDigitalUserConfig) {
         this.config = ConfigBuilder.build(config ?? {});
     }
 }
