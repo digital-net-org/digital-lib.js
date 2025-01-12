@@ -29,7 +29,7 @@ export default function useDigitalMutation<T, P = object, E = unknown>(
 
     return {
         ...mutation,
-        mutate: (payload?: MutationPayload<P>) => mutation.mutate(payload ?? {}),
+        mutate: (payload?: MutationPayload<P>) => mutation.mutate(payload ?? {}) as T,
         mutateAsync: async (payload?: MutationPayload<P>) => await mutation.mutateAsync(payload ?? {}),
     };
 }

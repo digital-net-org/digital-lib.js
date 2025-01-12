@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import type { Entity } from '../../core';
-import { Icon } from '../../react-digital-ui';
+import type { Entity } from '../../../core';
+import { Icon } from '../../../react-digital-ui';
 import Editor, { type EditorProps } from './Editor';
 
 const meta: Meta<EditorProps<Entity>> = {

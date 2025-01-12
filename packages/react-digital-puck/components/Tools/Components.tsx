@@ -1,11 +1,11 @@
 import React from 'react';
 import { Puck } from '@measured/puck';
-import { BaseTool } from '../../../react-digital-editor';
+import { BaseTool } from '../../../react-digital-ui';
 import { useClassName } from '../../../react-digital';
-import usePuckEditor from '../../context/usePuckEditor';
+import type { Entity } from '../../../core';
+import type { ToolRenderProps } from './ToolRender';
 
-export default function Components() {
-    const { renderToolName } = usePuckEditor();
+export default function Components<T extends Entity>({ renderToolName }: ToolRenderProps<T>) {
     const className = useClassName({}, 'Components');
 
     return (

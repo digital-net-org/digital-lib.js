@@ -1,6 +1,6 @@
-import type { Entity } from '../../core';
-import { useClassName } from '../../react-digital';
-import { Box } from '../../react-digital-ui';
+import type { Entity } from '../../../core';
+import { useClassName } from '../../../react-digital';
+import { Box } from '../../../react-digital-ui';
 import Edit, { type EditProps } from './Edit';
 import ToolBar, { type ToolBarProps } from './ToolBar';
 import './Editor.styles.css';

@@ -1,11 +1,11 @@
 import React from 'react';
 import { Puck } from '@measured/puck';
-import { BaseTool } from '../../../react-digital-editor';
+import { type Entity } from '../../../core';
 import { useClassName } from '../../../react-digital';
-import usePuckEditor from '../../context/usePuckEditor';
+import { BaseTool } from '../../../react-digital-ui';
+import type { ToolRenderProps } from './ToolRender';
 
-export default function Tree() {
-    const { renderToolName } = usePuckEditor();
+export default function Tree<T extends Entity>({ renderToolName }: ToolRenderProps<T>) {
     const className = useClassName({}, 'Tree');
 
     return (

@@ -1,7 +1,7 @@
 import React, { type PropsWithChildren } from 'react';
-import type { Entity } from '../../core';
-import { Box } from '../../react-digital-ui';
-import { useClassName } from '../../react-digital';
+import type { Entity } from '../../../core';
+import { Box } from '../../../react-digital-ui';
+import { useClassName } from '../../../react-digital';
 import EditActions, { type EditActionsProps } from './EditActions';
 
 export interface EditProps<T extends Entity> extends EditActionsProps {

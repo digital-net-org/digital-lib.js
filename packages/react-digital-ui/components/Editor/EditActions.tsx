@@ -1,6 +1,6 @@
 import React from 'react';
-import { type Icon, Box, Button } from '../../react-digital-ui';
-import type { ValueOf } from '../../core';
+import { type Icon, Box, Button } from '../../../react-digital-ui';
+import type { ValueOf } from '../../../core';
 
 export interface EditActionsProps {
     actions?: Array<{

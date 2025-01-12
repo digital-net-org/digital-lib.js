@@ -8,7 +8,6 @@ export { default as useCreate } from './crud/useCreate';
 export { default as usePatch } from './crud/usePatch';
 export { default as useDelete } from './crud/useDelete';
 export { default as useSchema } from './crud/useSchema';
-export { default as useCrud } from './crud/useCrud';
 
 export * from './config/ClientConfig';
 export * from './types';

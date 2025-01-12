@@ -7,7 +7,6 @@ import IDbStore from './IDbStore';
  * IndexedDb store accessor hook
  * @param store - store name (table)
  * @returns the store accessor methods and context
- *  - result: the entity retrieved from the store
  *  - get: retrieve an entity from the store
  *  - save: save an entity to the store
  *  - delete: delete an entity from the store
@@ -16,41 +15,36 @@ import IDbStore from './IDbStore';
 export default function useIDbStore<T extends Entity>(store: string) {
     const { database, ...context }: DigitalIdbContextState = React.useContext(DigitalIdbContext);
     const [isLoading, setIsLoading] = React.useState(false);
-    const [result, setResult] = React.useState<T | undefined>();
 
     const get = React.useCallback(async (id: string | number | undefined) => {
-        if (isLoading || !database || !id) {
+        if (!database || !id) {
             return;
         }
         setIsLoading(true);
         const result = await IDbStore.get<T>(database, store, id);
-        
-        setResult(result);
         setIsLoading(false);
         return result;
-    }, [database, isLoading, store]);
+    }, [database, store]);
 
     const save = React.useCallback(async (payload: Partial<T>) => {
-        if (isLoading || !database || !payload.id) {
+        if (!database || !payload.id) {
             return;
         }
         setIsLoading(true);
         await IDbStore.save<T>(database, store, payload);
-        setResult(state => state ? ({ ...state, ...payload }) : payload as T);
         setIsLoading(false);
-    }, [database, isLoading, store]);
+    }, [database, store]);
 
     const _delete = React.useCallback(async (id: string | number | undefined) => {
-        if (isLoading || !database || !id) {
+        if (!database || !id) {
             return;
         }
         setIsLoading(true);
         await IDbStore.delete<T>(database, store, id);
         setIsLoading(false);
-    }, [database, isLoading, store]);
+    }, [database, store]);
 
     return {
-        stored: result,
         get,
         save,
         delete: _delete,

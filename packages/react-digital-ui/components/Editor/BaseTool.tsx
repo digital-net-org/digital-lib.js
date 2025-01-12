@@ -1,6 +1,6 @@
 import React, { type PropsWithChildren } from 'react';
-import { useClassName } from '../../react-digital';
-import { Box, Text } from '../../react-digital-ui';
+import { useClassName } from '../../../react-digital';
+import { Box, Text } from '../../../react-digital-ui';
 import EditActions, { type EditActionsProps } from './EditActions';
 
 export interface BaseToolProps extends EditActionsProps {
