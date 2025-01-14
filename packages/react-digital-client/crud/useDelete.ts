@@ -3,11 +3,13 @@ import type { Entity, Result } from '../../core';
 import type { MutationConfig } from '../types';
 import useDigitalMutation from '../useDigitalMutation';
 
-export default function useDelete<T extends Entity>(
+type Callback = MutationConfig<Result, null>;
+
+export default function useDelete(
     endpoint: string,
     options?: {
-        onSuccess?: MutationConfig<Result, null>['onSuccess'];
-        onError?: MutationConfig<Result, null>['onError'];
+        onSuccess?: Callback['onSuccess'];
+        onError?: Callback['onError'];
     },
 ) {
     const { mutate, isPending: isDeleting } = useDigitalMutation<Result, { id: string }>(

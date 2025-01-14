@@ -1,5 +1,6 @@
 import type { Entity } from './Entity';
 import type { EntityRaw } from './EntityRaw';
+import type { Patch } from './Patch';
 
 /**
  * Helper class for **Entity**.
@@ -16,6 +17,18 @@ export default class EntityHelper {
             createdAt: new Date(entity.createdAt),
             updatedAt: entity.updatedAt ? new Date(entity.updatedAt) : undefined,
         } as T;
+    }
+
+    public static buildPatch<T extends Entity>(patch: Partial<T>): Patch<T> {
+        delete patch.id;
+        delete patch.createdAt;
+        delete patch.updatedAt;
+
+        return Object.keys(patch).map(key => ({
+            op: 'replace',
+            path: `/${key}`,
+            value: patch[(key as unknown) as keyof T],
+        }));
     }
 
     /**

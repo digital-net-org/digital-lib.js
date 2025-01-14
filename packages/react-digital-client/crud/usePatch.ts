@@ -1,13 +1,22 @@
 import React from 'react';
-import type { Result, Entity } from '../../core';
-import type { MutationConfig } from '../types';
+import { type Result, type Entity, EntityHelper } from '../../core';
+import { type MutationConfig } from '../types';
 import useDigitalMutation from '../useDigitalMutation';
 
+type Callback<T> = MutationConfig<Result<T>, null>;
+
+/**
+ * Hook to create entities.
+ * @param endpoint The API endpoint.
+ * @param options The options of the hook.
+ *  - `onSuccess` The callback to be called on create success.
+ *  - `onError` The callback to be called on create error.
+ */
 export default function usePatch<T extends Entity>(
     endpoint: string,
     options?: {
-        onSuccess?: MutationConfig<Result<T>, null>['onSuccess'];
-        onError?: MutationConfig<Result<T>, null>['onError'];
+        onSuccess?: Callback<T>['onSuccess'];
+        onError?: Callback<T>['onError'];
     },
 ) {
     const { mutate, isPending: isPatching } = useDigitalMutation<Result<T>, { id: string }>(
@@ -24,20 +33,10 @@ export default function usePatch<T extends Entity>(
     );
 
     const patch = React.useCallback(
-        (id: string | number, patch: Partial<T>) => {
-            delete patch.id;
-            delete patch.createdAt;
-            delete patch.updatedAt;
-
-            mutate({
-                params: { id: String(id) },
-                patch: Object.keys(patch).map(key => ({
-                    op: 'replace',
-                    path: `/${key}`,
-                    value: patch[(key as unknown) as keyof T],
-                })),
-            });
-        },
+        (id: string | number, patch: Partial<T>) => mutate({
+            params: { id: String(id) },
+            patch: EntityHelper.buildPatch<T>(patch),
+        }),
         [mutate],
     );
 
