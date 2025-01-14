@@ -67,21 +67,21 @@ function PuckEditor<T extends Entity>({
     const iDbStore = useIDbStore<T>(store);
     const className = useClassName({}, 'PuckEditor');
 
-    const {
-        entity,
-        entities,
-        isLoading,
-        ...puckCrud
-    } = usePuckCrud({ store, accessor, selectEntity, selectedEntityId });
+    const { entity, entities, isLoading, _delete, patch, create } = usePuckCrud({
+        store,
+        accessor,
+        selectEntity,
+        selectedEntityId,
+    });
 
     const handleCreate = React.useCallback(
-        async () => puckCrud.create(onCreate()),
-        [puckCrud.create, onCreate],
+        async () => create(onCreate()),
+        [create, onCreate],
     );
     
     const handleDelete = React.useCallback(
-        async () => entity && !isLoading ? puckCrud.delete(entity.id) : void 0,
-        [puckCrud.delete, entity, isLoading],
+        async () => entity && !isLoading ? _delete(entity.id) : void 0,
+        [entity, isLoading, _delete],
     );
 
     const handlePatch = React.useCallback(
@@ -93,9 +93,9 @@ function PuckEditor<T extends Entity>({
             if (!stored) {
                 return;
             }
-            puckCrud.patch(entity.id, { ...stored, data: stored[accessor] });
+            patch(entity.id, { ...stored, data: stored[accessor] });
         },
-        [accessor, entity, iDbStore, isLoading, puckCrud.patch],
+        [accessor, entity, iDbStore, isLoading, patch],
     );
     
     return (

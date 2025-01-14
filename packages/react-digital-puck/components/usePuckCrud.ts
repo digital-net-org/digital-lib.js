@@ -28,12 +28,14 @@ export default function usePuckCrud<T extends Entity>({
             setPuckState((stored?.[accessor] ?? e?.[accessor]) as Data | string, e?.id);
         },
     });
-    const createApi = useCreate<T>(store, {
+
+    const { create, isCreating } = useCreate<T>(store, {
         onSuccess: async () => {
             await invalidateAll();
         },
     });
-    const deleteApi = useDelete(store, {
+
+    const { delete: _delete, isDeleting } = useDelete(store, {
         onSuccess: async () => {
             selectEntity(undefined);
             await iDbStore.delete(selectedEntityId);
@@ -41,7 +43,8 @@ export default function usePuckCrud<T extends Entity>({
             await invalidateAll();
         },
     });
-    const patchApi = usePatch<T>(store, {
+
+    const { patch, isPatching } = usePatch<T>(store, {
         onSuccess: async () => {
             await iDbStore.delete(selectedEntityId);
             await invalidate();
@@ -52,11 +55,11 @@ export default function usePuckCrud<T extends Entity>({
     const isLoading = React.useMemo(
         () =>
             queryApi.isQuerying
-            || createApi.isCreating
-            || patchApi.isPatching
-            || deleteApi.isDeleting,
-        [queryApi.isQuerying, createApi.isCreating, patchApi.isPatching, deleteApi.isDeleting],
+            || isCreating
+            || isPatching
+            || isDeleting,
+        [queryApi.isQuerying, isCreating, isPatching, isDeleting],
     );
 
-    return { ...createApi, ...patchApi, ...deleteApi, isLoading, entity, entities };
+    return { patch, _delete, create, isLoading, entity, entities };
 }
