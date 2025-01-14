@@ -1,16 +1,18 @@
-import { useCreate, useDelete, useGet, useGetById, usePatch, useSchema } from '../../react-digital-client';
-import type { PuckEditorProps } from './PuckEditor';
-import type { Entity } from '../../core';
 import React from 'react';
-import { useIDbStore } from '../../react-digital-idb';
-import usePuckState from './usePuckState';
 import type { Data } from '@measured/puck';
+import { useCreate, useDelete, useGet, useGetById, usePatch } from '../../react-digital-client';
+import { type PuckEditorProps } from './PuckEditor';
+import { type Entity } from '../../core';
+import { useIDbStore } from '../../react-digital-idb';
+import { type Tool, tools } from './Tools';
+import usePuckState from './usePuckState';
 
 interface Props<T extends Entity> {
     store: PuckEditorProps<T>['store'];
     accessor: PuckEditorProps<T>['accessor'];
     selectedEntityId: string;
     selectEntity: (id: string | undefined) => void;
+    selectTool: (value: Tool['id'] | undefined) => void;
 }
 
 export default function usePuckCrud<T extends Entity>({
@@ -18,14 +20,25 @@ export default function usePuckCrud<T extends Entity>({
     accessor,
     selectedEntityId,
     selectEntity,
+    selectTool,
 }: Props<T>) {
     const iDbStore = useIDbStore<T>(store);
     const [_, setPuckState] = usePuckState();
+
     const { entities, invalidateQuery: invalidateAll, ...queryApi } = useGet<T>(store);
+
     const { entity, invalidateQuery: invalidate } = useGetById<T>(store, selectedEntityId, {
         onKeyChange: async (e) => {
             const stored = await iDbStore.get(e?.id);
-            setPuckState((stored?.[accessor] ?? e?.[accessor]) as Data | string, e?.id);
+            if (!e) {
+                return selectEntity(undefined);
+            } else {
+                setPuckState((stored?.[accessor] ?? e[accessor]) as Data | string, e?.id);
+            }
+        },
+        onError: async () => {
+            selectEntity(undefined);
+            selectTool('model-selector');
         },
     });
 
@@ -38,6 +51,7 @@ export default function usePuckCrud<T extends Entity>({
     const { delete: _delete, isDeleting } = useDelete(store, {
         onSuccess: async () => {
             selectEntity(undefined);
+            selectTool(undefined);
             await iDbStore.delete(selectedEntityId);
             await invalidate();
             await invalidateAll();

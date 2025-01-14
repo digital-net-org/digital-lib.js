@@ -2,13 +2,17 @@ import React from 'react';
 import { useFirstRender } from '../Effect';
 import useUrlParams from './useUrlParams';
 
+// TODO ISSUE#1: Remove this
 /**
  * Hook to manage a state in the URL.
  * @param accessor The name of the state.
  * @param defaultValue The default value of the state.
  * @returns A tuple with the current value of the state and a function to update it.
  */
-export default function useUrlState(accessor: string, defaultValue?: any): [string, (value?: any) => void] {
+export default function useUrlState(
+    accessor: string,
+    defaultValue?: any,
+): [string, (value?: any) => void] {
     const [params, setParams] = useUrlParams();
 
     useFirstRender(() => {
@@ -21,6 +25,7 @@ export default function useUrlState(accessor: string, defaultValue?: any): [stri
         (value?: any) => {
             if (value === undefined) {
                 setParams((prev) => {
+                    // TODO ISSUE#1: use this in useUrlParams to handle undefined values
                     delete prev[accessor];
                     return prev;
                 });

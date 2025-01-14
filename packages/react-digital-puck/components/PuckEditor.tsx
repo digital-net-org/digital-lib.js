@@ -61,8 +61,13 @@ function PuckEditor<T extends Entity>({
     renderToolName,
     onCreate,
 }: PuckEditorProps<T>) {
+    // TODO ISSUE#1: Remove usrSelect/State and replace it with useUrlParams
+    // const [urlState, setUrlState] = useUrlParams<{ entity: string, tool: string }>();
+    // const selectedEntityId = urlState.entity;
+    // const selectedTool = React.useMemo(() => tools.find(tool => tool.id === urlState.tool), [urlState.tool]);
+
     const [selectedEntityId, selectEntity] = useUrlState('entity');
-    const [SelectedTool, selectTool] = useUrlSelect(tools, { store: 'tool', accessor: 'id' });
+    const [selectedTool, selectTool] = useUrlSelect(tools, { store: 'tool', accessor: 'id' });
 
     const iDbStore = useIDbStore<T>(store);
     const className = useClassName({}, 'PuckEditor');
@@ -72,6 +77,7 @@ function PuckEditor<T extends Entity>({
         accessor,
         selectEntity,
         selectedEntityId,
+        selectTool,
     });
 
     const handleCreate = React.useCallback(
@@ -119,13 +125,13 @@ function PuckEditor<T extends Entity>({
             tools={
                 tools.map(tool => ({
                     ...tool,
-                    selected: SelectedTool?.id === tool.id,
-                    onSelect: () => selectTool(tool),
+                    selected: selectedTool?.id === tool.id,
+                    onSelect: () => selectTool(tool.id),
                 }))
             }
         >
             <ToolRender
-                id={SelectedTool?.id}
+                id={selectedTool?.id}
                 accessor={accessor}
                 store={store}
                 renderEntityName={renderEntityName}
@@ -144,7 +150,7 @@ function PuckEditor<T extends Entity>({
                 ]}
             />
             <Box direction="row" fullHeight fullWidth>
-                {SelectedTool && !SelectedTool.isDefault
+                {selectedTool && !selectedTool.isDefault
                     ? (<PuckRender />)
                     : (<EntityRender entity={entity} store={store} />)}
             </Box>

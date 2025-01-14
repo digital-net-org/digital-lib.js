@@ -1,6 +1,7 @@
 import React from 'react';
 import useUrlState from './useUrlState';
 
+// TODO ISSUE#1: Remove this
 export interface SelectOptions<T extends object> {
     store: string;
     accessor: keyof T;
@@ -14,13 +15,18 @@ export default function useUrlSelect<T extends object>(
 
     const value = React.useMemo(
         () => options.find(item => item[accessor] === stateId),
-        [accessor, stateId, options],
+        [accessor, options, stateId],
     );
 
-    const setValue = React.useCallback(
-        (value: T) => setStateId(value[accessor] === stateId ? undefined : value[accessor]),
-        [accessor, setStateId],
+    const handleSetValue = React.useCallback(
+        (value: T[typeof accessor] | undefined) => setStateId(value),
+        [setStateId],
     );
 
-    return [value, setValue] as const;
+    React.useEffect(
+        () => !value && stateId ? setStateId(undefined) : void 0,
+        [value, stateId, setStateId],
+    );
+
+    return [value, handleSetValue] as const;
 };
