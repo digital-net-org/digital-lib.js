@@ -29,6 +29,11 @@ export default function AuthInterceptor({ authStorageKey, userApi }: DigitalUser
             async (error) => {
                 const originalRequest = error.config;
                 const isUnauthorized = error.response?.status === 401;
+
+                if (!isUnauthorized) {
+                    return Promise.resolve(error.response);
+                }
+
                 const isRefreshing = originalRequest.url === userApi.refreshToken;
 
                 if (isRefreshing) {
