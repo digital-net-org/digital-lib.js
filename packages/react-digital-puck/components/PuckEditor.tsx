@@ -71,7 +71,10 @@ function PuckEditor<T extends Entity>({
     const { schema } = useSchema(store);
     const { entities, invalidateQuery: invalidateAll, ...queryApi } = useGet<T>(store);
     const { entity, invalidateQuery: invalidate } = useGetById<T>(store, selectedEntityId, {
-        onKeyChange: async e => setPuckData(e?.[accessor] as Data | string, e?.id),
+        onKeyChange: async (e) => {
+            const stored = await iDbStore.get(e?.id);
+            setPuckData((stored?.[accessor] ?? e?.[accessor]) as Data | string, e?.id);
+        },
     });
     const createApi = useCreate<T>(store, {
         onSuccess: async () => {
