@@ -4,13 +4,13 @@ import { type Entity } from '../../core';
 import { useClassName, useUrlSelect, useUrlState } from '../../react-digital';
 import { useIDbStore } from '../../react-digital-idb';
 import { Editor, Box, Icon } from '../../react-digital-ui';
-import { useGet, useGetById, useCreate, useDelete, usePatch, useSchema } from '../../react-digital-client';
 import PuckData from '../PuckData';
 import { type Tool, ToolRender, tools } from './Tools';
 import PuckRender from './PuckRender';
 import EntityRender from './EntityRender';
 import './PuckEditor.styles.css';
 import usePuckState from './usePuckState';
+import usePuckCrud from './usePuckCrud';
 
 export interface PuckEditorProps<T extends Entity> {
     accessor: keyof T;
@@ -61,59 +61,27 @@ function PuckEditor<T extends Entity>({
     renderToolName,
     onCreate,
 }: PuckEditorProps<T>) {
-    const [_, setPuckData] = usePuckState();
     const [selectedEntityId, selectEntity] = useUrlState('entity');
     const [SelectedTool, selectTool] = useUrlSelect(tools, { store: 'tool', accessor: 'id' });
 
     const iDbStore = useIDbStore<T>(store);
     const className = useClassName({}, 'PuckEditor');
 
-    const { schema } = useSchema(store);
-    const { entities, invalidateQuery: invalidateAll, ...queryApi } = useGet<T>(store);
-    const { entity, invalidateQuery: invalidate } = useGetById<T>(store, selectedEntityId, {
-        onKeyChange: async (e) => {
-            const stored = await iDbStore.get(e?.id);
-            setPuckData((stored?.[accessor] ?? e?.[accessor]) as Data | string, e?.id);
-        },
+    const { entity, entities, isLoading, _delete, patch, create } = usePuckCrud({
+        store,
+        accessor,
+        selectEntity,
+        selectedEntityId,
     });
-    const createApi = useCreate<T>(store, {
-        onSuccess: async () => {
-            await invalidateAll();
-        },
-    });
-    const deleteApi = useDelete(store, {
-        onSuccess: async () => {
-            selectEntity(undefined);
-            await iDbStore.delete(selectedEntityId);
-            await invalidate();
-            await invalidateAll();
-        },
-    });
-    const patchApi = usePatch<T>(store, {
-        onSuccess: async () => {
-            await iDbStore.delete(selectedEntityId);
-            await invalidate();
-            await invalidateAll();
-        },
-    });
-
-    const isLoading = React.useMemo(
-        () =>
-            queryApi.isQuerying
-            || createApi.isCreating
-            || patchApi.isPatching
-            || deleteApi.isDeleting,
-        [queryApi.isQuerying, createApi.isCreating, patchApi.isPatching, deleteApi.isDeleting],
-    );
 
     const handleCreate = React.useCallback(
-        async () => createApi.create(onCreate()),
-        [createApi, onCreate],
+        async () => create(onCreate()),
+        [create, onCreate],
     );
     
     const handleDelete = React.useCallback(
-        async () => entity && !isLoading ? deleteApi.delete(entity.id) : void 0,
-        [deleteApi, entity, isLoading],
+        async () => entity && !isLoading ? _delete(entity.id) : void 0,
+        [entity, isLoading, _delete],
     );
 
     const handlePatch = React.useCallback(
@@ -125,9 +93,9 @@ function PuckEditor<T extends Entity>({
             if (!stored) {
                 return;
             }
-            patchApi.patch(entity.id, { ...stored, data: stored[accessor] });
+            patch(entity.id, { ...stored, data: stored[accessor] });
         },
-        [accessor, entity, iDbStore, isLoading, patchApi],
+        [accessor, entity, iDbStore, isLoading, patch],
     );
     
     return (
@@ -178,7 +146,7 @@ function PuckEditor<T extends Entity>({
             <Box direction="row" fullHeight fullWidth>
                 {SelectedTool && !SelectedTool.isDefault
                     ? (<PuckRender />)
-                    : (<EntityRender entity={entity} store={store} schema={schema} />)}
+                    : (<EntityRender entity={entity} store={store} />)}
             </Box>
         </Editor>
     );
