@@ -7,11 +7,17 @@ export default class PuckData {
         content: [],
     };
 
-    public static toStoredData({ id: _, ...data }: Data): string {
+    public static stringify({ id: _, ...data }: Data): string {
         return JSON.stringify(data);
     }
 
-    public static fromStoredData(data: string | unknown): Data {
-        return typeof data === 'string' ? JSON.parse(data) : this.default;
+    public static parse(data: string | unknown): Data {
+        if (typeof data === 'string') {
+            return JSON.parse(data);
+        }
+        if (typeof data === 'object') {
+            return data as Data;
+        }
+        return this.default;
     }
 }

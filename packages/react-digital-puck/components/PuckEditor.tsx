@@ -1,6 +1,6 @@
 import React from 'react';
 import { type Data, type Config, Puck } from '@measured/puck';
-import { type Entity, EntityHelper, ObjectMatcher } from '../../core';
+import { type Entity } from '../../core';
 import { useClassName, useUrlSelect, useUrlState } from '../../react-digital';
 import { useIDbStore } from '../../react-digital-idb';
 import { Editor, Box, Icon } from '../../react-digital-ui';
@@ -9,9 +9,8 @@ import PuckData from '../PuckData';
 import { type Tool, ToolRender, tools } from './Tools';
 import PuckRender from './PuckRender';
 import EntityRender from './EntityRender';
-import useDataResolver from './useDataResolver';
 import './PuckEditor.styles.css';
-import useDigitalPuck from './useDigitalPuck';
+import usePuckState from './usePuckState';
 
 export interface PuckEditorProps<T extends Entity> {
     accessor: keyof T;
@@ -39,13 +38,13 @@ export default function<T extends Entity>(props: PuckEditorProps<T>) {
     const { save } = useIDbStore<T>(props.store);
 
     const handleDataChange = async ({ id, ...data }: Data) => {
-        if (!id) {
+        if (!id) { // Use puck hook to handle this, this should no longer be necessary
             return;
         } else if (id !== selected) {
             setSelected(id);
             return;
         }
-        await save({ id, [props.accessor]: PuckData.toStoredData(data) } as Partial<T>);
+        await save({ id, [props.accessor]: PuckData.stringify(data) } as Partial<T>);
     };
 
     return (
@@ -62,6 +61,7 @@ function PuckEditor<T extends Entity>({
     renderToolName,
     onCreate,
 }: PuckEditorProps<T>) {
+    const [_, setPuckData] = usePuckState();
     const [selectedEntityId, selectEntity] = useUrlState('entity');
     const [SelectedTool, selectTool] = useUrlSelect(tools, { store: 'tool', accessor: 'id' });
 
@@ -70,13 +70,15 @@ function PuckEditor<T extends Entity>({
 
     const { schema } = useSchema(store);
     const { entities, invalidateQuery: invalidateAll, ...queryApi } = useGet<T>(store);
-    const { entity, invalidateQuery: invalidate } = useGetById<T>(store, selectedEntityId);
+    const { entity, invalidateQuery: invalidate } = useGetById<T>(store, selectedEntityId, {
+        onKeyChange: async e => setPuckData(e?.[accessor] as Data | string, e?.id),
+    });
     const createApi = useCreate<T>(store, {
         onSuccess: async () => {
             await invalidateAll();
         },
     });
-    const deleteApi = useDelete<T>(store, {
+    const deleteApi = useDelete(store, {
         onSuccess: async () => {
             selectEntity(undefined);
             await iDbStore.delete(selectedEntityId);
@@ -100,13 +102,6 @@ function PuckEditor<T extends Entity>({
             || deleteApi.isDeleting,
         [queryApi.isQuerying, createApi.isCreating, patchApi.isPatching, deleteApi.isDeleting],
     );
-
-    const { hasChanged } = useDataResolver<T>({
-        accessor,
-        entity,
-        iDbStore,
-        isLoading,
-    });
 
     const handleCreate = React.useCallback(
         async () => createApi.create(onCreate()),
@@ -142,7 +137,7 @@ function PuckEditor<T extends Entity>({
                 {
                     action: handlePatch,
                     icon: Icon.FloppyIcon,
-                    disabled: !hasChanged || isLoading,
+                    disabled: isLoading,
                 },
                 {
                     action: handleDelete,
