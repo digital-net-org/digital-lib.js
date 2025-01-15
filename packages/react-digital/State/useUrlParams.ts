@@ -1,5 +1,6 @@
 import { useLocation, useNavigate } from 'react-router-dom';
 import React from 'react';
+import { ObjectMutator } from '../../core';
 
 /**
  * Hook to manage URL parameters.
@@ -19,12 +20,9 @@ export default function useUrlParams<T extends Record<string, any>>(): [T, (valu
             const resolved = typeof value === 'function'
                 ? value(params)
                 : value;
-            Object.keys(resolved).forEach((key) => {
-                if (resolved[key] === undefined) delete resolved[key];
-            });
             navigate(
                 {
-                    search: new URLSearchParams(resolved).toString(),
+                    search: new URLSearchParams(ObjectMutator.deleteUndefinedEntries(resolved)).toString(),
                 },
             );
         },
