@@ -1,16 +1,16 @@
 import React from 'react';
-import { type Data, type Config, Puck } from '@measured/puck';
+import { type Config, type Data, Puck } from '@measured/puck';
 import { type Entity } from '../../core';
-import { useClassName, useUrlSelect, useUrlState } from '../../react-digital';
+import { useClassName, useUrlParams } from '../../react-digital';
 import { useIDbStore } from '../../react-digital-idb';
-import { Editor, Box, Icon } from '../../react-digital-ui';
+import { Box, Editor, Icon } from '../../react-digital-ui';
 import PuckData from '../PuckData';
 import { type Tool, ToolRender, tools } from './Tools';
 import PuckRender from './PuckRender';
 import EntityRender from './EntityRender';
 import './PuckEditor.styles.css';
-import usePuckState from './usePuckState';
 import usePuckCrud from './usePuckCrud';
+import type { PuckUrlState } from '../PuckUrlState';
 
 export interface PuckEditorProps<T extends Entity> {
     accessor: keyof T;
@@ -61,13 +61,11 @@ function PuckEditor<T extends Entity>({
     renderToolName,
     onCreate,
 }: PuckEditorProps<T>) {
-    // TODO ISSUE#1: Remove usrSelect/State and replace it with useUrlParams
-    // const [urlState, setUrlState] = useUrlParams<{ entity: string, tool: string }>();
-    // const selectedEntityId = urlState.entity;
-    // const selectedTool = React.useMemo(() => tools.find(tool => tool.id === urlState.tool), [urlState.tool]);
+    const [urlState, setUrlState] = useUrlParams<PuckUrlState>();
 
-    const [selectedEntityId, selectEntity] = useUrlState('entity');
-    const [selectedTool, selectTool] = useUrlSelect(tools, { store: 'tool', accessor: 'id' });
+    const currentTool = React.useMemo(() => {
+        return tools.find(e => e.id === urlState.tool);
+    }, [urlState.tool]);
 
     const iDbStore = useIDbStore<T>(store);
     const className = useClassName({}, 'PuckEditor');
@@ -75,9 +73,6 @@ function PuckEditor<T extends Entity>({
     const { entity, entities, isLoading, _delete, patch, create } = usePuckCrud({
         store,
         accessor,
-        selectEntity,
-        selectedEntityId,
-        selectTool,
     });
 
     const handleCreate = React.useCallback(
@@ -125,13 +120,15 @@ function PuckEditor<T extends Entity>({
             tools={
                 tools.map(tool => ({
                     ...tool,
-                    selected: selectedTool?.id === tool.id,
-                    onSelect: () => selectTool(tool.id),
+                    selected: urlState.tool === tool.id,
+                    onSelect: () => setUrlState(
+                        prev => ({ ...prev, tool: prev.tool === tool.id ? undefined : tool.id }),
+                    ),
                 }))
             }
         >
             <ToolRender
-                id={selectedTool?.id}
+                id={urlState.tool}
                 accessor={accessor}
                 store={store}
                 renderEntityName={renderEntityName}
@@ -139,8 +136,10 @@ function PuckEditor<T extends Entity>({
                 isLoading={isLoading}
                 entity={entity}
                 entities={entities}
-                selectedEntityId={selectedEntityId}
-                selectEntity={selectEntity}
+                selectedEntityId={urlState.entity}
+                selectEntity={id => setUrlState(
+                    prev => ({ ...prev, entity: prev.entity === id ? undefined : id }
+                    ))}
                 actions={[
                     {
                         action: handleCreate,
@@ -150,7 +149,7 @@ function PuckEditor<T extends Entity>({
                 ]}
             />
             <Box direction="row" fullHeight fullWidth>
-                {selectedTool && !selectedTool.isDefault
+                {urlState.tool && !currentTool?.isDefault
                     ? (<PuckRender />)
                     : (<EntityRender entity={entity} store={store} />)}
             </Box>

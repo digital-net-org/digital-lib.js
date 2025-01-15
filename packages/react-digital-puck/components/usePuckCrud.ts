@@ -4,41 +4,36 @@ import { useCreate, useDelete, useGet, useGetById, usePatch } from '../../react-
 import { type PuckEditorProps } from './PuckEditor';
 import { type Entity } from '../../core';
 import { useIDbStore } from '../../react-digital-idb';
-import { type Tool, tools } from './Tools';
 import usePuckState from './usePuckState';
+import { useUrlParams } from '../../react-digital';
+import type { PuckUrlState } from '../PuckUrlState';
 
 interface Props<T extends Entity> {
     store: PuckEditorProps<T>['store'];
     accessor: PuckEditorProps<T>['accessor'];
-    selectedEntityId: string;
-    selectEntity: (id: string | undefined) => void;
-    selectTool: (value: Tool['id'] | undefined) => void;
 }
 
 export default function usePuckCrud<T extends Entity>({
     store,
     accessor,
-    selectedEntityId,
-    selectEntity,
-    selectTool,
 }: Props<T>) {
     const iDbStore = useIDbStore<T>(store);
     const [_, setPuckState] = usePuckState();
+    const [urlState, setUrlState] = useUrlParams<PuckUrlState>();
 
     const { entities, invalidateQuery: invalidateAll, ...queryApi } = useGet<T>(store);
 
-    const { entity, invalidateQuery: invalidate } = useGetById<T>(store, selectedEntityId, {
+    const { entity, invalidateQuery: invalidate } = useGetById<T>(store, urlState.entity, {
         onKeyChange: async (e) => {
             const stored = await iDbStore.get(e?.id);
             if (!e) {
-                return selectEntity(undefined);
+                return setUrlState(prev => ({ ...prev, entity: undefined }));
             } else {
                 setPuckState((stored?.[accessor] ?? e[accessor]) as Data | string, e?.id);
             }
         },
         onError: async () => {
-            selectEntity(undefined);
-            selectTool('model-selector');
+            setUrlState(prev => ({ ...prev, entity: undefined, tool: 'model-selector' }));
         },
     });
 
@@ -50,9 +45,8 @@ export default function usePuckCrud<T extends Entity>({
 
     const { delete: _delete, isDeleting } = useDelete(store, {
         onSuccess: async () => {
-            selectEntity(undefined);
-            selectTool(undefined);
-            await iDbStore.delete(selectedEntityId);
+            setUrlState(prev => ({ ...prev, entity: undefined, tool: undefined }));
+            await iDbStore.delete(urlState.entity);
             await invalidate();
             await invalidateAll();
         },
@@ -60,7 +54,7 @@ export default function usePuckCrud<T extends Entity>({
 
     const { patch, isPatching } = usePatch<T>(store, {
         onSuccess: async () => {
-            await iDbStore.delete(selectedEntityId);
+            await iDbStore.delete(urlState.entity);
             await invalidate();
             await invalidateAll();
         },
