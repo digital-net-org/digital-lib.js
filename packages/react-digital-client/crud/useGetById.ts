@@ -13,7 +13,6 @@ type Callback<T> = MutationConfig<Result<T>, null>;
  * @param options The options of the hook.
  *  - `onSuccess` The callback to be called on fetch success.
  *  - `onError` The callback to be called on fetch error.
- *  - `onKeyChange` The callback to be called provided id changes.
  */
 export default function useGetById<T extends Entity>(
     endpoint: string,
@@ -21,11 +20,9 @@ export default function useGetById<T extends Entity>(
     options?: {
         onSuccess?: Callback<T>['onSuccess'];
         onError?: Callback<T>['onError'];
-        onKeyChange?: (e: T | undefined) => void;
     },
 ) {
     const { queryClient } = useDigitalClient();
-    const [entity, setEntity] = React.useState<T | undefined>(undefined);
 
     const { data, isLoading, refetch } = useDigitalQuery<Result<EntityRaw>>(
         !id ? undefined : `${endpoint}/${id}`,
@@ -39,24 +36,11 @@ export default function useGetById<T extends Entity>(
         },
     );
 
-    const handleKeyChange = React.useCallback(
-        (e: T | undefined) => {
-            options?.onKeyChange?.(e);
-            setEntity(e);
-        },
-        [options],
+    const entity = React.useMemo(
+        () => data?.value ? EntityHelper.build<T>(data.value) : undefined,
+        [data],
     );
 
-    React.useEffect(
-        () => !id && entity ? handleKeyChange(undefined) : void 0,
-        [id, entity, handleKeyChange],
-    );
-
-    React.useEffect(
-        () => data?.value && data.value.id !== entity?.id ? handleKeyChange(EntityHelper.build<T>(data.value)) : void 0,
-        [data, entity, handleKeyChange],
-    );
-    
     const invalidateQuery = React.useCallback(async () => {
         await queryClient.invalidateQueries({
             predicate: query => query.queryKey[0] === `${endpoint}/${id}`,

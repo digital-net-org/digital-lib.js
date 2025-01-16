@@ -1,8 +1,18 @@
 import React from 'react';
 import type { Entity } from '../../../core';
 import { useClassName } from '../../../react-digital';
-import { BaseTool, Button } from '../../../react-digital-ui';
-import type { ToolRenderProps } from './ToolRender';
+import { type EditorProps, BaseTool, Button } from '../../../react-digital-ui';
+import { type PuckEditorProps } from '../PuckEditor';
+
+interface Props<T extends Entity> {
+    renderEntityName: PuckEditorProps<T>['renderEntityName'];
+    renderToolName: PuckEditorProps<T>['renderToolName'];
+    actions: EditorProps<T>['actions'];
+    entity: T | undefined;
+    entities: Array<T>;
+    onSelect: (id: T['id']) => void;
+    isLoading: boolean;
+}
 
 export default function Selector<T extends Entity>({
     renderEntityName,
@@ -10,10 +20,9 @@ export default function Selector<T extends Entity>({
     actions,
     entity,
     entities,
-    selectedEntityId,
-    selectEntity,
+    onSelect,
     isLoading,
-}: ToolRenderProps<T>) {
+}: Props<T>) {
     const className = useClassName({}, 'Selector');
 
     return (
@@ -29,10 +38,7 @@ export default function Selector<T extends Entity>({
                         disabled={isLoading}
                         fullWidth
                         selected={e.id === entity?.id}
-                        onClick={() => (!isLoading
-                            ? selectEntity(e.id !== selectedEntityId ? String(e.id) : undefined)
-                            : void 0
-                        )}
+                        onClick={() => !isLoading ? onSelect(e.id) : void 0}
                     >
                         {renderEntityName(e)}
                     </Button>

@@ -1,16 +1,16 @@
 import React from 'react';
 import { type Config, type Data, Puck } from '@measured/puck';
 import { type Entity } from '../../core';
-import { useClassName, useUrlParams } from '../../react-digital';
+import { useClassName } from '../../react-digital';
 import { useIDbStore } from '../../react-digital-idb';
 import { Box, Editor, Icon } from '../../react-digital-ui';
 import PuckData from '../PuckData';
-import { type Tool, ToolRender, tools } from './Tools';
+import { type Tool, Tools } from './Tools';
 import PuckRender from './PuckRender';
 import EntityRender from './EntityRender';
-import './PuckEditor.styles.css';
 import usePuckCrud from './usePuckCrud';
-import type { PuckUrlState } from '../PuckUrlState';
+import usePuckUrlState from './usePuckUrlState';
+import './PuckEditor.styles.css';
 
 export interface PuckEditorProps<T extends Entity> {
     accessor: keyof T;
@@ -61,11 +61,7 @@ function PuckEditor<T extends Entity>({
     renderToolName,
     onCreate,
 }: PuckEditorProps<T>) {
-    const [urlState, setUrlState] = useUrlParams<PuckUrlState>();
-
-    const currentTool = React.useMemo(() => {
-        return tools.find(e => e.id === urlState.tool);
-    }, [urlState.tool]);
+    const { currentTool, currentEntity, selectTool, selectEntity, resetState } = usePuckUrlState();
 
     const iDbStore = useIDbStore<T>(store);
     const className = useClassName({}, 'PuckEditor');
@@ -73,6 +69,8 @@ function PuckEditor<T extends Entity>({
     const { entity, entities, isLoading, _delete, patch, create } = usePuckCrud({
         store,
         accessor,
+        currentEntity,
+        onReset: resetState,
     });
 
     const handleCreate = React.useCallback(
@@ -118,38 +116,43 @@ function PuckEditor<T extends Entity>({
                 },
             ]}
             tools={
-                tools.map(tool => ({
+                Tools.map(tool => ({
                     ...tool,
-                    selected: urlState.tool === tool.id,
-                    onSelect: () => setUrlState(
-                        prev => ({ ...prev, tool: prev.tool === tool.id ? undefined : tool.id }),
-                    ),
+                    selected: currentTool?.id === tool.id,
+                    onSelect: () => selectTool(tool.id),
                 }))
             }
         >
-            <ToolRender
-                id={urlState.tool}
-                accessor={accessor}
-                store={store}
-                renderEntityName={renderEntityName}
-                renderToolName={renderToolName}
-                isLoading={isLoading}
-                entity={entity}
-                entities={entities}
-                selectedEntityId={urlState.entity}
-                selectEntity={id => setUrlState(
-                    prev => ({ ...prev, entity: prev.entity === id ? undefined : id }
-                    ))}
-                actions={[
-                    {
-                        action: handleCreate,
-                        icon: Icon.AddIcon,
-                        disabled: isLoading,
-                    },
-                ]}
-            />
+            {(() => {
+                if (currentTool?.id === 'model-selector') {
+                    return (
+                        <Tools.Selector
+                            renderEntityName={renderEntityName}
+                            renderToolName={renderToolName}
+                            isLoading={isLoading}
+                            entity={entity}
+                            entities={entities}
+                            onSelect={selectEntity}
+                            actions={[
+                                {
+                                    action: handleCreate,
+                                    icon: Icon.AddIcon,
+                                    disabled: isLoading,
+                                },
+                            ]}
+                        />
+                    );
+                }
+                if (currentTool?.id === 'tree') {
+                    return <Tools.Tree renderToolName={renderToolName} />;
+                }
+                if (currentTool?.id === 'components') {
+                    return <Tools.Components renderToolName={renderToolName} />;
+                }
+                return null;
+            })()}
             <Box direction="row" fullHeight fullWidth>
-                {urlState.tool && !currentTool?.isDefault
+                {currentTool?.id && !currentTool?.isDefault
                     ? (<PuckRender />)
                     : (<EntityRender entity={entity} store={store} />)}
             </Box>
