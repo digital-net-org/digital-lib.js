@@ -31,20 +31,14 @@ export interface PuckEditorProps<T extends Entity> {
  * @param onCreate - Build the default entity payload.
  */
 export default function<T extends Entity>(props: PuckEditorProps<T>) {
-    // NOTE: This is a workaround to handle Puck state has Puck only provide support for default values.
-    // Handles Puck data changes and saves them to the IndexedDB store, if the call is triggered by an entity change,
-    // it won't save the data to the store.
-    const [selected, setSelected] = React.useState<string | undefined>();
     const { save } = useIDbStore<T>(props.store);
 
     const handleDataChange = async ({ id, ...data }: Data) => {
-        if (!id) { // Use puck hook to handle this, this should no longer be necessary
-            return;
-        } else if (id !== selected) {
-            setSelected(id);
+        if (!id) {
             return;
         }
-        await save({ id, [props.accessor]: PuckData.stringify(data) } as Partial<T>);
+        console.log('handleDataChange');
+        await save({ id, [props.accessor]: data } as Partial<T>);
     };
 
     return (

@@ -11,11 +11,11 @@ export default class PuckData {
         return JSON.stringify(data);
     }
 
-    public static parse(data: string | unknown): Data {
+    public static resolve(data: unknown): Data {
         if (typeof data === 'string') {
             return JSON.parse(data);
         }
-        if (typeof data === 'object') {
+        if (typeof data === 'object' && data !== null) {
             return data as Data;
         }
         return this.default;

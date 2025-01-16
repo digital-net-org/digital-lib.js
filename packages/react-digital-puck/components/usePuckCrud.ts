@@ -1,5 +1,4 @@
 import React from 'react';
-import type { Data } from '@measured/puck';
 import { useCreate, useDelete, useGet, useGetById, usePatch } from '../../react-digital-client';
 import { type Entity } from '../../core';
 import { useIDbStore } from '../../react-digital-idb';
@@ -23,8 +22,7 @@ export default function usePuckCrud<T extends Entity>({
     const [puckState, setPuckState] = usePuckState();
 
     const { entities, invalidateQuery: invalidateAll, ...queryApi } = useGet<T>(store);
-
-    const { entity, invalidateQuery: invalidate } = useGetById<T>(store, currentEntity, {
+    const { entity, isQuerying, invalidateQuery: invalidate } = useGetById<T>(store, currentEntity, {
         onError: async () => {
             setPuckState(undefined);
             onReset();
@@ -33,14 +31,20 @@ export default function usePuckCrud<T extends Entity>({
     
     React.useEffect(() => {
         (async () => {
-            if (!entity && puckState.id) {
+            if (isQuerying || iDbStore.isLoading) {
+                return;
+            }
+            if (!entity?.id && puckState.id) {
+                console.log('%c reset puck state', 'color: red');
                 return setPuckState(undefined);
-            } else if (entity && entity.id !== puckState.id) {
+            }
+            if (entity && entity.id !== puckState.id) {
+                console.log('%c set puck state', 'color: green');
                 const stored = await iDbStore.get(entity?.id);
-                setPuckState((stored?.[accessor] ?? entity[accessor]) as Data | string, entity?.id);
+                setPuckState(stored?.[accessor] ?? entity[accessor], entity.id);
             }
         })();
-    }, [accessor, entity, iDbStore, puckState.id, setPuckState]);
+    }, [accessor, entity, iDbStore, isQuerying, puckState.id, setPuckState]);
 
     const { create, isCreating } = useCreate<T>(store, {
         onSuccess: async () => {
