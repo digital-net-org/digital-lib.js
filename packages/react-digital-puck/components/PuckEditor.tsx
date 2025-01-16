@@ -61,7 +61,7 @@ function PuckEditor<T extends Entity>({
     renderToolName,
     onCreate,
 }: PuckEditorProps<T>) {
-    const { currentTool, currentEntity, selectTool, selectEntity, resetState } = usePuckUrlState();
+    const { currentTool, currentEntity, dispatch } = usePuckUrlState();
 
     const iDbStore = useIDbStore<T>(store);
     const className = useClassName({}, 'PuckEditor');
@@ -70,7 +70,7 @@ function PuckEditor<T extends Entity>({
         store,
         accessor,
         currentEntity,
-        onReset: resetState,
+        onReset: () => dispatch('reset'),
     });
 
     const handleCreate = React.useCallback(
@@ -119,7 +119,7 @@ function PuckEditor<T extends Entity>({
                 Tools.map(tool => ({
                     ...tool,
                     selected: currentTool?.id === tool.id,
-                    onSelect: () => selectTool(tool.id),
+                    onSelect: () => dispatch('setTool', tool.id),
                 }))
             }
         >
@@ -132,7 +132,7 @@ function PuckEditor<T extends Entity>({
                             isLoading={isLoading}
                             entity={entity}
                             entities={entities}
-                            onSelect={selectEntity}
+                            onSelect={id => dispatch('setEntity', id)}
                             actions={[
                                 {
                                     action: handleCreate,

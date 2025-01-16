@@ -1,39 +1,29 @@
 import React from 'react';
 import { useUrlParams } from '../../react-digital';
-import { type Entity } from '../../core';
-import { type PuckUrlState } from '../PuckUrlState';
 import { Tools } from './Tools';
 
 export default function usePuckUrlState() {
-    const [urlState, setUrlState] = useUrlParams<PuckUrlState>();
+    const [urlState, setUrlState] = useUrlParams();
 
-    const resetState = React.useCallback(() => {
-        setUrlState({ entity: undefined, tool: Tools.find(e => e.isDefault)?.id });
+    const dispatch = React.useCallback((
+        action: 'setEntity' | 'setTool' | 'reset',
+        payload?: string | number | undefined,
+    ) => {
+        if (action === 'reset') {
+            return setUrlState({ entity: undefined, tool: Tools.find(e => e.isDefault)?.id });
+        }
+        const value = payload ? String(payload) : undefined;
+        const accessor = action.split('set')[1].toLowerCase();
+        setUrlState(prev => ({ ...prev, [accessor]: prev[accessor] === value ? undefined : value }));
     }, [setUrlState]);
 
-    const selectEntity = React.useCallback((payload: Entity['id']) => {
-        const entity = String(payload) === urlState.entity ? undefined : String(payload);
-        setUrlState(prev => ({ ...prev, entity }));
-    }, [setUrlState, urlState.entity]);
+    const currentTool = React.useMemo(() => Tools.find(e => e.id === urlState.tool), [urlState.tool]);
 
-    const selectTool = React.useCallback((payload: PuckUrlState['tool']) => {
-        const tool = payload === urlState.tool ? undefined : payload;
-        setUrlState(prev => ({ ...prev, tool }));
-    }, [setUrlState, urlState.tool]);
-
-    const currentTool = React.useMemo(() => {
-        return Tools.find(e => e.id === urlState.tool);
-    }, [urlState.tool]);
-
-    const currentEntity = React.useMemo(() => {
-        return urlState.entity;
-    }, [urlState.entity]);
+    const currentEntity = React.useMemo(() => urlState.entity, [urlState.entity]);
 
     return {
-        resetState,
+        dispatch,
         currentEntity,
         currentTool,
-        selectEntity,
-        selectTool,
     };
 }
