@@ -1,5 +1,5 @@
 import React from 'react';
-import { type Config, type Data, Puck } from '@measured/puck';
+import { type Config, type Data, Puck, usePuck } from '@measured/puck';
 import { type Entity } from '../../core';
 import { useClassName } from '../../react-digital';
 import { useIDbStore } from '../../react-digital-idb';
@@ -32,6 +32,11 @@ export interface PuckEditorProps<T extends Entity> {
  */
 export default function<T extends Entity>(props: PuckEditorProps<T>) {
     const { save } = useIDbStore<T>(props.store);
+
+    // Ici je ne peux pas acceder au state de Puck car je suis hors du composants
+    // Je dois pouvoir déplacer la logique du handleDataChange pour l'avoir ailleurs
+    // Je dois sinon trouver une autre solution, mais pour l'instant je vois pas.
+    // le onChange va quoi qu'il arrive enregistrer le moindre fait ou geste dans la IDB.
 
     const handleDataChange = async ({ id, ...data }: Data) => {
         if (!id) {

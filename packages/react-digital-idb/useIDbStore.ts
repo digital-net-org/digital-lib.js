@@ -30,6 +30,7 @@ export default function useIDbStore<T extends Entity>(store: string) {
         if (!database || !payload.id) {
             return;
         }
+        console.log('payload', payload);
         setIsLoading(true);
         await IDbStore.save<T>(database, store, payload);
         setIsLoading(false);
