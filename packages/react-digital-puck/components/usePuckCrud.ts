@@ -3,48 +3,17 @@ import { useCreate, useDelete, useGet, useGetById, usePatch } from '../../react-
 import { type Entity } from '../../core';
 import { useIDbStore } from '../../react-digital-idb';
 import { type PuckEditorProps } from './PuckEditor';
-import usePuckState from './usePuckState';
+import usePuckUrlState from './usePuckUrlState';
 
-interface Props<T extends Entity> {
-    store: PuckEditorProps<T>['store'];
-    accessor: PuckEditorProps<T>['accessor'];
-    onReset: () => void;
-    currentEntity: string | undefined;
-}
-
-export default function usePuckCrud<T extends Entity>({
-    store,
-    accessor,
-    currentEntity,
-    onReset,
-}: Props<T>) {
+export default function usePuckCrud<T extends Entity>(
+    store: PuckEditorProps<T>['store'],
+    onReset: () => void,
+) {
+    const { currentEntity } = usePuckUrlState();
     const iDbStore = useIDbStore<T>(store);
-    const [puckState, setPuckState] = usePuckState();
 
     const { entities, invalidateQuery: invalidateAll, ...queryApi } = useGet<T>(store);
-    const { entity, isQuerying, invalidateQuery: invalidate } = useGetById<T>(store, currentEntity, {
-        onError: async () => {
-            setPuckState(undefined);
-            onReset();
-        },
-    });
-    
-    React.useEffect(() => {
-        (async () => {
-            if (isQuerying || iDbStore.isLoading) {
-                return;
-            }
-            if (!entity?.id && puckState.id) {
-                console.log('%c reset puck state', 'color: red');
-                return setPuckState(undefined);
-            }
-            if (entity && entity.id !== puckState.id) {
-                console.log('%c set puck state', 'color: green');
-                const stored = await iDbStore.get(entity?.id);
-                setPuckState(stored?.[accessor] ?? entity[accessor], entity.id);
-            }
-        })();
-    }, [accessor, entity, iDbStore, isQuerying, puckState.id, setPuckState]);
+    const { entity, isQuerying, invalidateQuery: invalidate } = useGetById<T>(store, currentEntity);
 
     const { create, isCreating } = useCreate<T>(store, {
         onSuccess: async () => {
@@ -72,10 +41,11 @@ export default function usePuckCrud<T extends Entity>({
     const isLoading = React.useMemo(
         () =>
             queryApi.isQuerying
+            || isQuerying
             || isCreating
             || isPatching
             || isDeleting,
-        [queryApi.isQuerying, isCreating, isPatching, isDeleting],
+        [queryApi.isQuerying, isQuerying, isCreating, isPatching, isDeleting],
     );
 
     return { patch, _delete, create, isLoading, entity, entities };

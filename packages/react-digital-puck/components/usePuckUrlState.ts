@@ -5,7 +5,7 @@ import { Tools } from './Tools';
 export default function usePuckUrlState() {
     const [urlState, setUrlState] = useUrlParams();
 
-    const dispatch = React.useCallback((
+    const dispatchUrlState = React.useCallback((
         action: 'setEntity' | 'setTool' | 'reset',
         payload?: string | number | undefined,
     ) => {
@@ -22,7 +22,7 @@ export default function usePuckUrlState() {
     const currentEntity = React.useMemo(() => urlState.entity, [urlState.entity]);
 
     return {
-        dispatch,
+        dispatchUrlState,
         currentEntity,
         currentTool,
     };
