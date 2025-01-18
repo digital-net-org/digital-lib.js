@@ -1,33 +1,31 @@
 import * as React from 'react';
 import { createBrowserRouter, RouterProvider as ReactRouter } from 'react-router-dom';
 import RouterBuilder from './builder/RouterBuilder';
-import RouterDocument from './middlewares/RouterDocument';
-import type { RouterConfig } from './config';
+import type { RouteObject } from './RouteObject';
 
-export interface RouterProps extends RouterConfig {
+export interface RouterProps {
     middlewares?: React.ReactNode[];
-    renderLayout: (children: React.ReactNode) => React.ReactNode;
+    router: Array<RouteObject>;
+    renderLayout: (element: React.ReactNode) => React.ReactNode;
 }
 
-export const RouterContext = React.createContext<RouterConfig>({
+export const RouterContext = React.createContext<Omit<RouterProps, 'middlewares' | 'renderLayout'>>({
     router: [],
-    renderDocumentName: current => current,
 });
 
-export default function Router({ middlewares, ...config }: RouterProps) {
-    const router = React.useMemo(
-        () => [...(config.router ?? []), ...RouterBuilder.build()], [config],
+export default function Router({ middlewares, renderLayout, router }: RouterProps) {
+    const resolved = React.useMemo(
+        () => [...(router ?? []), ...RouterBuilder.build()], [router],
     );
 
     return (
-        <RouterContext.Provider value={{ ...config, router }}>
+        <RouterContext.Provider value={{ router: resolved }}>
             <ReactRouter
                 router={createBrowserRouter(
-                    router.map(({ element, path }) => ({
+                    resolved.map(({ element, path }) => ({
                         path,
                         element: (
                             <React.Fragment>
-                                <RouterDocument />
                                 {(middlewares ?? []).map(middleware => React.createElement(
                                     React.Fragment,
                                     {
@@ -35,7 +33,7 @@ export default function Router({ middlewares, ...config }: RouterProps) {
                                         key: (middleware as { type: React.JSXElementConstructor<any> }).type.name,
                                     },
                                 ))}
-                                {config.renderLayout(element)}
+                                {renderLayout(element)}
                             </React.Fragment>
                         ),
                     })),

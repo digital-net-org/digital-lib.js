@@ -1,5 +1,5 @@
 import React from 'react';
-import type { RouteObject } from '../config';
+import type { RouteObject } from '../RouteObject';
 
 export default class RouterBuilder {
     public static build(): Array<RouteObject> {
