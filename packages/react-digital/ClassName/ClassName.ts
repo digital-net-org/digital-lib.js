@@ -1,16 +1,17 @@
-import { isEmpty } from '../../core';
+import { StringMatcher } from '../../core';
 import { actionKeywords, booleanKeywords, excludedKeywords } from './keywords';
 
 /**
  * Resolve props to class names
  */
 const resolveProps = (baseClass: string, props: Record<string, any>) => {
-    const returnReduced = (acc: string, resolved: string) => (isEmpty(acc) ? resolved : `${acc} ${resolved}`);
+    const returnReduced = (acc: string, resolved: string) =>
+        (StringMatcher.isEmpty(acc) ? resolved : `${acc} ${resolved}`);
 
     const resolved = Object.keys(props).reduce((acc, key) => {
         if (
             !props[key]
-            || (typeof props[key] === 'string' && isEmpty(props[key]))
+            || (typeof props[key] === 'string' && StringMatcher.isEmpty(props[key]))
             || excludedKeywords.includes(key)
             || key.startsWith('aria')
             || key.startsWith('data')
@@ -32,7 +33,7 @@ const resolveProps = (baseClass: string, props: Record<string, any>) => {
         return acc;
     }, '');
 
-    return isEmpty(resolved) ? baseClass : `${baseClass} ${resolved}`;
+    return StringMatcher.isEmpty(resolved) ? baseClass : `${baseClass} ${resolved}`;
 };
 
 export default { resolveProps };
