@@ -18,3 +18,24 @@
 .SafariUi-Text-italic {
     font-style: italic;
 }
+
+.SafariUi-Text-size-small {
+    font-size: var(--font-size-small);
+}
+
+.SafariUi-Text-size-regular {
+    font-size: var(--font-size-regular);
+}
+
+.SafariUi-Text-size-medium {
+    font-size: var(--font-size-medium);
+}
+
+.SafariUi-Text-size-large {
+    font-size: var(--font-size-large);
+}
+
+.SafariUi-Text-size-xlarge {
+    font-size: var(--font-size-xlarge);
+}
+

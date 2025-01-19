@@ -7,6 +7,7 @@ export interface TextProps extends SafariNodeWithChildren {
     bold?: boolean;
     italic?: boolean;
     variant?: 'h1' | 'h2' | 'h3' | 'text' | 'caption' | 'JSON';
+    size?: 'small' | 'regular' | 'medium' | 'large' | 'xlarge';
 }
 
 export default function Text(props: TextProps) {
