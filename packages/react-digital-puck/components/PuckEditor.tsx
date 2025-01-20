@@ -59,13 +59,16 @@ export default function PuckEditor<T extends Entity>({
     const handlePatch = React.useCallback(
         async () => {
             if (!entity || !accessor || isLoading) {
+                console.log('if (!entity || !accessor || isLoading)');
                 return;
             }
             const stored = await iDbStore.get(entity.id);
             if (!stored) {
+                console.log('if (!stored)');
                 return;
             }
             patch(entity.id, { ...stored, data: stored[accessor] });
+            console.log('patch(entity.id, { ...stored, data: stored[accessor] });');
         },
         [accessor, entity, iDbStore, isLoading, patch],
     );
@@ -75,6 +78,8 @@ export default function PuckEditor<T extends Entity>({
             return;
         }
         if (!ObjectMatcher.deepEquality(data, entity[accessor] as Data)) {
+            // console.log('data', data);
+            // console.log('entity', entity[accessor] as Data);
             await iDbStore.save({ id: data.id, [accessor]: data } as Partial<T>);
         }
     };
