@@ -25,8 +25,8 @@ const Button = React.forwardRef<HTMLElement, ButtonProps>(({ children, variant =
                     {props.loading && <Loader color={props.disabled ? 'disabled' : 'text'} size="small" />}
                     <span className="SafariUi-Button-content">{children}</span>
                     {isModified && (
-                        <span className="extra-content">
-                            coucou
+                        <span className="SafariUi-Button-text-modified">
+                            &nbsp;(modifié)
                         </span>
                     )}
                 </React.Fragment>

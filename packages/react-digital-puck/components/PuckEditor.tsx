@@ -18,7 +18,6 @@ export interface PuckEditorProps<T extends Entity> {
     renderEntityName: (entity: T | undefined) => string;
     renderToolName: (toolId: Tool['id']) => string;
     onCreate: () => Partial<T>;
-    isModified: boolean;
 }
 
 /**
@@ -37,10 +36,11 @@ export default function PuckEditor<T extends Entity>({
     renderEntityName,
     renderToolName,
     onCreate,
-    isModified,
 }: PuckEditorProps<T>) {
     const iDbStore = useIDbStore<T>(store);
     const className = useClassName({}, 'PuckEditor');
+
+    const [modifiedStates, setModifiedStates] = React.useState<Record<string, boolean>>({});
 
     const { currentEntity, currentTool, dispatchUrlState } = usePuckUrlState();
     const { entity, entities, isLoading, _delete, patch, create } = usePuckCrud<T>(
@@ -68,6 +68,7 @@ export default function PuckEditor<T extends Entity>({
                 return;
             }
             patch(entity.id, { ...stored, data: JSON.stringify(stored[accessor]) });
+            setModifiedStates(prev => ({ ...prev, [entity.id]: false }));
         },
         [accessor, entity, iDbStore, isLoading, patch],
     );
@@ -79,11 +80,11 @@ export default function PuckEditor<T extends Entity>({
         const entityString = entity[accessor] as Data;
         const entityObject = JSON.parse(entityString.toString());
         if (!ObjectMatcher.deepEquality(data, entityObject)) {
-            console.log('data', data);
-            console.log('entity', entityObject);
             await iDbStore.save({ id: data.id, [accessor]: data } as Partial<T>);
+            setModifiedStates(prev => ({ ...prev, [entity.id]: true }));
         } else {
             await iDbStore.delete(entity.id);
+            setModifiedStates(prev => ({ ...prev, [entity.id]: false }));
         }
     };
 
@@ -94,11 +95,12 @@ export default function PuckEditor<T extends Entity>({
                 entity={entity}
                 renderName={renderEntityName}
                 isLoading={isLoading}
+                modifiedStates={modifiedStates}
                 actions={[
                     {
                         action: handlePatch,
                         icon: Icon.FloppyIcon,
-                        disabled: isLoading,
+                        disabled: isLoading || !(entity && modifiedStates[entity.id]),
                     },
                     {
                         action: handleDelete,
@@ -123,6 +125,7 @@ export default function PuckEditor<T extends Entity>({
                     isLoading={isLoading}
                     entity={entity}
                     entities={entities}
+                    modifiedStates={modifiedStates}
                 />
             </Editor>
         </Puck>

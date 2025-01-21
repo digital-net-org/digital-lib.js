@@ -8,6 +8,7 @@ import type { PropsWithChildren } from 'react';
 
 export interface EditorProps<T extends Entity> extends EditProps<T>, ToolBarProps {
     className?: string;
+    modifiedStates: Record<string, boolean>;
 }
 
 export default function Editor<T extends Entity>({
@@ -17,6 +18,7 @@ export default function Editor<T extends Entity>({
     entity,
     tools,
     renderName,
+    modifiedStates,
     ...state
 }: PropsWithChildren<EditorProps<T>>) {
     const resolvedClassname = useClassName({ className }, 'Editor');
@@ -32,6 +34,7 @@ export default function Editor<T extends Entity>({
                 entity={entity}
                 actions={actions}
                 isLoading={false}
+                isModified={entity ? modifiedStates[entity.id] : false}
                 disabled={false}
                 {...state}
             >

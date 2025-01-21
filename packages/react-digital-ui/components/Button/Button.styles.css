@@ -136,3 +136,9 @@
         fill: var(--palette-text-disabled);
     }
 }
+
+.SafariUi-Button-text-modified {
+    color: var(--palette-text-disabled);
+    font-size: 0.875rem;
+    font-style: italic;
+}

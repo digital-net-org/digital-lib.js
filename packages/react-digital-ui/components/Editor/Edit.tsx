@@ -9,6 +9,7 @@ export interface EditProps<T extends Entity> extends EditActionsProps {
     renderName?: (e: T) => string;
     isLoading?: boolean;
     disabled?: boolean;
+    isModified?: boolean;
 }
 
 export default function Edit<T extends Entity>({
@@ -16,6 +17,7 @@ export default function Edit<T extends Entity>({
     entity,
     actions,
     renderName,
+    isModified,
     ...state
 }: PropsWithChildren<EditProps<T>>) {
     const className = useClassName({}, 'Edit');
@@ -24,8 +26,15 @@ export default function Edit<T extends Entity>({
         <Box className={className}>
             <Box className={`${className}-State`}>
                 <Box />
-                <Box>{entity ? (renderName?.(entity) ?? entity.id) : null}</Box>
-                <EditActions actions={actions} {...state} />
+                <Box>
+                    {entity ? (renderName?.(entity) ?? entity.id) : null}
+                    {isModified && (
+                        <span className="SafariUi-Button-text-modified">
+                            &nbsp;(modifié)
+                        </span>
+                    )}
+                </Box>
+                <EditActions actions={actions} isModified={isModified} {...state} />
             </Box>
             <Box direction="row" overflow="hidden" fullHeight fullWidth>
                 {children}

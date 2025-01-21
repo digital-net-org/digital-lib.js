@@ -12,6 +12,7 @@ interface Props<T extends Entity> {
     entities: Array<T>;
     onSelect: (id: T['id']) => void;
     isLoading: boolean;
+    modifiedStates: Record<string, boolean>;
 }
 
 export default function Selector<T extends Entity>({
@@ -22,6 +23,7 @@ export default function Selector<T extends Entity>({
     entities,
     onSelect,
     isLoading,
+    modifiedStates,
 }: Props<T>) {
     const className = useClassName({}, 'Selector');
 
@@ -39,6 +41,7 @@ export default function Selector<T extends Entity>({
                         fullWidth
                         selected={e.id === entity?.id}
                         onClick={() => !isLoading ? onSelect(e.id) : void 0}
+                        isModified={modifiedStates[e.id]}
                     >
                         {renderEntityName(e)}
                     </Button>

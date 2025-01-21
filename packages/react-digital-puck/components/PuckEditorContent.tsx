@@ -19,6 +19,7 @@ interface PuckEditorContentProps<T extends Entity> {
     isLoading: boolean;
     entity: T | undefined;
     entities: T[];
+    modifiedStates: Record<string, boolean>;
 }
 
 export default function PuckEditorContent<T extends Entity>({
@@ -30,6 +31,7 @@ export default function PuckEditorContent<T extends Entity>({
     onCreate,
     renderEntityName,
     renderToolName,
+    modifiedStates,
 }: PuckEditorContentProps<T>) {
     const { currentTool, dispatchUrlState } = usePuckUrlState();
     const [puckState, setPuckState] = usePuckState();
@@ -71,6 +73,7 @@ export default function PuckEditorContent<T extends Entity>({
                                     disabled: isLoading,
                                 },
                             ]}
+                            modifiedStates={modifiedStates}
                         />
                     );
                 }
