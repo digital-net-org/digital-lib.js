@@ -1,8 +1,9 @@
 import React from 'react';
+import { t } from 'i18next';
 import { type Config, type Data, Puck } from '@measured/puck';
 import { type Entity } from '../../core';
 import { useClassName } from '../../react-digital';
-import { useIDbStore } from '../../react-digital-idb';
+import { useIDbStore, useStoredEntity } from '../../react-digital-idb';
 import { Box, Editor, Icon, Text } from '../../react-digital-ui';
 import PuckData from '../PuckData';
 import { Tools } from './Tools';
@@ -34,12 +35,15 @@ export default function PuckEditor<T extends Entity>({
     renderEntityName,
     onCreate,
 }: PuckEditorProps<T>) {
+    const { currentEntity, currentTool, dispatchUrlState } = usePuckUrlState();
+
     const iDbStore = useIDbStore<T>(store);
+    const { storedExists } = useStoredEntity<T>(store, currentEntity);
     const className = useClassName({}, 'PuckEditor');
 
-    const [modifiedEntities, setModifiedEntities] = React.useState<Record<string, boolean>>({});
+    const [modifiedEntities, setModifiedEntities] = React.useState<Record<string, boolean>>({}); // TODO: Delete this state
+    const [isCurrentMutated, setIsCurrentMutated] = React.useState(storedExists);
 
-    const { currentEntity, currentTool, dispatchUrlState } = usePuckUrlState();
     const { entity, entities, isLoading, _delete, patch, create } = usePuckCrud<T>(
         store,
         () => dispatchUrlState('reset'),
@@ -65,6 +69,7 @@ export default function PuckEditor<T extends Entity>({
                 return;
             }
             patch(entity.id, { ...stored, data: JSON.stringify(stored[accessor]) });
+            setIsCurrentMutated(false);
             setModifiedEntities(prev => ({ ...prev, [entity.id]: false }));
         },
         [accessor, entity, iDbStore, isLoading, patch],
@@ -76,10 +81,12 @@ export default function PuckEditor<T extends Entity>({
         }
         if (!PuckData.deepEquality(data, entity[accessor])) {
             await iDbStore.save({ id: data.id, [accessor]: data } as Partial<T>);
-            setModifiedEntities(prev => ({ ...prev, [entity.id]: true }));
+            setIsCurrentMutated(true);
+            setModifiedEntities(prev => ({ ...prev, [entity.id]: true })); // TODO: Delete this
         } else {
             await iDbStore.delete(entity.id);
-            setModifiedEntities(prev => ({ ...prev, [entity.id]: false }));
+            setIsCurrentMutated(false);
+            setModifiedEntities(prev => ({ ...prev, [entity.id]: false })); // TODO: Delete this
         }
     };
 
@@ -93,7 +100,7 @@ export default function PuckEditor<T extends Entity>({
                             {renderEntityName(entity)}
                         </Text>
                         <Text variant="span" size="small" italic>
-                            {entity && modifiedEntities[entity?.id] ? ' modifié' : ''}
+                            {isCurrentMutated ? t('puck:state:modified') : ''}
                         </Text>
                     </Box>
                 )}

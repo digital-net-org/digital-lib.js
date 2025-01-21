@@ -42,11 +42,9 @@ export default function PuckEditorContent<T extends Entity>({
                 return;
             }
             if (!entity?.id && puckState.id) {
-                console.log('%c reset puck state', 'color: red');
                 return setPuckState(undefined);
             }
             if (entity && entity.id !== puckState.id) {
-                console.log('%c set puck state', 'color: green');
                 const stored = await iDbStore.get(entity?.id);
                 setPuckState(stored?.[accessor] ?? entity[accessor], entity.id);
             }
