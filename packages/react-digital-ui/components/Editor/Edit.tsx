@@ -34,7 +34,7 @@ export default function Edit<T extends Entity>({
                         </span>
                     )}
                 </Box>
-                <EditActions actions={actions} isModified={isModified} {...state} />
+                <EditActions actions={actions} {...state} />
             </Box>
             <Box direction="row" overflow="hidden" fullHeight fullWidth>
                 {children}
