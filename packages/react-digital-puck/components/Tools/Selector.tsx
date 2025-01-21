@@ -1,7 +1,7 @@
 import React from 'react';
 import type { Entity } from '../../../core';
 import { useClassName } from '../../../react-digital';
-import { type EditorProps, BaseTool, Button } from '../../../react-digital-ui';
+import { type EditorProps, BaseTool, Button, Text } from '../../../react-digital-ui';
 import { type PuckEditorProps } from '../PuckEditor';
 
 interface Props<T extends Entity> {
@@ -41,9 +41,13 @@ export default function Selector<T extends Entity>({
                         fullWidth
                         selected={e.id === entity?.id}
                         onClick={() => !isLoading ? onSelect(e.id) : void 0}
-                        isModified={modifiedStates[e.id]}
                     >
                         {renderEntityName(e)}
+                        {modifiedStates[e.id] && (
+                            <Text italic size="small">
+                                &nbsp;(modifié)
+                            </Text>
+                        )}
                     </Button>
                 ))}
             </div>
