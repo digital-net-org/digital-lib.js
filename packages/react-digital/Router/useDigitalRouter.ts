@@ -6,7 +6,6 @@ export interface DigitalRoute {
     path: string;
     navigate: () => void;
     isCurrent: boolean;
-    documentName: string | undefined;
 }
 
 /**
@@ -14,7 +13,7 @@ export interface DigitalRoute {
  * @returns A tuple with the router and the current route.
  */
 export default function useDigitalRouter() {
-    const { router: contextRouter, renderDocumentName } = React.useContext(RouterContext);
+    const { router: contextRouter } = React.useContext(RouterContext);
     const navigate = useNavigate();
     const { pathname } = useLocation();
 
@@ -25,7 +24,6 @@ export default function useDigitalRouter() {
         return path
             ? {
                     path,
-                    documentName: renderDocumentName?.(path),
                     isCurrent: true,
                     navigate: () => navigate(path),
                 }
@@ -34,7 +32,6 @@ export default function useDigitalRouter() {
         contextRouter,
         pathname,
         navigate,
-        renderDocumentName,
     ]);
 
     const router: Array<DigitalRoute> = React.useMemo(
@@ -42,14 +39,12 @@ export default function useDigitalRouter() {
             (contextRouter ?? []).map(({ element: _, ...route }) => ({
                 navigate: () => navigate(route.path),
                 isCurrent: pathname === route.path,
-                documentName: renderDocumentName?.(route.path),
                 ...route,
             })),
         [
             contextRouter,
             pathname,
             navigate,
-            renderDocumentName,
         ],
     );
 
