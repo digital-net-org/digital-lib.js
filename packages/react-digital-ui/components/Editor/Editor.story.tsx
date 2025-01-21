@@ -1,9 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import type { Entity } from '../../../core';
 import { Icon } from '../../../react-digital-ui';
 import Editor, { type EditorProps } from './Editor';
 
-const meta: Meta<EditorProps<Entity>> = {
+const meta: Meta<EditorProps> = {
     title: 'Editor',
     component: Editor,
 };
@@ -16,7 +15,6 @@ export const Primary: Story = {
         disabled: { control: { type: 'boolean' } },
     },
     args: {
-        entity: { id: '0000-0000-0000-0000', createdAt: new Date() } satisfies Entity,
         actions: [
             { action: () => null, disabled: true, icon: Icon.FloppyIcon },
             { action: () => null, disabled: false, icon: Icon.TrashIcon },
@@ -36,7 +34,7 @@ export const Primary: Story = {
                 selected: false,
             },
         ],
-        renderName: (entity: Entity) => `ID: ${entity.id}`,
+        renderName: () => '0000-0000-0000-0000',
         disabled: false,
         isLoading: false,
     },

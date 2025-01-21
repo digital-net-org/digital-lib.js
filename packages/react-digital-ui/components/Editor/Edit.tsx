@@ -4,22 +4,20 @@ import { Box } from '../../../react-digital-ui';
 import { useClassName } from '../../../react-digital';
 import EditActions, { type EditActionsProps } from './EditActions';
 
-export interface EditProps<T extends Entity> extends EditActionsProps {
-    entity: T | undefined;
-    renderName?: (e: T) => string;
+export interface EditProps extends EditActionsProps {
+    renderName?: () => React.ReactNode;
     isLoading?: boolean;
     disabled?: boolean;
     isModified?: boolean;
 }
 
-export default function Edit<T extends Entity>({
+export default function Edit({
     children,
-    entity,
     actions,
     renderName,
     isModified,
     ...state
-}: PropsWithChildren<EditProps<T>>) {
+}: PropsWithChildren<EditProps>) {
     const className = useClassName({}, 'Edit');
 
     return (
@@ -27,12 +25,7 @@ export default function Edit<T extends Entity>({
             <Box className={`${className}-State`}>
                 <Box />
                 <Box>
-                    {entity ? (renderName?.(entity) ?? entity.id) : null}
-                    {isModified && (
-                        <span className="SafariUi-Button-text-modified">
-                            &nbsp;(modifié)
-                        </span>
-                    )}
+                    {renderName ? renderName() : null}
                 </Box>
                 <EditActions actions={actions} {...state} />
             </Box>

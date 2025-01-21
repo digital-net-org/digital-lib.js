@@ -2,10 +2,9 @@ import React from 'react';
 import { Puck } from '@measured/puck';
 import { useClassName } from '../../../react-digital';
 import { BaseTool } from '../../../react-digital-ui';
-import { type PuckEditorProps } from '../PuckEditor';
 
 interface Props {
-    renderToolName: PuckEditorProps<any>['renderToolName'];
+    renderToolName: (id: string) => string;
 }
 
 export default function Tree({ renderToolName }: Props) {

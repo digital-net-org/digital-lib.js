@@ -1,11 +1,11 @@
 import React from 'react';
 import { type Config, type Data, Puck } from '@measured/puck';
-import { type Entity, ObjectMatcher } from '../../core';
+import { type Entity } from '../../core';
 import { useClassName } from '../../react-digital';
 import { useIDbStore } from '../../react-digital-idb';
-import { Editor, Icon } from '../../react-digital-ui';
+import { Box, Editor, Icon, Text } from '../../react-digital-ui';
 import PuckData from '../PuckData';
-import { type Tool, Tools } from './Tools';
+import { Tools } from './Tools';
 import usePuckCrud from './usePuckCrud';
 import usePuckUrlState from './usePuckUrlState';
 import PuckEditorContent from './PuckEditorContent';
@@ -16,7 +16,6 @@ export interface PuckEditorProps<T extends Entity> {
     store: string;
     config: Config;
     renderEntityName: (entity: T | undefined) => string;
-    renderToolName: (toolId: Tool['id']) => string;
     onCreate: () => Partial<T>;
 }
 
@@ -26,7 +25,6 @@ export interface PuckEditorProps<T extends Entity> {
  * @param store - IndexedDB store/api name.
  * @param config - Puck configuration.
  * @param renderEntityName - Function to render the entity name.
- * @param renderToolName - Function to render the tool name.
  * @param onCreate - Build the default entity payload.
  */
 export default function PuckEditor<T extends Entity>({
@@ -34,13 +32,12 @@ export default function PuckEditor<T extends Entity>({
     config,
     store,
     renderEntityName,
-    renderToolName,
     onCreate,
 }: PuckEditorProps<T>) {
     const iDbStore = useIDbStore<T>(store);
     const className = useClassName({}, 'PuckEditor');
 
-    const [modifiedStates, setModifiedStates] = React.useState<Record<string, boolean>>({});
+    const [modifiedEntities, setModifiedEntities] = React.useState<Record<string, boolean>>({});
 
     const { currentEntity, currentTool, dispatchUrlState } = usePuckUrlState();
     const { entity, entities, isLoading, _delete, patch, create } = usePuckCrud<T>(
@@ -68,7 +65,7 @@ export default function PuckEditor<T extends Entity>({
                 return;
             }
             patch(entity.id, { ...stored, data: JSON.stringify(stored[accessor]) });
-            setModifiedStates(prev => ({ ...prev, [entity.id]: false }));
+            setModifiedEntities(prev => ({ ...prev, [entity.id]: false }));
         },
         [accessor, entity, iDbStore, isLoading, patch],
     );
@@ -77,30 +74,35 @@ export default function PuckEditor<T extends Entity>({
         if (isLoading || !(data.id && currentEntity && entity) || data.id !== entity?.id) {
             return;
         }
-        const entityString = entity[accessor] as Data;
-        const entityObject = JSON.parse(entityString.toString());
-        if (!ObjectMatcher.deepEquality(data, entityObject)) {
+        if (!PuckData.deepEquality(data, entity[accessor])) {
             await iDbStore.save({ id: data.id, [accessor]: data } as Partial<T>);
-            setModifiedStates(prev => ({ ...prev, [entity.id]: true }));
+            setModifiedEntities(prev => ({ ...prev, [entity.id]: true }));
         } else {
             await iDbStore.delete(entity.id);
-            setModifiedStates(prev => ({ ...prev, [entity.id]: false }));
+            setModifiedEntities(prev => ({ ...prev, [entity.id]: false }));
         }
     };
 
     return (
         <Puck data={PuckData.default} config={config} onChange={handlePuckChange}>
-            <Editor<T>
+            <Editor
                 className={className}
-                entity={entity}
-                renderName={renderEntityName}
+                renderName={() => (
+                    <Box direction="row" align="center" gap={1}>
+                        <Text variant="span">
+                            {renderEntityName(entity)}
+                        </Text>
+                        <Text variant="span" size="small" italic>
+                            {entity && modifiedEntities[entity?.id] ? ' modifié' : ''}
+                        </Text>
+                    </Box>
+                )}
                 isLoading={isLoading}
-                modifiedStates={modifiedStates}
                 actions={[
                     {
                         action: handlePatch,
                         icon: Icon.FloppyIcon,
-                        disabled: isLoading || !(entity && modifiedStates[entity.id]),
+                        disabled: isLoading || !(entity && modifiedEntities[entity.id]),
                     },
                     {
                         action: handleDelete,
@@ -120,12 +122,11 @@ export default function PuckEditor<T extends Entity>({
                     accessor={accessor}
                     store={store}
                     renderEntityName={renderEntityName}
-                    renderToolName={renderToolName}
                     onCreate={handleCreate}
                     isLoading={isLoading}
                     entity={entity}
                     entities={entities}
-                    modifiedStates={modifiedStates}
+                    modifiedStates={modifiedEntities}
                 />
             </Editor>
         </Puck>

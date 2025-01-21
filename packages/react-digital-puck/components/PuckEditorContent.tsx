@@ -1,9 +1,10 @@
 import React from 'react';
+import { t } from 'i18next';
 import { type Entity } from '../../core';
 import { useIDbStore } from '../../react-digital-idb';
 import { Box, Icon } from '../../react-digital-ui';
 import { type PuckEditorProps } from './PuckEditor';
-import { Tools } from './Tools';
+import { type Tool, Tools } from './Tools';
 import PuckRender from './PuckRender';
 import EntityRender from './EntityRender';
 import usePuckUrlState from './usePuckUrlState';
@@ -14,7 +15,6 @@ interface PuckEditorContentProps<T extends Entity> {
     accessor: PuckEditorProps<T>['accessor'];
     store: PuckEditorProps<T>['store'];
     renderEntityName: PuckEditorProps<T>['renderEntityName'];
-    renderToolName: PuckEditorProps<T>['renderToolName'];
     onCreate: () => void;
     isLoading: boolean;
     entity: T | undefined;
@@ -30,7 +30,6 @@ export default function PuckEditorContent<T extends Entity>({
     entities,
     onCreate,
     renderEntityName,
-    renderToolName,
     modifiedStates,
 }: PuckEditorContentProps<T>) {
     const { currentTool, dispatchUrlState } = usePuckUrlState();
@@ -54,6 +53,8 @@ export default function PuckEditorContent<T extends Entity>({
         })();
     }, [accessor, entity, iDbStore, isLoading, puckState.id, setPuckState]);
 
+    const handleRenderToolName = (id: string) => t(`puck:tools.${id}.title`);
+
     return (
         <React.Fragment>
             {(() => {
@@ -61,7 +62,7 @@ export default function PuckEditorContent<T extends Entity>({
                     return (
                         <Tools.Selector
                             renderEntityName={renderEntityName}
-                            renderToolName={renderToolName}
+                            renderToolName={handleRenderToolName}
                             isLoading={isLoading}
                             entity={entity}
                             entities={entities}
@@ -78,10 +79,10 @@ export default function PuckEditorContent<T extends Entity>({
                     );
                 }
                 if (currentTool?.id === 'tree') {
-                    return <Tools.Tree renderToolName={renderToolName} />;
+                    return <Tools.Tree renderToolName={handleRenderToolName} />;
                 }
                 if (currentTool?.id === 'components') {
-                    return <Tools.Components renderToolName={renderToolName} />;
+                    return <Tools.Components renderToolName={handleRenderToolName} />;
                 }
                 return null;
             })()}

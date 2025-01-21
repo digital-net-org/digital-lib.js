@@ -6,7 +6,7 @@ import './Text.styles.css';
 export interface TextProps extends SafariNodeWithChildren {
     bold?: boolean;
     italic?: boolean;
-    variant?: 'h1' | 'h2' | 'h3' | 'text' | 'caption' | 'JSON';
+    variant?: 'h1' | 'h2' | 'h3' | 'text' | 'span' | 'caption' | 'JSON';
     size?: 'small' | 'regular' | 'medium' | 'large' | 'xlarge';
 }
 
@@ -17,7 +17,7 @@ export default function Text(props: TextProps) {
         if (props.variant === 'text' || props.variant === undefined) {
             return 'p';
         }
-        if (props.variant === 'caption') {
+        if (props.variant === 'caption' || props.variant === 'span') {
             return 'span';
         }
         return props.variant;
