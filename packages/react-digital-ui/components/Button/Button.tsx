@@ -10,9 +10,10 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
     fullWidth?: boolean;
     selected?: boolean;
     href?: string;
+    isModified?: boolean;
 }
 
-const Button = React.forwardRef<HTMLElement, ButtonProps>(({ children, variant = 'primary', ...props }, ref) => {
+const Button = React.forwardRef<HTMLElement, ButtonProps>(({ children, variant = 'primary', isModified, ...props }, ref) => {
     const className = useClassName({ ...props, variant }, 'SafariUi-Button');
     const { mapHtmlProps } = useProps({ ...props, variant, className });
 
@@ -23,6 +24,11 @@ const Button = React.forwardRef<HTMLElement, ButtonProps>(({ children, variant =
                 <React.Fragment>
                     {props.loading && <Loader color={props.disabled ? 'disabled' : 'text'} size="small" />}
                     <span className="SafariUi-Button-content">{children}</span>
+                    {isModified && (
+                        <span className="extra-content">
+                            coucou
+                        </span>
+                    )}
                 </React.Fragment>
             ),
         }),

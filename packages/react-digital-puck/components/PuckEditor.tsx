@@ -18,6 +18,7 @@ export interface PuckEditorProps<T extends Entity> {
     renderEntityName: (entity: T | undefined) => string;
     renderToolName: (toolId: Tool['id']) => string;
     onCreate: () => Partial<T>;
+    isModified: boolean;
 }
 
 /**
@@ -36,6 +37,7 @@ export default function PuckEditor<T extends Entity>({
     renderEntityName,
     renderToolName,
     onCreate,
+    isModified,
 }: PuckEditorProps<T>) {
     const iDbStore = useIDbStore<T>(store);
     const className = useClassName({}, 'PuckEditor');
@@ -74,10 +76,14 @@ export default function PuckEditor<T extends Entity>({
         if (isLoading || !(data.id && currentEntity && entity) || data.id !== entity?.id) {
             return;
         }
-        if (!ObjectMatcher.deepEquality(data, entity[accessor] as Data)) {
+        const entityString = entity[accessor] as Data;
+        const entityObject = JSON.parse(entityString.toString());
+        if (!ObjectMatcher.deepEquality(data, entityObject)) {
             console.log('data', data);
-            console.log('entity', entity[accessor] as Data);
+            console.log('entity', entityObject);
             await iDbStore.save({ id: data.id, [accessor]: data } as Partial<T>);
+        } else {
+            await iDbStore.delete(entity.id);
         }
     };
 
