@@ -1,19 +1,19 @@
 import React from 'react';
-import { t } from 'i18next';
 import type { Entity } from '../../../core';
 import { useClassName } from '../../../react-digital';
-import { type EditorProps, BaseTool, Button, Text, Box } from '../../../react-digital-ui';
+import { type EditorProps, BaseTool } from '../../../react-digital-ui';
 import { type PuckEditorProps } from '../PuckEditor';
+import SelectorButton from './SelectorButton';
 
 interface Props<T extends Entity> {
     renderEntityName: PuckEditorProps<T>['renderEntityName'];
+    store: PuckEditorProps<T>['store'];
     renderToolName: (id: string) => string;
     actions: EditorProps['actions'];
     entity: T | undefined;
     entities: Array<T>;
     onSelect: (id: T['id']) => void;
     isLoading: boolean;
-    modifiedStates: Record<string, boolean>;
 }
 
 export default function Selector<T extends Entity>({
@@ -24,7 +24,7 @@ export default function Selector<T extends Entity>({
     entities,
     onSelect,
     isLoading,
-    modifiedStates,
+    store,
 }: Props<T>) {
     const className = useClassName({}, 'Selector');
 
@@ -35,23 +35,15 @@ export default function Selector<T extends Entity>({
         >
             <div className={className}>
                 {(entities ?? []).map(e => (
-                    <Button
+                    <SelectorButton 
+                        entity={e}
                         key={e.id}
-                        variant="icon"
-                        disabled={isLoading}
-                        fullWidth
+                        onSelect={onSelect}
                         selected={e.id === entity?.id}
-                        onClick={() => !isLoading ? onSelect(e.id) : void 0}
-                    >
-                        <Box direction="row" align="center" gap={1}>
-                            {renderEntityName(e)}
-                            {modifiedStates[e.id] && (
-                                <Text italic size="small">
-                                    {t('puck:state.modified')}
-                                </Text>
-                            )}
-                        </Box>
-                    </Button>
+                        isLoading={isLoading}
+                        renderEntityName={renderEntityName}
+                        store={store}
+                    />
                 ))}
             </div>
         </BaseTool>
