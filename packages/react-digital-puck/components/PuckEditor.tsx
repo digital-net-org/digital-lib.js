@@ -42,8 +42,6 @@ export default function PuckEditor<T extends Entity>({
     const { storedExists } = useStoredEntity<T>(store, currentEntity);
     const className = useClassName({}, 'PuckEditor');
 
-    const [isCurrentMutated, setIsCurrentMutated] = React.useState(storedExists);
-
     const { entity, entities, isLoading, _delete, patch, create } = usePuckCrud<T>(
         store,
         () => dispatchUrlState('reset'),
@@ -69,7 +67,6 @@ export default function PuckEditor<T extends Entity>({
                 return;
             }
             patch(entity.id, { ...stored, data: JSON.stringify(stored[accessor]) });
-            setIsCurrentMutated(false);
         },
         [accessor, entity, iDbStore, isLoading, patch],
     );
@@ -80,10 +77,8 @@ export default function PuckEditor<T extends Entity>({
         }
         if (!PuckData.deepEquality(data, entity[accessor])) {
             await iDbStore.save({ id: data.id, [accessor]: data } as Partial<T>);
-            setIsCurrentMutated(true);
         } else {
             await iDbStore.delete(entity.id);
-            setIsCurrentMutated(false);
         }
     };
 
@@ -94,7 +89,7 @@ export default function PuckEditor<T extends Entity>({
                 renderName={() => (
                     <PuckEditorHeader
                         name={renderEntityName(entity)}
-                        isCurrentMutated={isCurrentMutated && currentEntity}
+                        isCurrentMutated={storedExists}
                     />
                 )}
                 isLoading={isLoading}
@@ -102,7 +97,7 @@ export default function PuckEditor<T extends Entity>({
                     {
                         action: handlePatch,
                         icon: Icon.FloppyIcon,
-                        disabled: isLoading || !(entity && isCurrentMutated),
+                        disabled: isLoading || !(entity && storedExists),
                     },
                     {
                         action: handleDelete,

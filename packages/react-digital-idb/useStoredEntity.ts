@@ -14,7 +14,7 @@ import useIDbStore from './useIDbStore';
  *  - isLoading: indicates if the store is currently loading
  */
 export default function useStoredEntity<T extends Entity>(store: string, id: string | number | undefined) {
-    const { isLoading, get, save, delete: _delete } = useIDbStore<T>(store);
+    const { isLoading, get, save, delete: _delete, outdatedQueries } = useIDbStore<T>(store);
 
     const [storedExists, setStoredExists] = React.useState(false);
     const [storedEntity, setStoredEntity] = React.useState<T | undefined>(undefined);
@@ -32,6 +32,17 @@ export default function useStoredEntity<T extends Entity>(store: string, id: str
             setStoredExists(!!entity);
         })();
     }, [id, get]);
+
+    React.useEffect(() => {
+        (async () => {
+            if (!outdatedQueries.includes(`${store}:${id}`)) {
+                return;
+            }
+            const entity = await get(id);
+            setStoredEntity(entity);
+            setStoredExists(!!entity);
+        })();
+    }, [id, get, outdatedQueries, store]);
 
     return {
         storedEntity,
