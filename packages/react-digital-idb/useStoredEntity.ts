@@ -22,27 +22,29 @@ export default function useStoredEntity<T extends Entity>(store: string, id: str
     const deleteEntity = React.useCallback(async () => await _delete(id), [_delete, id]);
     const saveEntity = React.useCallback(async (payload: Partial<T>) => await save(payload), [save]);
 
+    const getStoredEntity = React.useCallback(async (id: string | number) => {
+        const entity = await get(id);
+        setStoredEntity(entity);
+        setStoredExists(!!entity);
+    }, [get]);
+    
     React.useEffect(() => {
         (async () => {
             if (!id) {
                 return;
             }
-            const entity = await get(id);
-            setStoredEntity(entity);
-            setStoredExists(!!entity);
+            await getStoredEntity(id);
         })();
-    }, [id, get]);
+    }, [id, getStoredEntity]);
 
     React.useEffect(() => {
         (async () => {
             if (!outdatedQueries.includes(`${store}:${id}`)) {
                 return;
             }
-            const entity = await get(id);
-            setStoredEntity(entity);
-            setStoredExists(!!entity);
+            await getStoredEntity(id!);
         })();
-    }, [id, get, outdatedQueries, store]);
+    }, [id, outdatedQueries, store, getStoredEntity]);
 
     return {
         storedEntity,
