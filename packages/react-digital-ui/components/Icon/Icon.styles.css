@@ -25,6 +25,10 @@
     --icon-color: var(--palette-text-disabled);
 }
 
+.SafariUi-Icon-size-mini {
+    --icon-size: calc((var(--font-size-regular) * 0.75));
+}
+
 .SafariUi-Icon-size-small {
     --icon-size: calc((var(--font-size-regular) * 1.125));
 }

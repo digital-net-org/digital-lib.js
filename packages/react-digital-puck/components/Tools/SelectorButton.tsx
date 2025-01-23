@@ -1,5 +1,4 @@
-import { Box, Button, Text } from '../../../react-digital-ui';
-import { t } from 'i18next';
+import { Box, Button, Icon } from '../../../react-digital-ui';
 import React from 'react';
 import type { PuckEditorProps } from '../PuckEditor';
 import type { Entity } from '../../../core';
@@ -33,12 +32,10 @@ export default function SelectorButton<T extends Entity>({
             fullWidth
             onClick={() => !isLoading ? onSelect(entity.id) : void 0}
         >
-            <Box direction="row" align="center" gap={1}>
+            <Box direction="row" align="center" justify="space-between" fullWidth gap={1}>
                 {renderEntityName(entity)}
                 {storedExists && (
-                    <Text italic size="small">
-                        {t('puck:state.modified')}
-                    </Text>
+                    <Icon.CircleFill size="mini" />
                 )}
             </Box>
         </Button>

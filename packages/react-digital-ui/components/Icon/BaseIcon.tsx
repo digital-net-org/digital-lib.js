@@ -6,7 +6,7 @@ import './Icon.styles.css';
 export interface IconProps extends SafariNode {
     color?: 'primary' | 'text' | 'disabled';
     variant?: 'outlined' | 'filled';
-    size?: 'small' | 'medium' | 'large';
+    size?: 'mini' | 'small' | 'medium' | 'large';
     fullWidth?: boolean;
     direction?: 'up' | 'down' | 'left' | 'right';
     animation?: boolean;
