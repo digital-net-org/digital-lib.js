@@ -80,6 +80,14 @@ export const Large: Story = {
     argTypes: Small.argTypes,
 };
 
+export const Xsmall: Story = {
+    args: {
+        ...Small.args,
+        size: 'x-small',
+    },
+    argTypes: Small.argTypes,
+};
+
 export const FullWidth: Story = {
     args: {
         ...Small.args,

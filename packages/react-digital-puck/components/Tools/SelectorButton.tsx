@@ -35,7 +35,7 @@ export default function SelectorButton<T extends Entity>({
             <Box direction="row" align="center" justify="space-between" fullWidth gap={1}>
                 {renderEntityName(entity)}
                 {storedExists && (
-                    <Icon.CircleFill size="mini" />
+                    <Icon.CircleFill size="x-small" />
                 )}
             </Box>
         </Button>
