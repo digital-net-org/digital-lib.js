@@ -10,8 +10,8 @@ import { Tools } from './Tools';
 import usePuckCrud from './usePuckCrud';
 import usePuckUrlState from './usePuckUrlState';
 import PuckEditorContent from './PuckEditorContent';
-import './PuckEditor.styles.css';
 import PuckEditorHeader from './PuckEditorHeader';
+import './PuckEditor.styles.css';
 
 export interface PuckEditorProps<T extends Entity> {
     accessor: keyof T;
