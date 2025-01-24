@@ -11,6 +11,7 @@ export default function DigitalIdbProvider({ children, ...idbConfig }: PropsWith
     const [isLoading, setIsLoading] = React.useState(false);
     const [hasError, setHasError] = React.useState(false);
     const [database, setDatabase] = React.useState<IDBDatabase | null>(null);
+    const [outdatedQueries, setOutdatedQueries] = React.useState<Array<string>>([]);
 
     React.useEffect(() => {
         (async () => {
@@ -29,11 +30,22 @@ export default function DigitalIdbProvider({ children, ...idbConfig }: PropsWith
         })();
     }, [database, hasError, idbConfig, isLoading]);
 
+    const addOutdatedQuery = React.useCallback((store: string, id: string) => {
+        setOutdatedQueries(prev => [...prev, `${store}:${id}`]);
+    }, []);
+
+    const deleteOutdatedQuery = React.useCallback((store: string, id: string) => {
+        setOutdatedQueries(prev => prev.filter(query => query !== `${store}:${id}`));
+    }, []);
+
     return (
         <DigitalIdbContext.Provider value={{
             isLoading,
             hasError,
             database,
+            outdatedQueries,
+            addOutdatedQuery,
+            deleteOutdatedQuery,
             ...idbConfig,
         }}
         >

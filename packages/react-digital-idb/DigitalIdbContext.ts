@@ -5,6 +5,9 @@ export interface DigitalIdbContextState extends IDbConfig {
     isLoading: boolean;
     hasError: boolean;
     database: IDBDatabase | null;
+    outdatedQueries: Array<string>;
+    addOutdatedQuery: (store: string, id: string) => void;
+    deleteOutdatedQuery: (store: string, id: string) => void;
 }
 
 export const defaultIdbConfig: IDbConfig = {
@@ -18,4 +21,7 @@ export const DigitalIdbContext = React.createContext<DigitalIdbContextState>({
     isLoading: false,
     hasError: false,
     database: null,
+    outdatedQueries: [],
+    addOutdatedQuery: () => undefined,
+    deleteOutdatedQuery: () => undefined,
 });

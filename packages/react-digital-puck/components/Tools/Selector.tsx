@@ -1,13 +1,15 @@
 import React from 'react';
 import type { Entity } from '../../../core';
 import { useClassName } from '../../../react-digital';
-import { type EditorProps, BaseTool, Button } from '../../../react-digital-ui';
+import { type EditorProps, BaseTool } from '../../../react-digital-ui';
 import { type PuckEditorProps } from '../PuckEditor';
+import SelectorButton from './SelectorButton';
 
 interface Props<T extends Entity> {
     renderEntityName: PuckEditorProps<T>['renderEntityName'];
-    renderToolName: PuckEditorProps<T>['renderToolName'];
-    actions: EditorProps<T>['actions'];
+    store: PuckEditorProps<T>['store'];
+    renderToolName: (id: string) => string;
+    actions: EditorProps['actions'];
     entity: T | undefined;
     entities: Array<T>;
     onSelect: (id: T['id']) => void;
@@ -22,6 +24,7 @@ export default function Selector<T extends Entity>({
     entities,
     onSelect,
     isLoading,
+    store,
 }: Props<T>) {
     const className = useClassName({}, 'Selector');
 
@@ -32,16 +35,15 @@ export default function Selector<T extends Entity>({
         >
             <div className={className}>
                 {(entities ?? []).map(e => (
-                    <Button
+                    <SelectorButton 
+                        entity={e}
                         key={e.id}
-                        variant="icon"
-                        disabled={isLoading}
-                        fullWidth
+                        onSelect={onSelect}
                         selected={e.id === entity?.id}
-                        onClick={() => !isLoading ? onSelect(e.id) : void 0}
-                    >
-                        {renderEntityName(e)}
-                    </Button>
+                        isLoading={isLoading}
+                        renderEntityName={renderEntityName}
+                        store={store}
+                    />
                 ))}
             </div>
         </BaseTool>

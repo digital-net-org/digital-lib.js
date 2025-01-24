@@ -8,7 +8,7 @@ export interface Tool {
     id: 'model-selector' | 'tree' | 'components';
     icon: ValueOf<typeof Icon>;
     isDefault: boolean;
-};
+}
 
 export const Tools = Object.assign(
     [

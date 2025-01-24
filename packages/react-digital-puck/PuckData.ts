@@ -1,4 +1,5 @@
 import type { Data } from '@measured/puck';
+import { ObjectMatcher } from '../core';
 
 export default class PuckData {
     public static readonly default: Data = {
@@ -19,5 +20,9 @@ export default class PuckData {
             return data as Data;
         }
         return this.default;
+    }
+
+    public static deepEquality(a: Data, b: unknown): boolean {
+        return ObjectMatcher.deepEquality(a, PuckData.resolve(b), ['id']);
     }
 }

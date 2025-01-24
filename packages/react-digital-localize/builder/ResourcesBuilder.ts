@@ -4,7 +4,7 @@ import { type Namespace } from '../Namespace';
 
 export default class ResourcesBuilder {
     public static getLocalesFiles(): Record<string, Record<string, any>> {
-        return import.meta.glob(['/src/**/locales.ts'], { eager: true });
+        return import.meta.glob(['/*/**/locales.ts'], { eager: true });
     }
 
     public static build() {

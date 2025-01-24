@@ -1,4 +1,3 @@
-import type { Entity } from '../../../core';
 import { useClassName } from '../../../react-digital';
 import { Box } from '../../../react-digital-ui';
 import Edit, { type EditProps } from './Edit';
@@ -6,19 +5,18 @@ import ToolBar, { type ToolBarProps } from './ToolBar';
 import './Editor.styles.css';
 import type { PropsWithChildren } from 'react';
 
-export interface EditorProps<T extends Entity> extends EditProps<T>, ToolBarProps {
+export interface EditorProps extends EditProps, ToolBarProps {
     className?: string;
 }
 
-export default function Editor<T extends Entity>({
+export default function Editor({
     className,
     children,
     actions,
-    entity,
     tools,
     renderName,
     ...state
-}: PropsWithChildren<EditorProps<T>>) {
+}: PropsWithChildren<EditorProps>) {
     const resolvedClassname = useClassName({ className }, 'Editor');
 
     return (
@@ -27,9 +25,8 @@ export default function Editor<T extends Entity>({
                 tools={tools}
                 {...state}
             />
-            <Edit<T>
+            <Edit
                 renderName={renderName}
-                entity={entity}
                 actions={actions}
                 isLoading={false}
                 disabled={false}

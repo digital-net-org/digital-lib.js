@@ -1,15 +1,16 @@
 import React from 'react';
+import { t } from 'i18next';
 import { type Config, type Data, Puck } from '@measured/puck';
 import { type Entity } from '../../core';
 import { useClassName } from '../../react-digital';
-import { useIDbStore } from '../../react-digital-idb';
-import { Box, Editor, Icon } from '../../react-digital-ui';
+import { IDbStore, useIDbStore, useStoredEntity } from '../../react-digital-idb';
+import { Box, Editor, Icon, Text } from '../../react-digital-ui';
 import PuckData from '../PuckData';
-import { type Tool, Tools } from './Tools';
-import PuckRender from './PuckRender';
-import EntityRender from './EntityRender';
+import { Tools } from './Tools';
 import usePuckCrud from './usePuckCrud';
 import usePuckUrlState from './usePuckUrlState';
+import PuckEditorContent from './PuckEditorContent';
+import PuckEditorHeader from './PuckEditorHeader';
 import './PuckEditor.styles.css';
 
 export interface PuckEditorProps<T extends Entity> {
@@ -17,7 +18,6 @@ export interface PuckEditorProps<T extends Entity> {
     store: string;
     config: Config;
     renderEntityName: (entity: T | undefined) => string;
-    renderToolName: (toolId: Tool['id']) => string;
     onCreate: () => Partial<T>;
 }
 
@@ -27,51 +27,31 @@ export interface PuckEditorProps<T extends Entity> {
  * @param store - IndexedDB store/api name.
  * @param config - Puck configuration.
  * @param renderEntityName - Function to render the entity name.
- * @param renderToolName - Function to render the tool name.
  * @param onCreate - Build the default entity payload.
  */
-export default function<T extends Entity>(props: PuckEditorProps<T>) {
-    const { save } = useIDbStore<T>(props.store);
-
-    const handleDataChange = async ({ id, ...data }: Data) => {
-        if (!id) {
-            return;
-        }
-        console.log('handleDataChange');
-        await save({ id, [props.accessor]: data } as Partial<T>);
-    };
-
-    return (
-        <Puck data={PuckData.default} config={props.config} onChange={handleDataChange}>
-            <PuckEditor {...props} />
-        </Puck>
-    );
-}
-
-function PuckEditor<T extends Entity>({
-    store,
+export default function PuckEditor<T extends Entity>({
     accessor,
+    config,
+    store,
     renderEntityName,
-    renderToolName,
     onCreate,
 }: PuckEditorProps<T>) {
-    const { currentTool, currentEntity, dispatch } = usePuckUrlState();
+    const { currentEntity, currentTool, dispatchUrlState } = usePuckUrlState();
 
     const iDbStore = useIDbStore<T>(store);
+    const { storedExists } = useStoredEntity<T>(store, currentEntity);
     const className = useClassName({}, 'PuckEditor');
 
-    const { entity, entities, isLoading, _delete, patch, create } = usePuckCrud({
+    const { entity, entities, isLoading, _delete, patch, create } = usePuckCrud<T>(
         store,
-        accessor,
-        currentEntity,
-        onReset: () => dispatch('reset'),
-    });
+        () => dispatchUrlState('reset'),
+    );
 
     const handleCreate = React.useCallback(
         async () => create(onCreate()),
         [create, onCreate],
     );
-    
+
     const handleDelete = React.useCallback(
         async () => entity && !isLoading ? _delete(entity.id) : void 0,
         [entity, isLoading, _delete],
@@ -86,70 +66,63 @@ function PuckEditor<T extends Entity>({
             if (!stored) {
                 return;
             }
-            patch(entity.id, { ...stored, data: stored[accessor] });
+            patch(entity.id, { ...stored, data: JSON.stringify(stored[accessor]) });
         },
         [accessor, entity, iDbStore, isLoading, patch],
     );
-    
+
+    const handlePuckChange = async (data: Data) => {
+        if (isLoading || !(data.id && currentEntity && entity) || data.id !== entity?.id) {
+            return;
+        }
+        if (!PuckData.deepEquality(data, entity[accessor])) {
+            await iDbStore.save({ id: data.id, [accessor]: data } as Partial<T>);
+        } else {
+            await iDbStore.delete(entity.id);
+        }
+    };
+
     return (
-        <Editor<T>
-            className={className}
-            entity={entity}
-            renderName={renderEntityName}
-            isLoading={isLoading}
-            actions={[
-                {
-                    action: handlePatch,
-                    icon: Icon.FloppyIcon,
-                    disabled: isLoading,
-                },
-                {
-                    action: handleDelete,
-                    icon: Icon.TrashIcon,
-                    disabled: !entity || isLoading,
-                },
-            ]}
-            tools={
-                Tools.map(tool => ({
-                    ...tool,
-                    selected: currentTool?.id === tool.id,
-                    onSelect: () => dispatch('setTool', tool.id),
-                }))
-            }
-        >
-            {(() => {
-                if (currentTool?.id === 'model-selector') {
-                    return (
-                        <Tools.Selector
-                            renderEntityName={renderEntityName}
-                            renderToolName={renderToolName}
-                            isLoading={isLoading}
-                            entity={entity}
-                            entities={entities}
-                            onSelect={id => dispatch('setEntity', id)}
-                            actions={[
-                                {
-                                    action: handleCreate,
-                                    icon: Icon.AddIcon,
-                                    disabled: isLoading,
-                                },
-                            ]}
-                        />
-                    );
+        <Puck data={PuckData.default} config={config} onChange={handlePuckChange}>
+            <Editor
+                className={className}
+                renderName={() => (
+                    <PuckEditorHeader
+                        name={renderEntityName(entity)}
+                        isCurrentMutated={storedExists}
+                    />
+                )}
+                isLoading={isLoading}
+                actions={[
+                    {
+                        action: handlePatch,
+                        icon: Icon.FloppyIcon,
+                        disabled: isLoading || !(entity && storedExists),
+                    },
+                    {
+                        action: handleDelete,
+                        icon: Icon.TrashIcon,
+                        disabled: !entity || isLoading,
+                    },
+                ]}
+                tools={
+                    Tools.map(tool => ({
+                        ...tool,
+                        selected: currentTool?.id === tool.id,
+                        onSelect: () => dispatchUrlState('setTool', tool.id),
+                    }))
                 }
-                if (currentTool?.id === 'tree') {
-                    return <Tools.Tree renderToolName={renderToolName} />;
-                }
-                if (currentTool?.id === 'components') {
-                    return <Tools.Components renderToolName={renderToolName} />;
-                }
-                return null;
-            })()}
-            <Box direction="row" fullHeight fullWidth>
-                {currentTool?.id && !currentTool?.isDefault
-                    ? (<PuckRender />)
-                    : (<EntityRender entity={entity} store={store} />)}
-            </Box>
-        </Editor>
+            >
+                <PuckEditorContent
+                    accessor={accessor}
+                    store={store}
+                    renderEntityName={renderEntityName}
+                    onCreate={handleCreate}
+                    isLoading={isLoading}
+                    entity={entity}
+                    entities={entities}
+                />
+            </Editor>
+        </Puck>
     );
 }
