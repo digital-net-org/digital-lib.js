@@ -1,5 +1,4 @@
 export * from './types';
-
 export * from './Avatar';
 export * from './Box';
 export * from './Button';

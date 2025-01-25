@@ -1,5 +1,5 @@
 import { type ValueOf } from '../../../core';
-import { Icon } from '../../../react-digital-ui';
+import { Icon } from '../../../react-digital-ui/components/Icon';
 import Tree from './Tree';
 import Components from './Components';
 import Selector from './Selector';
