@@ -61,3 +61,12 @@
         outline: none;
     }
 }
+
+.SafariUi-InputText button {
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    display: contents;
+    padding: 0;
+    margin: 0;
+}

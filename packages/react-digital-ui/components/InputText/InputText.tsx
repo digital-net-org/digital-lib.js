@@ -2,6 +2,7 @@ import React from 'react';
 import type { ControlledHandler, SafariInputNode } from '../types';
 import { useClassName } from '../../../react-digital';
 import './InputText.styles.css';
+import { Icon } from '../Icon';
 
 export interface InputTextProps extends SafariInputNode {
     value: string;
@@ -21,6 +22,7 @@ export default function InputText({ type = 'text', pattern, patternMessage, name
     const ref = React.useRef<HTMLInputElement>(null);
     const [hasError, setHasError] = React.useState(false);
     const [selected, setSelected] = React.useState(false);
+    const [hidden, setHidden] = React.useState(type === 'password');
     const className = useClassName({ ...props, error: hasError, selected }, 'SafariUi-InputText');
 
     // Restore error state on value change
@@ -31,6 +33,13 @@ export default function InputText({ type = 'text', pattern, patternMessage, name
         if (props.required && props.value === '')
             ref.current?.setCustomValidity(props.requiredMessage ?? 'This field is required');
     }, [props.required, props.requiredMessage, props.value]);
+
+    const resolvedType = React.useMemo(() => {
+        if (type !== 'password') {
+            return type;
+        }
+        return hidden ? 'password' : 'text';
+    }, [hidden, type]);
 
     const testValue = React.useCallback((value: string) => !pattern || new RegExp(pattern).test(value), [pattern]);
 
@@ -75,13 +84,18 @@ export default function InputText({ type = 'text', pattern, patternMessage, name
                 name={name}
                 pattern={pattern}
                 disabled={props.disabled}
-                type={type}
+                type={resolvedType}
                 onChange={handleChange}
                 onSelect={handleSelect}
                 onBlur={handleBlur}
                 onError={() => setHasError(true)}
                 onInvalid={() => setHasError(true)}
             />
+            {type === 'password' && (
+                <button onClick={() => setHidden(!hidden)}>
+                    {hidden ? <Icon.EyeSlashedIcon variant="filled" /> : <Icon.EyeIcon variant="filled" />}
+                </button>
+            )}
         </div>
     );
 }
