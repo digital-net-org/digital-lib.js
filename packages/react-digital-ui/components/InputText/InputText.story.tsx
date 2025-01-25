@@ -26,6 +26,7 @@ export const Primary: Story = {
         loading: { control: 'boolean' },
         disabled: { control: 'boolean' },
         fullWidth: { control: 'boolean' },
+        borderless: { control: 'boolean' },
     },
     args: {
         type: 'text',
@@ -35,5 +36,6 @@ export const Primary: Story = {
         loading: false,
         disabled: false,
         fullWidth: false,
+        borderless: false,
     },
 };

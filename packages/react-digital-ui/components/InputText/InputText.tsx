@@ -15,6 +15,7 @@ export interface InputTextProps extends SafariInputNode {
     requiredMessage?: string;
     type?: 'text' | 'password' | 'email';
     fullWidth?: boolean | undefined;
+    borderless?: boolean | undefined;
     name?: string;
 }
 

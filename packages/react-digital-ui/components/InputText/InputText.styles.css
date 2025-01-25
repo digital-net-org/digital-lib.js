@@ -27,6 +27,12 @@
         }
     }
 
+    &.SafariUi-InputText-borderless {
+        border: none;
+        background-color: transparent;
+    }
+
+
     &.SafariUi-InputText-loading {
         outline: none;
 
@@ -49,6 +55,10 @@
 
     &.SafariUi-InputText-error {
         outline-color: var(--palette-error);
+    }
+
+    &.SafariUi-InputText-borderless {
+        outline: none;
     }
 }
 

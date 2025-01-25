@@ -131,4 +131,6 @@ export const booleanKeywords = [
     'wrap',
     'isInverted',
     'inverted',
+    'borderless',
+    'isBorderless',
 ];
