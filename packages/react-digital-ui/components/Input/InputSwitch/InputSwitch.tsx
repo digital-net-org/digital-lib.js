@@ -1,9 +1,10 @@
 import React from 'react';
-import type { SafariInputNode } from '../types';
-import { useClassName, useProps } from '../../../react-digital';
+import type { SafariNode } from '../../types';
+import type { BaseInputProps } from '../types';
+import { useClassName, useProps } from '../../../../react-digital';
 import './InputSwitch.styles.css';
 
-export interface InputSwitchProps extends SafariInputNode {
+export interface InputSwitchProps extends BaseInputProps, SafariNode {
     name?: string;
     value: boolean;
     onChange: (checked: boolean) => void;

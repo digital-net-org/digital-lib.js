@@ -1,0 +1,10 @@
+.SafariUi-InputSelect {
+    width: 100%;
+
+    & select {
+        width: 100%;
+        border: none;
+        cursor: pointer;
+        background: transparent;
+    }
+}

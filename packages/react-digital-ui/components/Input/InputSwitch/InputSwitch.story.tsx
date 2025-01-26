@@ -1,7 +1,7 @@
 /* eslint react-hooks/rules-of-hooks: 0 */
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
-import { Box } from '../Box';
+import { Box } from '../../Box';
 import component, { type InputSwitchProps } from './InputSwitch';
 
 const meta: Meta<InputSwitchProps> = {

@@ -10,13 +10,3 @@
     gap: 1rem;
     justify-content: flex-end;
 }
-
-.SafariUi-FormField {
-    position: relative;
-}
-
-.SafariUi-FormField-label {
-    position: absolute;
-    top: -1.1rem;
-    font-size: 0.8rem;
-}

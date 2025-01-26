@@ -1,6 +1,6 @@
 import React from 'react';
 import { Box } from '../Box';
-import { InputText, type InputTextProps } from '../InputText';
+import { InputText, type InputTextProps } from '../Input';
 import type { ControlledHandler } from '../types';
 import { useClassName } from '../../../react-digital';
 import './Form.styles.css';
@@ -19,16 +19,8 @@ const FormField = React.forwardRef(
                 id={id}
                 ref={ref}
                 className={resolvedClassName}
-                direction="row"
-                mt={1}
-                gap={2}
-                justify="space-between"
-                align="center"
             >
-                <React.Fragment>
-                    {label && <label className="SafariUi-FormField-label">{label}</label>}
-                    <InputText type={type} name={id} {...inputProps} />
-                </React.Fragment>
+                <InputText type={type} name={id} label={label} {...inputProps} />
             </Box>
         );
     },
