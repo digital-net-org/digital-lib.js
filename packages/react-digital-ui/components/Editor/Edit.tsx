@@ -1,8 +1,8 @@
 import React, { type PropsWithChildren } from 'react';
-import type { Entity } from '../../../core';
 import { Box } from '../../../react-digital-ui';
 import { useClassName } from '../../../react-digital';
 import EditActions, { type EditActionsProps } from './EditActions';
+import './Edit.styles.css';
 
 export interface EditProps extends EditActionsProps {
     renderName?: () => React.ReactNode;
