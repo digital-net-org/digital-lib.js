@@ -5,7 +5,7 @@ import TableHead from './TableHead';
 export interface TableProps<T extends Entity> {
     schema: EntitySchema;
     entities: T[];
-    onEdit: (entity: T) => void;
+    onEdit: (id: string | number) => void;
     onDelete: (id: string | number) => void;
     isLoading?: boolean;
     disabled?: boolean;
