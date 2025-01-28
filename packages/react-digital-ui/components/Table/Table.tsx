@@ -6,7 +6,7 @@ export interface TableProps<T extends Entity> {
     schema: EntitySchema;
     entities: T[];
     onEdit: (entity: T) => void;
-    onDelete: (entity: T) => void;
+    onDelete: (id: string | number) => void;
     isLoading?: boolean;
     disabled?: boolean;
 }

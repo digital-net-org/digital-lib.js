@@ -8,7 +8,7 @@ interface TableRowProps<T extends Entity> {
     schema: EntitySchema;
     entity: T;
     onEdit: (entity: T) => void;
-    onDelete: (entity: T) => void;
+    onDelete: (id: string | number) => void;
     disabled?: boolean;
     isLoading?: boolean;
 }
@@ -25,7 +25,7 @@ export default function TableRow<T extends Entity>({ schema, entity, onEdit, onD
                 <EditActions
                     actions={[
                         { icon: Icon.PencilSquare, action: () => onEdit(entity) },
-                        { icon: Icon.TrashIcon, action: () => onDelete(entity) },
+                        { icon: Icon.TrashIcon, action: () => onDelete(entity.id) },
                     ]}
                     {...props}
                 />
