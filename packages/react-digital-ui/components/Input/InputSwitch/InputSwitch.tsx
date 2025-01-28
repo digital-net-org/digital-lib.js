@@ -6,19 +6,23 @@ import './InputSwitch.styles.css';
 
 export interface InputSwitchProps extends BaseInputProps, SafariNode {
     name?: string;
-    value: boolean;
-    onChange: (checked: boolean) => void;
+    value?: boolean;
+    onChange?: (value: boolean) => void;
 }
 
-export default function InputSwitch({ id, ...props }: InputSwitchProps) {
+export default function InputSwitch({ id, value, onChange, ...props }: InputSwitchProps) {
     const className = useClassName(props, 'DigitalUi-InputSwitch');
     const { mapHtmlProps } = useProps(props);
 
-    const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    const handleClick = (e: React.MouseEvent<HTMLInputElement>) => {
         if (props.disabled || props.loading) {
             e.preventDefault();
             e.stopPropagation();
         }
+    };
+
+    const handleChange = (_: React.ChangeEvent<HTMLInputElement>) => {
+        onChange?.(!value);
     };
 
     return (
@@ -28,11 +32,11 @@ export default function InputSwitch({ id, ...props }: InputSwitchProps) {
                     <input
                         id={props.name}
                         className="DigitalUi-InputSwitch-input"
+                        name={props.name}
                         type="checkbox"
-                        value={JSON.stringify(props.value)}
-                        checked={props.value}
-                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => props.onChange(e.target.checked)}
+                        checked={value}
                         onClick={handleClick}
+                        onChange={handleChange}
                     />,
                 )}
                 <span className="DigitalUi-InputSwitch-slider"></span>
