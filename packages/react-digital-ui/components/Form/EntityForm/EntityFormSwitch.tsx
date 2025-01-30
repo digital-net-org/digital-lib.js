@@ -6,24 +6,15 @@ import { type Entity, type EntitySchemaProperty, StringResolver } from '../../..
 
 interface EntityFormSwitchProps<T extends Entity> {
     schema: EntitySchemaProperty;
-    entity: T;
+    value: boolean;
+    onChange: (value: boolean) => void;
 }
 
 export default function EntityFormSwitch<T extends Entity>({
     schema,
-    entity,
+    value,
+    onChange,
 }: EntityFormSwitchProps<T>) {
-    const resolvedValue = React.useMemo(() => {
-        const resolvedName = StringResolver.toCamelCase(schema.name) as keyof T;
-        return entity[resolvedName] as boolean;
-    }, [entity, schema.name]);
-
-    const [value, setValue] = React.useState(resolvedValue);
-    const onChange = (checked: boolean) => {
-        console.log('checked', checked);
-        setValue(checked);
-    };
-
     return (
         <Box direction="row" align="center" gap={1} key={schema.name}>
             <Text>{schema.name}</Text>

@@ -1,40 +1,63 @@
 import { type Entity, type EntitySchema, StringResolver } from '../../../../core';
-
 import React from 'react';
-import { InputSwitch, InputText } from '../../Input';
-import { Box } from '../../Box';
-import { Text } from '../../Text';
 import EntityFormSwitch from './EntityFormSwitch';
+import EntityFormInput from './EntityFormInput';
 
 interface EntityFormProps<T extends Entity> {
     schema: EntitySchema;
     entity: T;
+    onFormChange: (data: Partial<T>) => void;
 }
 
 export default function EntityForm<T extends Entity>({
     schema,
     entity,
+    onFormChange,
 }: EntityFormProps<T>) {
+    const initialValues = schema.reduce((acc, s) => {
+        if (!s.isForeignKey && !s.isIdentity && !s.isReadOnly && s.isRequired) {
+            const resolvedName = StringResolver.toCamelCase(s.name) as keyof T;
+            acc[resolvedName] = entity[resolvedName];
+        }
+        return acc;
+    }, {} as Partial<T>);
+
+    const [formData, setFormData] = React.useState<Partial<T>>(initialValues);
+
+    const updateField = (key: keyof T, value: any) => {
+        setFormData((prev) => {
+            const updated = { ...prev, [key]: value };
+            onFormChange(updated);
+            return updated;
+        });
+    };
+
     return (
         <form>
             {schema.map((s) => {
-                const resolvedName = StringResolver.toCamelCase(s.name) as keyof T;
-
                 if (s.isForeignKey || s.isIdentity || s.isReadOnly || !s.isRequired) {
                     return;
                 }
+                const resolvedName = StringResolver.toCamelCase(s.name) as keyof T;
                 if (s.type === 'String') {
                     return (
-                        <InputText
-                            value={entity[resolvedName] as string}
-                            onChange={() => {}}
-                            label={s.name}
+                        <EntityFormInput
                             key={s.name}
+                            schema={s}
+                            value={formData[resolvedName] as string}
+                            onChange={value => updateField(resolvedName, value)}
                         />
                     );
                 }
                 if (s.type === 'Boolean') {
-                    return <EntityFormSwitch schema={s} entity={entity} />;
+                    return (
+                        <EntityFormSwitch
+                            key={s.name}
+                            schema={s}
+                            value={formData[resolvedName] as boolean}
+                            onChange={value => updateField(resolvedName, value)}
+                        />
+                    );
                 }
             })}
         </form>
