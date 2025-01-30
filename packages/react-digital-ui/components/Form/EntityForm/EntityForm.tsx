@@ -14,22 +14,25 @@ export default function EntityForm<T extends Entity>({
     entity,
     onFormChange,
 }: EntityFormProps<T>) {
-    const initialValues = schema.reduce((acc, s) => {
-        if (!s.isForeignKey && !s.isIdentity && !s.isReadOnly && s.isRequired) {
-            const resolvedName = StringResolver.toCamelCase(s.name) as keyof T;
-            acc[resolvedName] = entity[resolvedName];
-        }
-        return acc;
-    }, {} as Partial<T>);
+    const [formData, setFormData] = React.useState<Partial<T>>(() =>
+        schema.reduce((acc, s) => {
+            if (!s.isForeignKey && !s.isIdentity && !s.isReadOnly && s.isRequired) {
+                const resolvedName = StringResolver.toCamelCase(s.name) as keyof T;
+                acc[resolvedName] = entity[resolvedName];
+            }
+            return acc;
+        }, {} as Partial<T>),
+    );
 
-    const [formData, setFormData] = React.useState<Partial<T>>(initialValues);
+    React.useEffect(() => {
+        onFormChange(formData);
+    }, [formData, onFormChange]);
 
     const updateField = (key: keyof T, value: any) => {
-        setFormData((prev) => {
-            const updated = { ...prev, [key]: value };
-            onFormChange(updated);
-            return updated;
-        });
+        setFormData(prev => ({
+            ...prev,
+            [key]: value,
+        }));
     };
 
     return (
