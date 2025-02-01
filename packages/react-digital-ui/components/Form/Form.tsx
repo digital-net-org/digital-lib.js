@@ -12,7 +12,7 @@ export interface FormProps extends SafariNodeWithChildren {
 }
 
 export default function Form({ children, id, actionLabel, ...props }: FormProps) {
-    const className = useClassName(props, 'SafariUi-Form');
+    const className = useClassName(props, 'DigitalUi-Form');
     const { mapProps } = useProps({ children, loading: props.loading });
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {

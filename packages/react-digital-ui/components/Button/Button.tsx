@@ -13,7 +13,7 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
 }
 
 const Button = React.forwardRef<HTMLElement, ButtonProps>(({ children, variant = 'primary', ...props }, ref) => {
-    const className = useClassName({ ...props, variant }, 'SafariUi-Button');
+    const className = useClassName({ ...props, variant }, 'DigitalUi-Button');
     const { mapHtmlProps } = useProps({ ...props, variant, className });
 
     return mapHtmlProps(
@@ -22,7 +22,7 @@ const Button = React.forwardRef<HTMLElement, ButtonProps>(({ children, variant =
             children: (
                 <React.Fragment>
                     {props.loading && <Loader color={props.disabled ? 'disabled' : 'text'} size="small" />}
-                    <span className="SafariUi-Button-content">{children}</span>
+                    <span className="DigitalUi-Button-content">{children}</span>
                 </React.Fragment>
             ),
         }),

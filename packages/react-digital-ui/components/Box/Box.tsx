@@ -58,7 +58,7 @@ const Box = React.forwardRef<HTMLDivElement, BoxProps>(
                 justify,
                 ...props,
             },
-            'SafariUi-Box',
+            'DigitalUi-Box',
         );
 
         return <div {...props} style={{ backgroundColor: color }} ref={ref} className={className} />;

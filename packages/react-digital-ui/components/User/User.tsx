@@ -14,7 +14,7 @@ export interface UserProps extends SafariNode {
 
 export default function User({ size = 'small', onClick, id, username, inverted }: UserProps) {
     const handleClick = () => onClick?.(id ?? '');
-    const className = useClassName({ size, inverted }, 'SafariUi-User');
+    const className = useClassName({ size, inverted }, 'DigitalUi-User');
     return (
         <div className={className}>
             {onClick
@@ -24,7 +24,7 @@ export default function User({ size = 'small', onClick, id, username, inverted }
                         </Button>
                     )
                 : (
-                        <div className="SafariUi-User-row">
+                        <div className="DigitalUi-User-row">
                             <UserContent username={username} size={size} />
                         </div>
                     )}

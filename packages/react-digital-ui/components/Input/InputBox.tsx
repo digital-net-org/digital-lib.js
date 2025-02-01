@@ -6,7 +6,7 @@ import type { SafariNode } from '../types';
 import './InputBox.styles.css';
 
 export default function InputBox({ children, id, label, ...props }: PropsWithChildren<InputBoxProps & SafariNode>) {
-    const className = useClassName(props, 'SafariUi-InputBox');
+    const className = useClassName(props, 'DigitalUi-InputBox');
     return (
         <Box
             id={id}
@@ -18,7 +18,7 @@ export default function InputBox({ children, id, label, ...props }: PropsWithChi
             align="center"
             fullWidth={props.fullWidth}
         >
-            {label && <label className="SafariUi-Input-label">{label}</label>}
+            {label && <label className="DigitalUi-Input-label">{label}</label>}
             {children}
         </Box>
     );

@@ -1,4 +1,4 @@
-.SafariUi-Header {
+.DigitalUi-Header {
     position: relative;
     display: flex;
     flex-direction: row;
@@ -10,7 +10,7 @@
     border-bottom: 1px solid var(--palette-shadow-light);
 }
 
-.SafariUi-Header > div {
+.DigitalUi-Header > div {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -18,10 +18,10 @@
     width: 100%;
 }
 
-.SafariUi-Header > div:first-child {
+.DigitalUi-Header > div:first-child {
     justify-content: left;
 }
 
-.SafariUi-Header > div:last-child {
+.DigitalUi-Header > div:last-child {
     justify-content: right;
 }

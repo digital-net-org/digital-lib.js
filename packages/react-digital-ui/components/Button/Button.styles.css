@@ -1,4 +1,4 @@
-.SafariUi-Button {
+.DigitalUi-Button {
     height: fit-content;
     width: fit-content;
     min-width: 0;
@@ -19,7 +19,7 @@
     color: inherit;
     transition: all 0.3s ease;
 
-    & .SafariUi-Loader {
+    & .DigitalUi-Loader {
         position: absolute;
         left: 50%;
         top: 16.666%;
@@ -30,30 +30,30 @@
     }
 }
 
-.SafariUi-Button-fullWidth {
+.DigitalUi-Button-fullWidth {
     width: 100%;
 }
 
-.SafariUi-Button-disabled {
+.DigitalUi-Button-disabled {
     pointer-events: none;
     cursor: default;
 }
 
-.SafariUi-Button-loading {
+.DigitalUi-Button-loading {
     cursor: default;
     pointer-events: none;
 
-    & .SafariUi-Loader {
+    & .DigitalUi-Loader {
         position: absolute;
         top: 36%;
     }
 
-    & .SafariUi-Button-content {
+    & .DigitalUi-Button-content {
         opacity: 0;
     }
 }
 
-.SafariUi-Button-content {
+.DigitalUi-Button-content {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -62,24 +62,24 @@
     gap: var(--spacing-1);
 }
 
-.SafariUi-Button-variant-primary {
+.DigitalUi-Button-variant-primary {
     background-color: var(--palette-primary);
     border-color: var(--palette-primary);
 
     &:hover,
-    &.SafariUi-Button-selected {
+    &.DigitalUi-Button-selected {
         background-color: var(--palette-primary-light);
         border-color: var(--palette-primary-light);
     }
 
-    &.SafariUi-Button-disabled {
+    &.DigitalUi-Button-disabled {
         background-color: var(--palette-background-disabled);
         border-color: var(--palette-background-disabled);
         color: var(--palette-text-disabled);
     }
 }
 
-.SafariUi-Button-variant-secondary {
+.DigitalUi-Button-variant-secondary {
     background-color: transparent;
     border-color: var(--palette-primary);
 
@@ -89,18 +89,18 @@
     }
 
     &:hover,
-    &.SafariUi-Button-selected {
+    &.DigitalUi-Button-selected {
         border-color: var(--palette-primary);
         color: var(--palette-primary);
     }
 
-    &.SafariUi-Button-disabled {
+    &.DigitalUi-Button-disabled {
         border-color: var(--palette-text-disabled);
         color: var(--palette-text-disabled);
     }
 }
 
-.SafariUi-Button-variant-text {
+.DigitalUi-Button-variant-text {
     border-color: transparent;
     background-color: transparent;
 
@@ -109,16 +109,16 @@
     }
 
     &:hover,
-    &.SafariUi-Button-selected {
+    &.DigitalUi-Button-selected {
         color: var(--palette-primary);
     }
 
-    &.SafariUi-Button-disabled {
+    &.DigitalUi-Button-disabled {
         color: var(--palette-text-disabled);
     }
 }
 
-.SafariUi-Button-variant-icon {
+.DigitalUi-Button-variant-icon {
     padding: calc(var(--spacing-1) * 0.5);
 
     line-height: 0.8rem;
@@ -129,11 +129,11 @@
         background-color: var(--palette-primary-light);
     }
 
-    &.SafariUi-Button-selected {
+    &.DigitalUi-Button-selected {
         background-color: var(--palette-primary);
     }
 
-    &.SafariUi-Button-disabled svg {
+    &.DigitalUi-Button-disabled svg {
         fill: var(--palette-text-disabled);
     }
 }

@@ -26,7 +26,7 @@ export default function InputSelect<T>({
     ...props
 }: InputSelectProps<T>) {
     const ref = useInputRef<HTMLSelectElement>(props);
-    const resolvedClassName = useClassName(props, 'SafariUi-InputSelect');
+    const resolvedClassName = useClassName(props, 'DigitalUi-InputSelect');
 
     const options = React.useMemo(
         () => [...props.options, ...(!props.required ? [undefined] : [])],

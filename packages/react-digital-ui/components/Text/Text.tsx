@@ -11,7 +11,7 @@ export interface TextProps extends SafariNodeWithChildren {
 }
 
 export default function Text(props: TextProps) {
-    const className = useClassName(props, 'SafariUi-Text');
+    const className = useClassName(props, 'DigitalUi-Text');
 
     const tag = React.useMemo(() => {
         if (props.variant === 'text' || props.variant === undefined) {

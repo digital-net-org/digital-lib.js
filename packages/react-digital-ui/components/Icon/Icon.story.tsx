@@ -7,7 +7,7 @@ const meta: Meta<IconProps> = {
     title: 'SVG/Icon',
     decorators: (_, { args }) => (
         <React.Fragment>
-            <style>{`.SafariUi-Box { border: 1px solid red; }`}</style>
+            <style>{`.DigitalUi-Box { border: 1px solid red; }`}</style>
             {args.fullWidth
                 ? (
                         <Box resizable>

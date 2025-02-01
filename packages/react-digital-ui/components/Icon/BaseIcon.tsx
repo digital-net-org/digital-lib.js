@@ -20,7 +20,7 @@ export default function BaseIcon({
     animation = true,
     ...props
 }: IconProps & { children: React.ReactNode }) {
-    const className = useClassName({ ...props, variant, color, size, direction, animation }, 'SafariUi-Icon');
+    const className = useClassName({ ...props, variant, color, size, direction, animation }, 'DigitalUi-Icon');
     const resolved = useProps({ ...props, variant, color, size, direction, animation, className });
     return resolved.mapHtmlProps();
 }

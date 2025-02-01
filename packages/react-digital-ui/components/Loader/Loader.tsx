@@ -11,7 +11,7 @@ export interface LoaderProps extends BaseLoaderProps {
 }
 
 export default function Loader({ color = 'text', size = 'medium', ...props }: LoaderProps) {
-    const className = useClassName({ ...props, color, size }, 'SafariUi-Loader');
+    const className = useClassName({ ...props, color, size }, 'DigitalUi-Loader');
     return (
         <div className={className}>
             {Array(4)

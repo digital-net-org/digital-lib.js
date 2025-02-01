@@ -1,67 +1,67 @@
-.SafariUi-Icon {
+.DigitalUi-Icon {
     line-height: 0;
     --icon-transition: 0s;
     --icon-color: currentColor;
     --icon-size: 1rem;
 }
 
-.SafariUi-Icon-action {
+.DigitalUi-Icon-action {
     cursor: pointer;
 }
 
-.SafariUi-Icon-animation {
+.DigitalUi-Icon-animation {
     --icon-transition: 0.4s;
 }
 
-.SafariUi-Icon-color-primary {
+.DigitalUi-Icon-color-primary {
     --icon-color: var(--palette-primary);
 }
 
-.SafariUi-Icon-color-text {
+.DigitalUi-Icon-color-text {
     --icon-color: var(--palette-text);
 }
 
-.SafariUi-Icon-color-disabled {
+.DigitalUi-Icon-color-disabled {
     --icon-color: var(--palette-text-disabled);
 }
 
-.SafariUi-Icon-size-xsmall {
+.DigitalUi-Icon-size-xsmall {
     --icon-size: calc((var(--font-size-regular) * 0.75));
 }
 
-.SafariUi-Icon-size-small {
+.DigitalUi-Icon-size-small {
     --icon-size: calc((var(--font-size-regular) * 1.125));
 }
 
-.SafariUi-Icon-size-medium {
+.DigitalUi-Icon-size-medium {
     --icon-size: calc((var(--font-size-regular) * 1.75));
 }
 
-.SafariUi-Icon-size-large {
+.DigitalUi-Icon-size-large {
     --icon-size: calc((var(--font-size-regular) * 3));
 }
 
-.SafariUi-Icon-fullWidth {
+.DigitalUi-Icon-fullWidth {
     --icon-size: 100%;
 }
 
-.SafariUi-Icon[direction="up"] {
+.DigitalUi-Icon[direction="up"] {
     --icon-transform: rotate(360deg);
 }
 
-.SafariUi-Icon[direction="down"] {
+.DigitalUi-Icon[direction="down"] {
     --icon-transform: rotate(180deg);
 }
 
-.SafariUi-Icon[direction="left"] {
+.DigitalUi-Icon[direction="left"] {
     --icon-transform: rotate(270deg);
 }
 
-.SafariUi-Icon[direction="right"] {
+.DigitalUi-Icon[direction="right"] {
     --icon-transform: rotate(90deg);
 }
 
-.SafariUi-Icon {
+.DigitalUi-Icon {
     color: var(--icon-color);
     fill: var(--icon-color);
     width: var(--icon-size);

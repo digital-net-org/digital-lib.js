@@ -1,158 +1,158 @@
-.SafariUi-Box {
+.DigitalUi-Box {
     display: flex;
     box-sizing: border-box;
     height: fit-content;
 }
 
-.SafariUi-Box-fullWidth {
+.DigitalUi-Box-fullWidth {
     width: 100%;
 }
 
-.SafariUi-Box-fullHeight {
+.DigitalUi-Box-fullHeight {
     height: 100%;
 }
 
-.SafariUi-Box-resizable {
+.DigitalUi-Box-resizable {
     resize: both;
     overflow: auto;
 }
 
-.SafariUi-Box-overflow-hidden {
+.DigitalUi-Box-overflow-hidden {
     overflow: hidden;
 }
 
-.SafariUi-Box-overflow-auto {
+.DigitalUi-Box-overflow-auto {
     overflow: auto;
 }
 
-.SafariUi-Box-overflow-scroll {
+.DigitalUi-Box-overflow-scroll {
     overflow: scroll;
 }
 
-.SafariUi-Box-wrap {
+.DigitalUi-Box-wrap {
     flex-wrap: wrap;
 }
 
-.SafariUi-Box-direction-column {
+.DigitalUi-Box-direction-column {
     flex-direction: column;
 }
 
-.SafariUi-Box-direction-row {
+.DigitalUi-Box-direction-row {
     flex-direction: row;
 }
 
-.SafariUi-Box-justify-center {
+.DigitalUi-Box-justify-center {
     justify-content: center;
 }
 
-.SafariUi-Box-justify-end {
+.DigitalUi-Box-justify-end {
     justify-content: flex-end;
 }
 
-.SafariUi-Box-justify-start {
+.DigitalUi-Box-justify-start {
     justify-content: flex-start;
 }
 
-.SafariUi-Box-justify-space-between {
+.DigitalUi-Box-justify-space-between {
     justify-content: space-between;
 }
 
-.SafariUi-Box-justify-space-around {
+.DigitalUi-Box-justify-space-around {
     justify-content: space-around;
 }
 
-.SafariUi-Box-align-center {
+.DigitalUi-Box-align-center {
     align-items: center;
 }
 
-.SafariUi-Box-align-end {
+.DigitalUi-Box-align-end {
     align-items: flex-end;
 }
 
-.SafariUi-Box-align-start {
+.DigitalUi-Box-align-start {
     align-items: flex-start;
 }
 
-.SafariUi-Box-p-1 {
+.DigitalUi-Box-p-1 {
     padding: var(--spacing-1);
 }
 
-.SafariUi-Box-p-2 {
+.DigitalUi-Box-p-2 {
     padding: var(--spacing-2);
 }
 
-.SafariUi-Box-p-3 {
+.DigitalUi-Box-p-3 {
     padding: var(--spacing-3);
 }
 
-.SafariUi-Box-pt-1 {
+.DigitalUi-Box-pt-1 {
     padding-top: var(--spacing-1);
 }
 
-.SafariUi-Box-pt-2 {
+.DigitalUi-Box-pt-2 {
     padding-top: var(--spacing-2);
 }
 
-.SafariUi-Box-pt-3 {
+.DigitalUi-Box-pt-3 {
     padding-top: var(--spacing-3);
 }
 
-.SafariUi-Box-pb-1 {
+.DigitalUi-Box-pb-1 {
     padding-bottom: var(--spacing-1);
 }
 
-.SafariUi-Box-pb-2 {
+.DigitalUi-Box-pb-2 {
     padding-bottom: var(--spacing-2);
 }
 
-.SafariUi-Box-pb-3 {
+.DigitalUi-Box-pb-3 {
     padding-bottom: var(--spacing-3);
 }
 
-.SafariUi-Box-m-1 {
+.DigitalUi-Box-m-1 {
     margin: var(--spacing-1);
 }
 
-.SafariUi-Box-m-2 {
+.DigitalUi-Box-m-2 {
     margin: var(--spacing-2);
 }
 
-.SafariUi-Box-m-3 {
+.DigitalUi-Box-m-3 {
     margin: var(--spacing-3);
 }
 
-.SafariUi-Box-mt-1 {
+.DigitalUi-Box-mt-1 {
     margin-top: var(--spacing-1);
 }
 
-.SafariUi-Box-mt-2 {
+.DigitalUi-Box-mt-2 {
     margin-top: var(--spacing-2);
 }
 
-.SafariUi-Box-mt-3 {
+.DigitalUi-Box-mt-3 {
     margin-top: var(--spacing-3);
 }
 
-.SafariUi-Box-mb-1 {
+.DigitalUi-Box-mb-1 {
     margin-bottom: var(--spacing-1);
 }
 
-.SafariUi-Box-mb-2 {
+.DigitalUi-Box-mb-2 {
     margin-bottom: var(--spacing-2);
 }
 
-.SafariUi-Box-mb-3 {
+.DigitalUi-Box-mb-3 {
     margin-bottom: var(--spacing-3);
 }
 
-.SafariUi-Box-gap-1 {
+.DigitalUi-Box-gap-1 {
     gap: var(--spacing-1);
 }
 
-.SafariUi-Box-gap-2 {
+.DigitalUi-Box-gap-2 {
     gap: var(--spacing-2);
 }
 
-.SafariUi-Box-gap-3 {
+.DigitalUi-Box-gap-3 {
     gap: var(--spacing-3);
 }

@@ -11,7 +11,7 @@ export interface InputSwitchProps extends BaseInputProps, SafariNode {
 }
 
 export default function InputSwitch({ id, ...props }: InputSwitchProps) {
-    const className = useClassName(props, 'SafariUi-InputSwitch');
+    const className = useClassName(props, 'DigitalUi-InputSwitch');
     const { mapHtmlProps } = useProps(props);
 
     const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -23,11 +23,11 @@ export default function InputSwitch({ id, ...props }: InputSwitchProps) {
 
     return (
         <div id={id} className={className}>
-            <label className="SafariUi-InputSwitch-label" htmlFor={props.name}>
+            <label className="DigitalUi-InputSwitch-label" htmlFor={props.name}>
                 {mapHtmlProps(
                     <input
                         id={props.name}
-                        className="SafariUi-InputSwitch-input"
+                        className="DigitalUi-InputSwitch-input"
                         type="checkbox"
                         value={JSON.stringify(props.value)}
                         checked={props.value}
@@ -35,7 +35,7 @@ export default function InputSwitch({ id, ...props }: InputSwitchProps) {
                         onClick={handleClick}
                     />,
                 )}
-                <span className="SafariUi-InputSwitch-slider"></span>
+                <span className="DigitalUi-InputSwitch-slider"></span>
             </label>
         </div>
     );

@@ -13,7 +13,7 @@ export interface AvatarProps extends SafariNode {
 }
 
 export default function Avatar({ src, color = 'text', size = 'small', fullWidth = false, ...props }: AvatarProps) {
-    const classNames = useClassName({ color, size, fullWidth, ...props }, 'SafariUi-Avatar');
+    const classNames = useClassName({ color, size, fullWidth, ...props }, 'DigitalUi-Avatar');
     const svgProps = React.useMemo(() => ({ color, size, fullWidth }), [color, size, fullWidth]);
     const { hasError } = useImage(src);
 
@@ -21,7 +21,7 @@ export default function Avatar({ src, color = 'text', size = 'small', fullWidth 
         <AvatarContainer className={classNames} color={color} size={size} fullWidth={fullWidth} {...props}>
             {src && !hasError
                 ? (
-                        <div className="SafariUi-Avatar-container">
+                        <div className="DigitalUi-Avatar-container">
                             <img src={src} alt="" />
                             <Icon.CircleIcon {...svgProps} />
                         </div>

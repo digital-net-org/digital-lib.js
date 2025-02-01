@@ -1,41 +1,41 @@
-.SafariUi-Text {
+.DigitalUi-Text {
     color: var(--palette-text);
 }
 
-.SafariUi-Text-variant-caption {
+.DigitalUi-Text-variant-caption {
     letter-spacing: calc(var(--font-letter-spacing) * 2);
     text-transform: uppercase;
 }
 
-.SafariUi-Text-variant-h3 .SafariUi-Text-variant-h2 .SafariUi-Text-variant-h1 {
+.DigitalUi-Text-variant-h3 .DigitalUi-Text-variant-h2 .DigitalUi-Text-variant-h1 {
     text-transform: capitalize;
 }
 
-.SafariUi-Text-bold {
+.DigitalUi-Text-bold {
     font-weight: bold;
 }
 
-.SafariUi-Text-italic {
+.DigitalUi-Text-italic {
     font-style: italic;
 }
 
-.SafariUi-Text-size-small {
+.DigitalUi-Text-size-small {
     font-size: var(--font-size-small);
 }
 
-.SafariUi-Text-size-regular {
+.DigitalUi-Text-size-regular {
     font-size: var(--font-size-regular);
 }
 
-.SafariUi-Text-size-medium {
+.DigitalUi-Text-size-medium {
     font-size: var(--font-size-medium);
 }
 
-.SafariUi-Text-size-large {
+.DigitalUi-Text-size-large {
     font-size: var(--font-size-large);
 }
 
-.SafariUi-Text-size-xlarge {
+.DigitalUi-Text-size-xlarge {
     font-size: var(--font-size-xlarge);
 }
 

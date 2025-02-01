@@ -28,7 +28,7 @@
         gap: calc(var(--spacing-1) * 0.75);
         padding-right: var(--spacing-1);
 
-        & .SafariUi-Button {
+        & .DigitalUi-Button {
             justify-content: left;
             padding: calc(var(--spacing-1) * 0.75);
         }

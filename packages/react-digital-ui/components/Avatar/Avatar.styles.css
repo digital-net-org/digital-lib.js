@@ -1,8 +1,8 @@
-.SafariUi-Avatar {
+.DigitalUi-Avatar {
     width: var(--avatar-size);
     height: var(--avatar-size);
 
-    & .SafariUi-Avatar-container {
+    & .DigitalUi-Avatar-container {
         position: relative;
         border-radius: 100%;
         height: var(--avatar-size);
@@ -23,29 +23,29 @@
     }
 }
 
-.SafariUi-Avatar-action {
+.DigitalUi-Avatar-action {
     cursor: pointer;
 }
 
-.SafariUi-Avatar-color-disabled {
+.DigitalUi-Avatar-color-disabled {
     & img {
         -webkit-filter: grayscale(100%);
         filter: grayscale(100%);
     }
 }
 
-.SafariUi-Avatar-size-small {
+.DigitalUi-Avatar-size-small {
     --avatar-size: calc((var(--font-size-regular) * 1.125));
 }
 
-.SafariUi-Avatar-size-medium {
+.DigitalUi-Avatar-size-medium {
     --avatar-size: calc((var(--font-size-regular) * 1.75));
 }
 
-.SafariUi-Avatar-size-large {
+.DigitalUi-Avatar-size-large {
     --avatar-size: calc((var(--font-size-regular) * 3));
 }
 
-.SafariUi-Avatar-fullWidth {
+.DigitalUi-Avatar-fullWidth {
     --avatar-size: 100%;
 }

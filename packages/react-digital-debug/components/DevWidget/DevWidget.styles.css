@@ -44,23 +44,23 @@
 .DevWidget {
     font-size: smaller;
 
-    & .SafariUi-Text {
+    & .DigitalUi-Text {
         font-size: smaller;
     }
 
-    & .SafariUi-Text-variant-caption {
+    & .DigitalUi-Text-variant-caption {
         font-size: small;
     }
 
-    & .SafariUi-Text-variant-h1 {
+    & .DigitalUi-Text-variant-h1 {
         font-size: medium;
     }
 
-    & .SafariUi-Text-variant-h2 {
+    & .DigitalUi-Text-variant-h2 {
         font-size: medium;
     }
 
-    & .SafariUi-Text-variant-h3 {
+    & .DigitalUi-Text-variant-h3 {
         font-size: medium;
     }
 }

@@ -13,7 +13,7 @@ export interface FormFieldProps extends Omit<InputTextProps, 'value' | 'onChange
 
 const FormField = React.forwardRef(
     ({ label, type, className, id, ...inputProps }: FormFieldProps, ref: React.Ref<HTMLDivElement>) => {
-        const resolvedClassName = useClassName({ type, className }, 'SafariUi-FormField');
+        const resolvedClassName = useClassName({ type, className }, 'DigitalUi-FormField');
         return (
             <Box
                 id={id}

@@ -1,8 +1,8 @@
-.SafariUi-InputBox {
+.DigitalUi-InputBox {
     position: relative;
 }
 
-.SafariUi-InputBox {
+.DigitalUi-InputBox {
     --input-padding: calc(var(--spacing-1) * 0.5) calc(var(--spacing-2) * 0.5);
 
     width: 250px;
@@ -13,11 +13,11 @@
     color: var(--palette-text);
     padding: var(--input-padding);
 
-    &.SafariUi-InputBox-fullWidth {
+    &.DigitalUi-InputBox-fullWidth {
         width: 100%;
     }
 
-    &.SafariUi-InputBox-disabled {
+    &.DigitalUi-InputBox-disabled {
         background-color: var(--palette-background-disabled);
         border-color: var(--palette-border-disabled);
 
@@ -27,12 +27,12 @@
         }
     }
 
-    &.SafariUi-InputBox-borderless {
+    &.DigitalUi-InputBox-borderless {
         border: none;
         background-color: transparent;
     }
 
-    &.SafariUi-InputBox-loading {
+    &.DigitalUi-InputBox-loading {
         outline: none;
 
         & input, select {
@@ -43,24 +43,24 @@
     }
 }
 
-.SafariUi-InputBox-error {
+.DigitalUi-InputBox-error {
     border-color: var(--palette-error);
     outline: 1px solid var(--palette-error);
 }
 
-.SafariUi-InputBox-selected {
+.DigitalUi-InputBox-selected {
     outline: 1px solid var(--palette-primary);
 
-    &.SafariUi-InputBox-error {
+    &.DigitalUi-InputBox-error {
         outline-color: var(--palette-error);
     }
 
-    &.SafariUi-InputBox-borderless {
+    &.DigitalUi-InputBox-borderless {
         outline: none;
     }
 }
 
-.SafariUi-Input-label {
+.DigitalUi-Input-label {
     position: absolute;
     top: -1.1rem;
     left: 0;

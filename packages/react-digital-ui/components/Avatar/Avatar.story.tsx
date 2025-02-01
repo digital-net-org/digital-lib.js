@@ -9,7 +9,7 @@ const meta: Meta<AvatarProps> = {
         args.fullWidth
             ? (
                     <React.Fragment>
-                        <style>{`.SafariUi-Box { border: 1px solid red; }`}</style>
+                        <style>{`.DigitalUi-Box { border: 1px solid red; }`}</style>
                         <Box resizable>
                             <Component {...args} />
                         </Box>

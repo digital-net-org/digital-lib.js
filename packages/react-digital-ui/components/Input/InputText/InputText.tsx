@@ -57,7 +57,7 @@ export default function InputText({ type = 'text', pattern, patternMessage, name
             selected={selected}
             {...props}
         >
-            <div className="SafariUi-InputText">
+            <div className="DigitalUi-InputText">
                 <input
                     ref={ref}
                     value={props.value}

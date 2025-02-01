@@ -5,5 +5,5 @@ import './Header.styles.css';
 export type HeaderProps = SafariNodeWithChildren;
 
 export default function Header(props: HeaderProps) {
-    return <header className="SafariUi-Header" {...props} />;
+    return <header className="DigitalUi-Header" {...props} />;
 }

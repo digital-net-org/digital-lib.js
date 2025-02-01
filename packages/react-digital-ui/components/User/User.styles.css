@@ -1,4 +1,4 @@
-.SafariUi-User {
+.DigitalUi-User {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -10,7 +10,7 @@
         display: block;
     }
 
-    & .SafariUi-Button-content {
+    & .DigitalUi-Button-content {
         display: flex;
         flex-direction: row;
         justify-content: center;
@@ -18,7 +18,7 @@
         gap: var(--spacing-1);
     }
 
-    & .SafariUi-User-row {
+    & .DigitalUi-User-row {
         display: flex;
         flex-direction: row;
         justify-content: center;
@@ -28,24 +28,24 @@
     }
 }
 
-.SafariUi-User-inverted {
-    & .SafariUi-Button-content {
+.DigitalUi-User-inverted {
+    & .DigitalUi-Button-content {
         flex-direction: row-reverse;
     }
-    & .SafariUi-User-row {
+    & .DigitalUi-User-row {
         flex-direction: row-reverse;
     }
 }
 
-.SafariUi-User-size-small span {
+.DigitalUi-User-size-small span {
     font-size: 1rem;
 }
 
-.SafariUi-User-size-medium span {
+.DigitalUi-User-size-medium span {
     font-size: 1.1rem;
 }
 
-.SafariUi-User-size-large span {
+.DigitalUi-User-size-large span {
     font-size: 1.3rem;
 }
 

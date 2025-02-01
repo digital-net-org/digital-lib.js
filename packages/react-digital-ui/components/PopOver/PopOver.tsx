@@ -15,7 +15,7 @@ export interface PopOverProps extends SafariNodeWithChildren {
 }
 
 export default function PopOver({ children, anchor, open, onOpen, onClose, ...props }: PopOverProps) {
-    const className = useClassName({ ...props }, 'SafariUi-PopOver');
+    const className = useClassName({ ...props }, 'DigitalUi-PopOver');
     const { mapHtmlProps } = useProps(props);
 
     const dialogRef = React.useRef(null);
@@ -29,11 +29,11 @@ export default function PopOver({ children, anchor, open, onOpen, onClose, ...pr
         <React.Fragment>
             {mapHtmlProps(
                 <dialog ref={dialogRef} open={open} className={className}>
-                    <div ref={placeHolderRef} className="SafariUi-PopOver-placeholder" />
-                    <div className="SafariUi-PopOver-content">{children}</div>
+                    <div ref={placeHolderRef} className="DigitalUi-PopOver-placeholder" />
+                    <div className="DigitalUi-PopOver-content">{children}</div>
                 </dialog>,
             )}
-            {open ? <div ref={backgroundRef} className="SafariUi-PopOver-background" onClick={onClose} /> : null}
+            {open ? <div ref={backgroundRef} className="DigitalUi-PopOver-background" onClick={onClose} /> : null}
         </React.Fragment>
     );
 }
