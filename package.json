@@ -44,6 +44,7 @@
     "jsdom": "latest",
     "react": "^18",
     "react-dom": "^18",
+    "react-i18next": "^15",
     "react-router-dom": "^6",
     "storybook": "^8",
     "typescript": "latest",
