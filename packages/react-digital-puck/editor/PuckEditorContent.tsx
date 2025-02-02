@@ -4,7 +4,7 @@ import { type Entity } from '../../core';
 import { useIDbStore } from '../../react-digital-idb';
 import { Box, Icon } from '../../react-digital-ui';
 import { type PuckEditorProps } from './PuckEditor';
-import { type Tool, Tools } from './Tools';
+import { Tools } from './Tools';
 import PuckRender from './PuckRender';
 import EntityRender from './EntityRender';
 import usePuckUrlState from './usePuckUrlState';

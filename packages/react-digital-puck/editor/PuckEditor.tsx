@@ -1,12 +1,12 @@
 import React from 'react';
-import { t } from 'i18next';
 import { type Config, type Data, Puck } from '@measured/puck';
 import { type Entity } from '../../core';
 import { useClassName } from '../../react-digital';
-import { IDbStore, useIDbStore, useStoredEntity } from '../../react-digital-idb';
-import { Box, Editor, Icon, Text } from '../../react-digital-ui';
-import PuckData from '../PuckData';
+import { useIDbStore, useStoredEntity } from '../../react-digital-idb';
+import { Editor, Icon } from '../../react-digital-ui';
+import { config } from '../library';
 import { Tools } from './Tools';
+import PuckDataHelper from './PuckDataHelper';
 import usePuckCrud from './usePuckCrud';
 import usePuckUrlState from './usePuckUrlState';
 import PuckEditorContent from './PuckEditorContent';
@@ -16,7 +16,6 @@ import './PuckEditor.styles.css';
 export interface PuckEditorProps<T extends Entity> {
     accessor: keyof T;
     store: string;
-    config: Config;
     renderEntityName: (entity: T | undefined) => string;
     onCreate: () => Partial<T>;
 }
@@ -25,13 +24,11 @@ export interface PuckEditorProps<T extends Entity> {
  * PuckEditor component. Wrapper for the Measured Puck editor.
  * @param accessor - Entity key name of the data to be edited.
  * @param store - IndexedDB store/api name.
- * @param config - Puck configuration.
  * @param renderEntityName - Function to render the entity name.
  * @param onCreate - Build the default entity payload.
  */
 export default function PuckEditor<T extends Entity>({
     accessor,
-    config,
     store,
     renderEntityName,
     onCreate,
@@ -75,7 +72,7 @@ export default function PuckEditor<T extends Entity>({
         if (isLoading || !(data.id && currentEntity && entity) || data.id !== entity?.id) {
             return;
         }
-        if (!PuckData.deepEquality(data, entity[accessor])) {
+        if (!PuckDataHelper.deepEquality(data, entity[accessor])) {
             await iDbStore.save({ id: data.id, [accessor]: data } as Partial<T>);
         } else {
             await iDbStore.delete(entity.id);
@@ -83,7 +80,7 @@ export default function PuckEditor<T extends Entity>({
     };
 
     return (
-        <Puck data={PuckData.default} config={config} onChange={handlePuckChange}>
+        <Puck data={PuckDataHelper.default} config={config} onChange={handlePuckChange}>
             <Editor
                 className={className}
                 renderName={() => (

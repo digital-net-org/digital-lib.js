@@ -1,7 +1,7 @@
 import type { Data } from '@measured/puck';
-import { ObjectMatcher } from '../core';
+import { ObjectMatcher } from '../../core';
 
-export default class PuckData {
+export default class PuckDataHelper {
     public static readonly default: Data = {
         root: { props: { title: '' } },
         zones: {},
@@ -23,6 +23,6 @@ export default class PuckData {
     }
 
     public static deepEquality(a: Data, b: unknown): boolean {
-        return ObjectMatcher.deepEquality(a, PuckData.resolve(b), ['id']);
+        return ObjectMatcher.deepEquality(a, PuckDataHelper.resolve(b), ['id']);
     }
 }
