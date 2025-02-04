@@ -14,29 +14,15 @@ export default function EntityForm<T extends Entity>({
     entity,
     onFormChange,
 }: EntityFormProps<T>) {
-    const [formData, setFormData] = React.useState<Partial<T>>(() =>
-        schema.reduce((acc, s) => {
-            if (!s.isForeignKey && !s.isIdentity && !s.isReadOnly && s.isRequired) {
-                const resolvedName = StringResolver.toCamelCase(s.name) as keyof T;
-                acc[resolvedName] = entity[resolvedName];
-            }
-            return acc;
-        }, {} as Partial<T>),
-    );
-
-    React.useEffect(() => {
-        onFormChange(formData);
-    }, [formData, onFormChange]);
-
-    const updateField = (key: keyof T, value: any) => {
-        setFormData(prev => ({
-            ...prev,
-            [key]: value,
-        }));
+    const handleChange = (e: React.ChangeEvent<HTMLFormElement>) => {
+        const value = e.target.value;
+        const path = e.target.name;
+        console.log(value, path);
+        return onFormChange(value);
     };
 
     return (
-        <form>
+        <form onChange={handleChange}>
             {schema.map((s) => {
                 if (s.isForeignKey || s.isIdentity || s.isReadOnly || !s.isRequired) {
                     return;
@@ -47,8 +33,10 @@ export default function EntityForm<T extends Entity>({
                         <EntityFormInput
                             key={s.name}
                             schema={s}
-                            value={formData[resolvedName] as string}
-                            onChange={value => updateField(resolvedName, value)}
+                            value={entity[resolvedName] as string}
+                            onChange={(value) => {
+                                onFormChange({ [resolvedName]: value } as Partial<T>);
+                            }}
                         />
                     );
                 }
@@ -57,8 +45,10 @@ export default function EntityForm<T extends Entity>({
                         <EntityFormSwitch
                             key={s.name}
                             schema={s}
-                            value={formData[resolvedName] as boolean}
-                            onChange={value => updateField(resolvedName, value)}
+                            value={entity[resolvedName] as boolean}
+                            onChange={(value) => {
+                                onFormChange({ [resolvedName]: value } as Partial<T>);
+                            }}
                         />
                     );
                 }

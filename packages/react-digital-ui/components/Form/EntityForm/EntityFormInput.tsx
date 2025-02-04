@@ -1,26 +1,27 @@
 import { InputText } from '../../Input';
 import React from 'react';
-import { type Entity, type EntitySchemaProperty } from '../../../../core';
+import { type EntitySchemaProperty } from '../../../../core';
 import { Box } from '../../Box';
 import type { ControlledHandler } from '../../types';
 
-interface EntityFormInputProps<T extends Entity> {
+interface EntityFormInputProps {
     schema: EntitySchemaProperty;
     value: string;
     onChange: ControlledHandler<string>;
 }
 
-export default function EntityFormInput<T extends Entity>({
+export default function EntityFormInput({
     schema,
     onChange,
     value,
-}: EntityFormInputProps<T>) {
+}: EntityFormInputProps) {
     return (
         <Box direction="row" align="center" gap={1} key={schema.name}>
             <InputText
                 value={value}
-                onChange={value => onChange(value)}
+                onChange={onChange}
                 label={schema.name}
+                id={schema.name}
             />
         </Box>
     );
