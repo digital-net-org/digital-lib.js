@@ -26,20 +26,12 @@ type Story = StoryObj<typeof meta>;
 export default meta;
 
 export const Primary: Story = {
-    decorators: (Story) => {
-        const [value, setValue] = React.useState<boolean>();
-        const onChange = (checked: boolean) => setValue(checked);
-        return (
-            <Box>
-                <Story value={value} onChange={onChange} />
-            </Box>
-        );
-    },
     args: {
         name: 'switch',
         required: false,
         loading: false,
         disabled: false,
+        defaultChecked: false,
     },
 };
 
@@ -48,8 +40,14 @@ export const StateTests: Story = {
         const [value, setValue] = React.useState<boolean>(false);
         const onChange = (checked: boolean) => setValue(checked);
         return (
-            <Box>
+            <Box gap={2}>
                 <InputSwitch value={value} onChange={onChange} />
+                <Box>
+                    State content:
+                    <pre>
+                        {JSON.stringify(value, null, 2)}
+                    </pre>
+                </Box>
             </Box>
         );
     },
