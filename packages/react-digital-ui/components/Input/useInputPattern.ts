@@ -14,7 +14,7 @@ export default function useInputPattern(
         requiredMessage,
         pattern,
         patternMessage,
-    }: BaseInputProps & InputPatternProps & { onChange: (value: any) => void },
+    }: BaseInputProps & InputPatternProps & { onChange?: (value: string) => void },
 ) {
     const [error, setError] = React.useState(false);
 
@@ -24,13 +24,12 @@ export default function useInputPattern(
         if (loading) {
             return;
         }
-        const isValid
-            = (e.target.value !== '' && testValue(e.target.value)) || (e.target.value === '' && !required);
+        const isValid = (e.target.value !== '' && testValue(e.target.value)) || (e.target.value === '' && !required);
         if (isValid) {
             setError(false);
         }
         handlePattern(e, !isValid);
-        onChange(e.target.value);
+        onChange?.(e.target.value);
     };
 
     const handlePattern = (e: React.ChangeEvent<HTMLInputElement>, error: boolean) => {

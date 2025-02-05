@@ -1,21 +1,29 @@
 import React from 'react';
-import type { ControlledHandler } from '../../types';
-import type { SafariInputNode } from '../types';
+import { type ControlledState } from '../../types';
+import { type SafariInputNode } from '../types';
 import { Icon } from '../../Icon';
 import useInputPattern, { type InputPatternProps } from '../useInputPattern';
 import useInputRef from '../useInputRef';
 import InputBox from '../InputBox';
 import './InputText.styles.css';
 
-export interface InputTextProps extends SafariInputNode, InputPatternProps {
-    value: string;
-    onChange: ControlledHandler<string>;
-    onSelect?: ControlledHandler<string>;
-    onBlur?: ControlledHandler<string>;
+export interface InputTextProps extends SafariInputNode, InputPatternProps, ControlledState<string> {
+    onSelect?: () => void;
+    onBlur?: () => void;
     type?: 'text' | 'password' | 'email';
+    defaultValue?: string;
 }
 
-export default function InputText({ type = 'text', pattern, patternMessage, name, label, ...props }: InputTextProps) {
+export default function InputText(
+    {
+        type = 'text',
+        pattern,
+        patternMessage,
+        name,
+        label,
+        ...props
+    }: InputTextProps,
+) {
     const [selected, setSelected] = React.useState(false);
     const [hidden, setHidden] = React.useState(type === 'password');
     const ref = useInputRef<HTMLInputElement>(props);
@@ -35,12 +43,12 @@ export default function InputText({ type = 'text', pattern, patternMessage, name
     }, [hidden, type]);
 
     const handleSelect = () => {
-        props.onSelect?.(props.value);
+        props.onSelect?.();
         setSelected(true);
     };
 
     const handleBlur = () => {
-        props.onBlur?.(props.value);
+        props.onBlur?.();
         setSelected(false);
     };
 
@@ -59,8 +67,10 @@ export default function InputText({ type = 'text', pattern, patternMessage, name
         >
             <div className="DigitalUi-InputText">
                 <input
+
                     ref={ref}
                     value={props.value}
+                    defaultValue={props.defaultValue}
                     name={name}
                     pattern={pattern}
                     disabled={props.disabled}

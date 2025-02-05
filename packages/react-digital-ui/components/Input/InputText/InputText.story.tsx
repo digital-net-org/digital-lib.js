@@ -41,6 +41,7 @@ export const StateTests: Story = {
 
 export const Primary: Story = {
     argTypes: {
+        defaultValue: { control: 'text' },
         pattern: { control: 'select', options: ['[a-zA-Z0-9]+', '[0-9]+'] },
         patternMessage: { control: 'text' },
         type: { control: 'radio', options: ['text', 'password', 'email'] },
@@ -51,6 +52,7 @@ export const Primary: Story = {
         borderless: { control: 'boolean' },
     },
     args: {
+        defaultValue: 'default',
         type: 'text',
         pattern: undefined,
         patternMessage: 'Invalid input',

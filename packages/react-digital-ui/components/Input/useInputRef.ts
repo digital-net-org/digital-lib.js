@@ -8,7 +8,7 @@ export default function useInputRef<T extends ValidatableHTMLElement>(
         value,
         required,
         requiredMessage,
-    }: BaseInputProps & { value: any },
+    }: BaseInputProps & { value?: any },
 ) {
     const ref = React.useRef<T>(null);
     const isValueEmpty = React.useMemo(
