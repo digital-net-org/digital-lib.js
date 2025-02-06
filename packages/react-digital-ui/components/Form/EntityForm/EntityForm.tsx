@@ -28,7 +28,9 @@ export default function EntityForm<T extends Entity>({
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        console.log('TODO');
+        const formData = new FormData(e.currentTarget);
+        const sendData = Object.fromEntries(formData);
+        console.log('sendData', e.currentTarget);
     };
 
     return (

@@ -38,4 +38,25 @@ export const StateTests: Story = {
     },
 };
 
-// export const SubmitTests: Story = {};
+// export const SubmitTests: Story = {
+//     decorators: () => {
+//         const onSubmit = (entity: Partial<TestEntity>) => setValue(prev => ({ ...prev, ...entity }));
+//         return (
+//             <Box gap={2}>
+//                 <EntityForm
+//                     entity={value}
+//                     onSubmit={onSubmit}
+//                     schema={testSchema}
+//                 />
+//                 <Box>
+//                     State content:
+//                     <pre>
+//                         {JSON.stringify(value, null, 2)}
+//                     </pre>
+//                 </Box>
+//             </Box>
+//         );
+//     },
+//     args: {
+//     },
+// };
