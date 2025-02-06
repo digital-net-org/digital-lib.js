@@ -40,20 +40,20 @@ export const StateTests: Story = {
 
 // export const SubmitTests: Story = {
 //     decorators: () => {
-//         const onSubmit = (entity: Partial<TestEntity>) => setValue(prev => ({ ...prev, ...entity }));
+//         const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+//             e.preventDefault();
+//             const formData = new FormData(e.currentTarget);
+//             const sendData = Object.fromEntries(formData);
+//             console.log('sendData', sendData);
+//         };
 //         return (
 //             <Box gap={2}>
 //                 <EntityForm
-//                     entity={value}
+//                     id="test"
+//                     entity={testEntity}
 //                     onSubmit={onSubmit}
 //                     schema={testSchema}
 //                 />
-//                 <Box>
-//                     State content:
-//                     <pre>
-//                         {JSON.stringify(value, null, 2)}
-//                     </pre>
-//                 </Box>
 //             </Box>
 //         );
 //     },
