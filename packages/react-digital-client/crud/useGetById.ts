@@ -1,8 +1,8 @@
 import React from 'react';
-import { type Entity, EntityHelper, type EntityRaw, type Result } from '../../core';
-import useDigitalQuery from '../useDigitalQuery';
-import useDigitalClient from '../useDigitalClient';
+import { type Entity, EntityHelper, type EntityRaw, type Result } from '../../dto';
 import type { MutationConfig } from '../types';
+import useDigitalClient from '../useDigitalClient';
+import useDigitalQuery from '../useDigitalQuery';
 
 type Callback<T> = MutationConfig<Result<T>, null>;
 
@@ -20,33 +20,27 @@ export default function useGetById<T extends Entity>(
     options?: {
         onSuccess?: Callback<T>['onSuccess'];
         onError?: Callback<T>['onError'];
-    },
+    }
 ) {
     const { queryClient } = useDigitalClient();
 
-    const { data, isLoading, refetch } = useDigitalQuery<Result<EntityRaw>>(
-        !id ? undefined : `${endpoint}/${id}`,
-        {
-            onSuccess: async (e) => {
-                await options?.onSuccess?.({ ...e, value: EntityHelper.build<T>(e.value) });
-            },
-            onError: async (e) => {
-                await options?.onError?.(e);
-            },
+    const { data, isLoading, refetch } = useDigitalQuery<Result<EntityRaw>>(!id ? undefined : `${endpoint}/${id}`, {
+        onSuccess: async e => {
+            await options?.onSuccess?.({ ...e, value: EntityHelper.build<T>(e.value) });
         },
-    );
+        onError: async e => {
+            await options?.onError?.(e);
+        },
+    });
 
-    const entity = React.useMemo(
-        () => data?.value ? EntityHelper.build<T>(data.value) : undefined,
-        [data],
-    );
+    const entity = React.useMemo(() => (data?.value ? EntityHelper.build<T>(data.value) : undefined), [data]);
 
     const invalidateQuery = React.useCallback(async () => {
         await queryClient.invalidateQueries({
             predicate: query => query.queryKey[0] === `${endpoint}/${id}`,
         });
     }, [endpoint, id, queryClient]);
-    
+
     const refetchQuery = React.useCallback(async () => {
         await invalidateQuery();
         await refetch();

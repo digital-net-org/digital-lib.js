@@ -1,5 +1,4 @@
-import React from 'react';
-import type { Entity } from '../../../core';
+import type { Entity } from '../../../dto';
 import { useClassName } from '../../../react-digital';
 import { type EditorProps, BaseTool } from '../../../react-digital-ui';
 import { type PuckEditorProps } from '../PuckEditor';
@@ -29,13 +28,10 @@ export default function Selector<T extends Entity>({
     const className = useClassName({}, 'Selector');
 
     return (
-        <BaseTool
-            title={renderToolName('model-selector')}
-            actions={actions}
-        >
+        <BaseTool title={renderToolName('model-selector')} actions={actions}>
             <div className={className}>
                 {(entities ?? []).map(e => (
-                    <SelectorButton 
+                    <SelectorButton
                         entity={e}
                         key={e.id}
                         onSelect={onSelect}

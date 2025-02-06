@@ -1,13 +1,9 @@
 import React from 'react';
-import type { Entity } from '../../../core';
+import type { Entity } from '../../../dto';
 import type { TableProps } from './Table';
 import TableRow from './TableRow';
 
-export default function TableBodyProps<T extends Entity>({
-    schema,
-    entities,
-    ...props
-}: TableProps<T>) {
+export default function TableBodyProps<T extends Entity>({ schema, entities, ...props }: TableProps<T>) {
     return (
         <tbody>
             {entities.map(entity => (

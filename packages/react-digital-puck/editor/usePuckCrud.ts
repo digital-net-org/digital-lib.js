@@ -1,14 +1,11 @@
 import React from 'react';
+import type { Entity } from '../../dto';
 import { useCreate, useDelete, useGet, useGetById, usePatch } from '../../react-digital-client';
-import { type Entity } from '../../core';
 import { useIDbStore } from '../../react-digital-idb';
 import { type PuckEditorProps } from './PuckEditor';
 import usePuckUrlState from './usePuckUrlState';
 
-export default function usePuckCrud<T extends Entity>(
-    store: PuckEditorProps<T>['store'],
-    onReset: () => void,
-) {
+export default function usePuckCrud<T extends Entity>(store: PuckEditorProps<T>['store'], onReset: () => void) {
     const { currentEntity } = usePuckUrlState();
     const iDbStore = useIDbStore<T>(store);
 
@@ -39,13 +36,8 @@ export default function usePuckCrud<T extends Entity>(
     });
 
     const isLoading = React.useMemo(
-        () =>
-            queryApi.isQuerying
-            || isQuerying
-            || isCreating
-            || isPatching
-            || isDeleting,
-        [queryApi.isQuerying, isQuerying, isCreating, isPatching, isDeleting],
+        () => queryApi.isQuerying || isQuerying || isCreating || isPatching || isDeleting,
+        [queryApi.isQuerying, isQuerying, isCreating, isPatching, isDeleting]
     );
 
     return { patch, _delete, create, isLoading, entity, entities };

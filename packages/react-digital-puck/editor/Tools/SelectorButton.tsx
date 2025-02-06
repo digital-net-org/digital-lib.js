@@ -1,8 +1,7 @@
-import { Box, Button, Icon } from '../../../react-digital-ui';
-import React from 'react';
-import type { PuckEditorProps } from '../PuckEditor';
-import type { Entity } from '../../../core';
+import type { Entity } from '../../../dto';
 import { useStoredEntity } from '../../../react-digital-idb';
+import { Box, Button, Icon } from '../../../react-digital-ui';
+import type { PuckEditorProps } from '../PuckEditor';
 
 interface Props<T extends Entity> {
     renderEntityName: PuckEditorProps<T>['renderEntityName'];
@@ -30,13 +29,11 @@ export default function SelectorButton<T extends Entity>({
             disabled={isLoading}
             selected={selected}
             fullWidth
-            onClick={() => !isLoading ? onSelect(entity.id) : void 0}
+            onClick={() => (!isLoading ? onSelect(entity.id) : void 0)}
         >
             <Box direction="row" align="center" justify="space-between" fullWidth gap={1}>
                 {renderEntityName(entity)}
-                {storedExists && (
-                    <Icon.CircleFill size="x-small" />
-                )}
+                {storedExists && <Icon.CircleFill size="x-small" />}
             </Box>
         </Button>
     );

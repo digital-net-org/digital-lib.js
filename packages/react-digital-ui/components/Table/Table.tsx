@@ -1,6 +1,6 @@
-import type { Entity, EntitySchema } from '../../../core';
-import TableHead from './TableHead';
+import type { Entity, EntitySchema } from '../../../dto';
 import TableBody from './TableBody';
+import TableHead from './TableHead';
 
 export interface TableProps<T extends Entity> {
     schema: EntitySchema;

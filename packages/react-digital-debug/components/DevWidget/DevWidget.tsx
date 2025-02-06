@@ -1,7 +1,7 @@
 import React, { type PropsWithChildren } from 'react';
-import type { Position } from '../../../core';
-import './DevWidget.styles.css';
+import type { Position } from '../../../dto';
 import { Text } from '../../../react-digital-ui';
+import './DevWidget.styles.css';
 
 export interface DevWidgetProps extends PropsWithChildren {
     appVersion?: string;
@@ -35,10 +35,7 @@ export default function DevWidget({ children, appVersion, position, offset, onDr
     };
 
     return (
-        <div
-            className="DevWidget"
-            style={{ top: position.y, left: position.x }}
-        >
+        <div className="DevWidget" style={{ top: position.y, left: position.x }}>
             <div
                 className={`DevWidget-title ${isDragging ? 'DevWidget-grabbing' : 'DevWidget-grab'}`}
                 onMouseDown={handleMouseDown}
@@ -49,9 +46,7 @@ export default function DevWidget({ children, appVersion, position, offset, onDr
                 <Text variant="caption">devtool</Text>
                 {appVersion && <Text>{appVersion}</Text>}
             </div>
-            <div className="DevWidget-content">
-                {children}
-            </div>
+            <div className="DevWidget-content">{children}</div>
         </div>
     );
-};
+}

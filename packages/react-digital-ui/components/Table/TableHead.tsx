@@ -1,22 +1,21 @@
-import React from 'react';
 import { t } from 'i18next';
-import type { EntitySchema } from '../../../core';
+import type { EntitySchema } from '../../../dto';
 import { Text } from '../Text';
 
 interface TableHeadProps {
     schema: EntitySchema;
 }
 
-export default function TableHead({
-    schema,
-}: TableHeadProps) {
+export default function TableHead({ schema }: TableHeadProps) {
     return (
         <thead>
             <tr>
                 {schema.map(s => (
                     <th key={s.name} style={{ border: 'solid 1px white', padding: '.5rem' }}>
                         <Text size="small">{s.name}</Text>
-                        <Text size="small" italic variant="caption">{s.type}</Text>
+                        <Text size="small" italic variant="caption">
+                            {s.type}
+                        </Text>
                     </th>
                 ))}
                 <th>

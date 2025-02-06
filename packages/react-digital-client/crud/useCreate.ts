@@ -1,5 +1,5 @@
 import React from 'react';
-import type { Entity, Result } from '../../core';
+import type { Entity, Result } from '../../dto';
 import type { MutationConfig } from '../types';
 import useDigitalMutation from '../useDigitalMutation';
 
@@ -17,13 +17,13 @@ export default function useCreate<T extends Entity>(
     options?: {
         onSuccess?: Callback<T>['onSuccess'];
         onError?: Callback<T>['onError'];
-    },
+    }
 ) {
     const { mutate, isPending: isCreating } = useDigitalMutation<Result<T>>(endpoint, {
-        onSuccess: async (e) => {
+        onSuccess: async e => {
             await options?.onSuccess?.(e);
         },
-        onError: async (e) => {
+        onError: async e => {
             await options?.onError?.(e);
         },
     });

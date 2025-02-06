@@ -1,6 +1,6 @@
+import type { Patch } from '../messages/Patch';
 import type { Entity } from './Entity';
 import type { EntityRaw } from './EntityRaw';
-import type { Patch } from './Patch';
 
 /**
  * Helper class for **Entity**.
@@ -27,7 +27,7 @@ export default class EntityHelper {
         return Object.keys(patch).map(key => ({
             op: 'replace',
             path: `/${key}`,
-            value: patch[(key as unknown) as keyof T],
+            value: patch[key as unknown as keyof T],
         }));
     }
 
@@ -39,7 +39,7 @@ export default class EntityHelper {
      */
     public static getLatest<T extends Entity>(entities: T[], key?: 'updatedAt' | 'createdAt'): T | undefined {
         return entities.find(
-            entity => entity[key ?? 'createdAt']?.getTime() === Math.max(...entities.map(e => e.createdAt.getTime())),
+            entity => entity[key ?? 'createdAt']?.getTime() === Math.max(...entities.map(e => e.createdAt.getTime()))
         );
     }
 

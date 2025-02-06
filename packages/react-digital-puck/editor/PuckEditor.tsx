@@ -1,17 +1,17 @@
+import { type Data, Puck } from '@measured/puck';
 import React from 'react';
-import { type Config, type Data, Puck } from '@measured/puck';
-import { type Entity } from '../../core';
+import type { Entity } from '../../dto';
 import { useClassName } from '../../react-digital';
 import { useIDbStore, useStoredEntity } from '../../react-digital-idb';
 import { Editor, Icon } from '../../react-digital-ui';
 import { config } from '../library';
-import { Tools } from './Tools';
 import PuckDataHelper from './PuckDataHelper';
-import usePuckCrud from './usePuckCrud';
-import usePuckUrlState from './usePuckUrlState';
+import './PuckEditor.styles.css';
 import PuckEditorContent from './PuckEditorContent';
 import PuckEditorHeader from './PuckEditorHeader';
-import './PuckEditor.styles.css';
+import { Tools } from './Tools';
+import usePuckCrud from './usePuckCrud';
+import usePuckUrlState from './usePuckUrlState';
 
 export interface PuckEditorProps<T extends Entity> {
     accessor: keyof T;
@@ -39,34 +39,27 @@ export default function PuckEditor<T extends Entity>({
     const { storedExists } = useStoredEntity<T>(store, currentEntity);
     const className = useClassName({}, 'PuckEditor');
 
-    const { entity, entities, isLoading, _delete, patch, create } = usePuckCrud<T>(
-        store,
-        () => dispatchUrlState('reset'),
+    const { entity, entities, isLoading, _delete, patch, create } = usePuckCrud<T>(store, () =>
+        dispatchUrlState('reset')
     );
 
-    const handleCreate = React.useCallback(
-        async () => create(onCreate()),
-        [create, onCreate],
-    );
+    const handleCreate = React.useCallback(async () => create(onCreate()), [create, onCreate]);
 
     const handleDelete = React.useCallback(
-        async () => entity && !isLoading ? _delete(entity.id) : void 0,
-        [entity, isLoading, _delete],
+        async () => (entity && !isLoading ? _delete(entity.id) : void 0),
+        [entity, isLoading, _delete]
     );
 
-    const handlePatch = React.useCallback(
-        async () => {
-            if (!entity || !accessor || isLoading) {
-                return;
-            }
-            const stored = await iDbStore.get(entity.id);
-            if (!stored) {
-                return;
-            }
-            patch(entity.id, { ...stored, data: JSON.stringify(stored[accessor]) });
-        },
-        [accessor, entity, iDbStore, isLoading, patch],
-    );
+    const handlePatch = React.useCallback(async () => {
+        if (!entity || !accessor || isLoading) {
+            return;
+        }
+        const stored = await iDbStore.get(entity.id);
+        if (!stored) {
+            return;
+        }
+        patch(entity.id, { ...stored, data: JSON.stringify(stored[accessor]) });
+    }, [accessor, entity, iDbStore, isLoading, patch]);
 
     const handlePuckChange = async (data: Data) => {
         if (isLoading || !(data.id && currentEntity && entity) || data.id !== entity?.id) {
@@ -83,12 +76,7 @@ export default function PuckEditor<T extends Entity>({
         <Puck data={PuckDataHelper.default} config={config} onChange={handlePuckChange}>
             <Editor
                 className={className}
-                renderName={() => (
-                    <PuckEditorHeader
-                        name={renderEntityName(entity)}
-                        isCurrentMutated={storedExists}
-                    />
-                )}
+                renderName={() => <PuckEditorHeader name={renderEntityName(entity)} isCurrentMutated={storedExists} />}
                 isLoading={isLoading}
                 actions={[
                     {
@@ -102,13 +90,11 @@ export default function PuckEditor<T extends Entity>({
                         disabled: !entity || isLoading,
                     },
                 ]}
-                tools={
-                    Tools.map(tool => ({
-                        ...tool,
-                        selected: currentTool?.id === tool.id,
-                        onSelect: () => dispatchUrlState('setTool', tool.id),
-                    }))
-                }
+                tools={Tools.map(tool => ({
+                    ...tool,
+                    selected: currentTool?.id === tool.id,
+                    onSelect: () => dispatchUrlState('setTool', tool.id),
+                }))}
             >
                 <PuckEditorContent
                     accessor={accessor}

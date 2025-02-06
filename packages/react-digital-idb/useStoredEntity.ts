@@ -1,5 +1,5 @@
 import React from 'react';
-import type { Entity } from '../core';
+import type { Entity } from '../dto';
 import useIDbStore from './useIDbStore';
 
 /**
@@ -22,12 +22,15 @@ export default function useStoredEntity<T extends Entity>(store: string, id: str
     const deleteEntity = React.useCallback(async () => await _delete(id), [_delete, id]);
     const saveEntity = React.useCallback(async (payload: Partial<T>) => await save(payload), [save]);
 
-    const getStoredEntity = React.useCallback(async (id: string | number) => {
-        const entity = await get(id);
-        setStoredEntity(entity);
-        setStoredExists(!!entity);
-    }, [get]);
-    
+    const getStoredEntity = React.useCallback(
+        async (id: string | number) => {
+            const entity = await get(id);
+            setStoredEntity(entity);
+            setStoredExists(!!entity);
+        },
+        [get]
+    );
+
     React.useEffect(() => {
         (async () => {
             if (!id) {

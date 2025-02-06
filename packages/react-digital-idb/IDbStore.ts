@@ -1,4 +1,4 @@
-import type { Entity } from '../core';
+import type { Entity } from '../dto';
 
 /**
  * Indexed database store accessor utilities
@@ -18,9 +18,7 @@ export default class IDbStore {
     }
 
     private static getStore(db: IDBDatabase, store: string, mode?: IDBTransactionMode): IDBObjectStore {
-        return db
-            .transaction(store, mode ?? 'readwrite')
-            .objectStore(store);
+        return db.transaction(store, mode ?? 'readwrite').objectStore(store);
     }
 
     /**
@@ -32,7 +30,7 @@ export default class IDbStore {
     public static async get<T extends Entity>(
         db: IDBDatabase,
         store: string,
-        id: string | number,
+        id: string | number
     ): Promise<T | undefined> {
         return new Promise<T | undefined>((resolve, reject) => {
             try {
@@ -42,9 +40,9 @@ export default class IDbStore {
                 request.onerror = () => reject(request.error);
             } catch (error) {
                 reject(error);
-            };
+            }
         });
-    };
+    }
 
     /**
      * Save Entity to the store
@@ -52,11 +50,7 @@ export default class IDbStore {
      * @param store - store name
      * @param data - entity data
      */
-    public static async save<T extends Entity>(
-        db: IDBDatabase,
-        store: string,
-        data: Partial<T>,
-    ): Promise<void> {
+    public static async save<T extends Entity>(db: IDBDatabase, store: string, data: Partial<T>): Promise<void> {
         return new Promise<void>((resolve, reject) => {
             try {
                 this.validateStore(db, store);
@@ -74,9 +68,9 @@ export default class IDbStore {
                 result.onerror = () => console.error(result.error);
             } catch (error) {
                 reject(error);
-            };
+            }
         });
-    };
+    }
 
     /**
      * Delete Entity from the store
@@ -84,11 +78,7 @@ export default class IDbStore {
      * @param store - store name
      * @param id - entity id
      */
-    public static async delete<T extends Entity>(
-        db: IDBDatabase,
-        store: string,
-        id: string | number,
-    ): Promise<void> {
+    public static async delete<T extends Entity>(db: IDBDatabase, store: string, id: string | number): Promise<void> {
         return new Promise<void>((resolve, reject) => {
             try {
                 this.validateStore(db, store);
@@ -96,7 +86,7 @@ export default class IDbStore {
                 resolve();
             } catch (error) {
                 reject(error);
-            };
+            }
         });
-    };
+    }
 }

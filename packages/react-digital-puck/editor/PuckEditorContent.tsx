@@ -1,15 +1,15 @@
-import React from 'react';
 import { t } from 'i18next';
-import { type Entity } from '../../core';
+import React from 'react';
+import type { Entity } from '../../dto';
 import { useIDbStore } from '../../react-digital-idb';
 import { Box, Icon } from '../../react-digital-ui';
-import { type PuckEditorProps } from './PuckEditor';
-import { Tools } from './Tools';
-import PuckRender from './PuckRender';
 import EntityRender from './EntityRender';
-import usePuckUrlState from './usePuckUrlState';
-import usePuckState from './usePuckState';
+import { type PuckEditorProps } from './PuckEditor';
 import './PuckEditor.styles.css';
+import PuckRender from './PuckRender';
+import { Tools } from './Tools';
+import usePuckState from './usePuckState';
+import usePuckUrlState from './usePuckUrlState';
 
 interface PuckEditorContentProps<T extends Entity> {
     accessor: PuckEditorProps<T>['accessor'];
@@ -84,9 +84,11 @@ export default function PuckEditorContent<T extends Entity>({
                 return null;
             })()}
             <Box direction="row" fullHeight fullWidth>
-                {currentTool?.id && !currentTool?.isDefault
-                    ? (<PuckRender />)
-                    : (<EntityRender entity={entity} store={store} />)}
+                {currentTool?.id && !currentTool?.isDefault ? (
+                    <PuckRender />
+                ) : (
+                    <EntityRender entity={entity} store={store} />
+                )}
             </Box>
         </React.Fragment>
     );

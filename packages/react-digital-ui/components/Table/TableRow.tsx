@@ -1,5 +1,5 @@
 import React from 'react';
-import { type Entity, type EntitySchema } from '../../../core';
+import { type Entity, type EntitySchema } from '../../../dto';
 import { EditActions } from '../Editor';
 import { Icon } from '../Icon';
 import TableCell from './TableCell';
@@ -13,13 +13,7 @@ interface TableRowProps<T extends Entity> {
     isLoading?: boolean;
 }
 
-export default function TableRow<T extends Entity>({
-    schema,
-    entity,
-    onEdit,
-    onDelete,
-    ...props
-}: TableRowProps<T>) {
+export default function TableRow<T extends Entity>({ schema, entity, onEdit, onDelete, ...props }: TableRowProps<T>) {
     return (
         <tr key={entity.id}>
             {schema.map(s => (

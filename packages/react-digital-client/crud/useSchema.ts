@@ -1,5 +1,5 @@
 import React from 'react';
-import type { EntitySchema, Result } from '../../core';
+import type { EntitySchema, Result } from '../../dto';
 import useDigitalQuery from '../useDigitalQuery';
 
 /**

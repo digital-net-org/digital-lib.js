@@ -1,8 +1,8 @@
 import React from 'react';
-import { type Entity, EntityHelper, type EntityRaw, type QueryResult } from '../../core';
+import { type Entity, EntityHelper, type EntityRaw, type QueryResult } from '../../dto';
 import { type MutationConfig } from '../types';
-import useDigitalQuery from '../useDigitalQuery';
 import useDigitalClient from '../useDigitalClient';
+import useDigitalQuery from '../useDigitalQuery';
 
 type Callback<T> = MutationConfig<QueryResult<T>, null>;
 
@@ -18,14 +18,14 @@ export default function useGet<T extends Entity>(
     options?: {
         onSuccess?: Callback<T>['onSuccess'];
         onError?: Callback<T>['onError'];
-    },
+    }
 ) {
     const { queryClient } = useDigitalClient();
     const { data, isLoading, refetch } = useDigitalQuery<QueryResult<EntityRaw>>(endpoint, {
-        onSuccess: async (e) => {
+        onSuccess: async e => {
             await options?.onSuccess?.({ ...e, value: e.value.map(EntityHelper.build<T>) });
         },
-        onError: async (e) => {
+        onError: async e => {
             await options?.onError?.(e);
         },
     });

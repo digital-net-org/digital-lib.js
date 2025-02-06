@@ -1,7 +1,7 @@
-import React, { type ReactNode, type PropsWithChildren } from 'react';
-import { DevToolContext } from './DevToolContext';
+import type { PropsWithChildren, ReactNode } from 'react';
+import type { Position } from '../../dto';
 import { useLocalStorage } from '../../react-digital';
-import { type Position } from '../../core';
+import { DevToolContext } from './DevToolContext';
 import DevWidget from './DevWidget/DevWidget';
 
 interface DevToolProviderProps extends PropsWithChildren {
