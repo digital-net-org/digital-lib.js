@@ -1,5 +1,5 @@
 import { type Entity, type EntitySchema, StringResolver } from '../../../../core';
-import React, { FormEvent } from 'react';
+import React from 'react';
 import { InputSwitch, InputText } from '../../Input';
 import { Text } from '../../Text';
 import { type BoxProps, Box } from '../../Box';
@@ -8,7 +8,7 @@ export interface EntityFormProps<T extends Entity> extends Omit<BoxProps, 'onCha
     schema: EntitySchema;
     entity: T;
     onChange?: (data: Partial<T>) => void;
-    onSubmitData?: (data: Partial<T>) => void;
+    onSubmitData?: (data: Record<string, string>) => void;
 }
 
 export default function EntityForm<T extends Entity>({
@@ -33,8 +33,8 @@ export default function EntityForm<T extends Entity>({
             acc[target.name] = target.value;
             return acc;
         }, {} as Record<string, string>);
-        // onSubmitData?.(data);
-        console.log('formElements', formElements);
+        onSubmitData?.(formElements);
+        // console.log('formElements', formElements);
     };
 
     return (
