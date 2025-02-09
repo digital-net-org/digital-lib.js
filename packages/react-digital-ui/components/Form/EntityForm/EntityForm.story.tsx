@@ -17,7 +17,7 @@ export default meta;
 export const StateTests: Story = {
     decorators: () => {
         const [value, setValue] = React.useState<TestEntity>(testEntity);
-        const onChange = (entity: Partial<TestEntity>) => setValue(prev => ({ ...prev, ...entity }));
+        const onChange = (entity: TestEntity) => setValue(prev => ({ ...prev, ...entity }));
         return (
             <Box gap={2}>
                 <EntityForm
@@ -40,14 +40,18 @@ export const StateTests: Story = {
 
 export const SubmitTests: Story = {
     decorators: () => {
-        const [value, setValue] = React.useState<Partial<TestEntity>>({});
+        const [value, setValue] = React.useState<TestEntity>();
+
+        const onSubmit = (data: TestEntity) => {
+            setValue(data);
+        };
 
         return (
             <Box gap={2}>
                 <EntityForm
                     id="test"
-                    entity={testEntity}
-                    onSubmitData={setValue}
+                    defaultEntity={testEntity}
+                    onSubmit={onSubmit}
                     schema={testSchema}
                 />
                 <button type="submit" form="test">Submit</button>

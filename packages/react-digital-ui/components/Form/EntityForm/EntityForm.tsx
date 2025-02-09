@@ -6,35 +6,38 @@ import { type BoxProps, Box } from '../../Box';
 
 export interface EntityFormProps<T extends Entity> extends Omit<BoxProps, 'onChange' | 'onSubmit'> {
     schema: EntitySchema;
-    entity: T;
-    onChange?: (data: Partial<T>) => void;
-    onSubmitData?: (data: Record<string, string>) => void;
+    entity?: T;
+    defaultEntity?: T;
+    onChange?: (entity: T) => void;
+    onSubmit?: (entity: T) => void;
 }
 
 export default function EntityForm<T extends Entity>({
     id,
     schema,
     entity,
+    defaultEntity,
     onChange,
-    onSubmitData,
+    onSubmit,
     ...boxProps
 }: EntityFormProps<T>) {
-    const handleChange = (e: React.ChangeEvent<HTMLFormElement>) => {
-        const value = e.target.value;
-        const path = e.target.name;
-        console.log(value, path);
-        return onChange?.(value);
-    };
-
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        const formElements = Array.from(e.currentTarget.elements).reduce((acc, el) => {
-            const target = el as HTMLInputElement;
-            acc[target.name] = target.value;
+        console.log('submitting', e.currentTarget.elements);
+        const formElements = (Array.from(e.currentTarget.elements) as HTMLInputElement[]).reduce((acc, element) => {
+            if (!element.name || element.name.length === 0) {
+                return acc;
+            }
+            acc[element.name as keyof T] = element.value as any;
             return acc;
-        }, {} as Record<string, string>);
-        onSubmitData?.(formElements);
-        // console.log('formElements', formElements);
+        }, {} as T);
+        console.log('formElements', formElements);
+        return onSubmit?.(formElements as T);
+    };
+
+    const handleChange = (e: React.ChangeEvent<HTMLFormElement>) => {
+        const { name, value } = e.target;
+        onChange?.({ [StringResolver.toCamelCase(name)]: value } as T);
     };
 
     return (
@@ -56,7 +59,8 @@ export default function EntityForm<T extends Entity>({
                                     label={s.name}
                                     id={s.name}
                                     name={s.name}
-                                    defaultValue={entity[resolvedName] as string}
+                                    defaultValue={defaultEntity?.[resolvedName] as string}
+                                    value={entity?.[resolvedName] as string}
                                 />
                             </React.Fragment>
                         );
@@ -68,7 +72,8 @@ export default function EntityForm<T extends Entity>({
                                     <Text>{s.name}</Text>
                                     <InputSwitch
                                         id={s.name}
-                                        defaultChecked={entity[resolvedName] as boolean}
+                                        defaultChecked={defaultEntity?.[resolvedName] as boolean}
+                                        value={entity?.[resolvedName] as boolean}
                                         name={s.name}
                                     />
                                 </Box>

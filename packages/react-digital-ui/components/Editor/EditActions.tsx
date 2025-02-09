@@ -4,7 +4,7 @@ import type { ValueOf } from '../../../core';
 
 export interface EditActionsProps {
     actions?: Array<{
-        action: () => void;
+        action?: () => void;
         icon: ValueOf<typeof Icon>;
         disabled?: boolean;
         formId?: string;
