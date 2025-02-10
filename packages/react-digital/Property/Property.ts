@@ -1,4 +1,5 @@
 import React from 'react';
+import { nativeProperties } from './nativeProperties';
 
 export default class Property {
     /**
@@ -31,7 +32,7 @@ export default class Property {
                 delete props[key];
                 continue;
             }
-            if (!/(class|on)([A-Z]).*/g.test(key) && /([a-z0-9])([A-Z])/g.test(key)) {
+            if (!nativeProperties.has(key)) {
                 props[key.toLowerCase()] = props[key];
                 delete props[key];
             }
