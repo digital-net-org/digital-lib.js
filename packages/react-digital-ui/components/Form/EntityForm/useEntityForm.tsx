@@ -3,7 +3,12 @@ import { useDelete, useGetById, usePatch, useSchema } from '../../../../react-di
 import React from 'react';
 import type { Entity } from '../../../../core';
 
-export default function useEntityForm<T extends Entity>(endpoint: string) {
+/**
+ * Hook to handle EntityForm actions.
+ * @param endpoint The API endpoint.
+ * @param redirect The redirect path after a deletion.
+ */
+export default function useEntityForm<T extends Entity>(endpoint: string, redirect: string) {
     const { id } = useParams();
     const { entity, isQuerying, invalidateQuery: invalidate } = useGetById<T>(endpoint, id);
     const { schema, isLoading: isSchemaLoading } = useSchema(endpoint);
@@ -21,9 +26,7 @@ export default function useEntityForm<T extends Entity>(endpoint: string) {
 
     const handlePatch = React.useCallback(
         async (data: T) => {
-            if (!id || isLoading) {
-                return;
-            }
+            if (!id || isLoading) return;
             console.log('patching', id, data);
             patch(id, data);
         },
@@ -32,13 +35,11 @@ export default function useEntityForm<T extends Entity>(endpoint: string) {
 
     const handleDelete = React.useCallback(
         async () => {
-            if (!id || isLoading) {
-                return;
-            }
+            if (!id || isLoading) return;
+            navigate(`/${redirect}`);
             _delete(id);
-            navigate(endpoint);
         },
-        [id, isLoading, _delete, navigate, endpoint],
+        [id, isLoading, _delete, navigate, redirect],
     );
     
     return {
