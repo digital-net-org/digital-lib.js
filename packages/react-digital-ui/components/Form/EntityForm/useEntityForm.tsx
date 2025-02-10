@@ -1,7 +1,12 @@
-import { useNavigate, useParams } from 'react-router-dom';
-import { useDelete, useGetById, usePatch, useSchema } from '../../../../react-digital-client';
 import React from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import type { Entity } from '../../../../core';
+import { useDelete, useGetById, usePatch, useSchema } from '../../../../react-digital-client';
+
+/* TODO: @horameus
+    - PATCH: Handle schema for constraints
+    - DELETE: Handle redirection
+*/
 
 /**
  * Hook to handle EntityForm actions.
@@ -10,11 +15,18 @@ import type { Entity } from '../../../../core';
  */
 export default function useEntityForm<T extends Entity>(endpoint: string, redirect: string) {
     const { id } = useParams();
+    const navigate = useNavigate();
+    const [payload, setPayload] = React.useState<T>();
+    
     const { entity, isQuerying, invalidateQuery: invalidate } = useGetById<T>(endpoint, id);
     const { schema, isLoading: isSchemaLoading } = useSchema(endpoint);
-    const navigate = useNavigate();
 
-    const isLoading = React.useMemo(() => isSchemaLoading || isQuerying, [isSchemaLoading, isQuerying]);
+    React.useEffect(() => entity ? setPayload(entity) : void 0, [entity])
+
+    const isLoading = React.useMemo(
+        () => isSchemaLoading || isQuerying, 
+        [isSchemaLoading, isQuerying]
+    );
 
     const { patch } = usePatch<T>(endpoint, {
         onSuccess: async () => await invalidate(),
@@ -25,17 +37,20 @@ export default function useEntityForm<T extends Entity>(endpoint: string, redire
     });
 
     const handlePatch = React.useCallback(
-        async (data: T) => {
-            if (!id || isLoading) return;
-            console.log('patching', id, data);
-            patch(id, data);
+        async () => {
+            if (!id || !payload || isLoading) {
+                return;
+            }
+            patch(id, payload);
         },
         [id, isLoading, patch],
     );
 
     const handleDelete = React.useCallback(
         async () => {
-            if (!id || isLoading) return;
+            if (!id || isLoading) {
+                return;
+            }
             navigate(`/${redirect}`);
             _delete(id);
         },
@@ -44,11 +59,12 @@ export default function useEntityForm<T extends Entity>(endpoint: string, redire
     
     return {
         id,
-        entity,
         schema,
         isLoading,
         isQuerying,
         handlePatch,
         handleDelete,
+        payload, 
+        setPayload
     };
 }

@@ -1,8 +1,8 @@
 /* eslint react-hooks/rules-of-hooks: 0 */
-import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
-import InputText, { type InputTextProps } from './InputText';
+import React from 'react';
 import { Box } from '../../Box';
+import InputText, { type InputTextProps } from './InputText';
 
 const meta: Meta<InputTextProps> = {
     title: 'Inputs/InputText',
@@ -41,7 +41,6 @@ export const StateTests: Story = {
 
 export const Primary: Story = {
     argTypes: {
-        defaultValue: { control: 'text' },
         pattern: { control: 'select', options: ['[a-zA-Z0-9]+', '[0-9]+'] },
         patternMessage: { control: 'text' },
         type: { control: 'radio', options: ['text', 'password', 'email'] },
@@ -52,7 +51,6 @@ export const Primary: Story = {
         borderless: { control: 'boolean' },
     },
     args: {
-        defaultValue: 'default',
         type: 'text',
         pattern: undefined,
         patternMessage: 'Invalid input',

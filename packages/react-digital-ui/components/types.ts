@@ -10,6 +10,6 @@ export type SafariNodeWithChildren = React.PropsWithChildren & SafariNode;
 export type ControlledHandler<T> = (value: T) => void | React.Dispatch<React.SetStateAction<T>>;
 
 export interface ControlledState<T> {
-    onChange?: ControlledHandler<T>;
-    value?: T;
+    onChange: ControlledHandler<T>;
+    value: T;
 }

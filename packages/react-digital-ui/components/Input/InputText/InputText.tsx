@@ -1,17 +1,16 @@
 import React from 'react';
-import { type ControlledState } from '../../types';
-import { type SafariInputNode } from '../types';
 import { Icon } from '../../Icon';
+import { type ControlledState } from '../../types';
+import InputBox from '../InputBox';
+import { type SafariInputNode } from '../types';
 import useInputPattern, { type InputPatternProps } from '../useInputPattern';
 import useInputRef from '../useInputRef';
-import InputBox from '../InputBox';
 import './InputText.styles.css';
 
 export interface InputTextProps extends SafariInputNode, InputPatternProps, ControlledState<string> {
     onSelect?: () => void;
     onBlur?: () => void;
     type?: 'text' | 'password' | 'email';
-    defaultValue?: string;
 }
 
 export default function InputText(
@@ -70,7 +69,6 @@ export default function InputText(
 
                     ref={ref}
                     value={props.value}
-                    defaultValue={props.defaultValue}
                     name={name}
                     pattern={pattern}
                     disabled={props.disabled}

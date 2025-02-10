@@ -1,6 +1,6 @@
 import React from 'react';
+import { Property, useClassName } from '../../../react-digital';
 import type { SafariNodeWithChildren } from '../types';
-import { useClassName } from '../../../react-digital';
 import './Text.styles.css';
 
 export interface TextProps extends SafariNodeWithChildren {
@@ -10,7 +10,7 @@ export interface TextProps extends SafariNodeWithChildren {
     size?: 'small' | 'regular' | 'medium' | 'large' | 'xlarge';
 }
 
-export default function Text(props: TextProps) {
+export default function Text({ children, ...props }: TextProps) {
     const className = useClassName(props, 'DigitalUi-Text');
 
     const tag = React.useMemo(() => {
@@ -26,10 +26,10 @@ export default function Text(props: TextProps) {
     if (props.variant === 'JSON') {
         return (
             <pre className={className}>
-                {JSON.stringify(props.children, null, 2)}
+                {JSON.stringify(children, null, 2)}
             </pre>
         );
     }
 
-    return React.createElement(tag, { ...props, className }, props.children);
+    return React.createElement(tag, { ...Property.toHtml(props), className }, children);
 }

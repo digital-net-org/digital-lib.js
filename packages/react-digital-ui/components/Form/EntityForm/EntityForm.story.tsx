@@ -1,6 +1,6 @@
 /* eslint react-hooks/rules-of-hooks: 0 */
-import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
+import React from 'react';
 import type { Entity } from '../../../../core';
 import { Box } from '../../Box';
 import EntityForm, { type EntityFormProps } from './EntityForm';
@@ -17,40 +17,14 @@ export default meta;
 export const StateTests: Story = {
     decorators: () => {
         const [value, setValue] = React.useState<TestEntity>(testEntity);
-        const onChange = (entity: TestEntity) => setValue(prev => ({ ...prev, ...entity }));
-        return (
-            <Box gap={2}>
-                <EntityForm
-                    entity={value}
-                    onChange={onChange}
-                    schema={testSchema}
-                />
-                <Box>
-                    State content:
-                    <pre>
-                        {JSON.stringify(value, null, 2)}
-                    </pre>
-                </Box>
-            </Box>
-        );
-    },
-    args: {
-    },
-};
-
-export const SubmitTests: Story = {
-    decorators: () => {
-        const [value, setValue] = React.useState<TestEntity>();
-
-        const onSubmit = (data: TestEntity) => {
-            setValue(data);
-        };
+        const onSubmit = () => console.log('submit');
 
         return (
             <Box gap={2}>
                 <EntityForm
                     id="test"
-                    defaultEntity={testEntity}
+                    value={value}
+                    onChange={setValue}
                     onSubmit={onSubmit}
                     schema={testSchema}
                 />

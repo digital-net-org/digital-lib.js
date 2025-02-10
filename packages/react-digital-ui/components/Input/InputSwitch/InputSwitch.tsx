@@ -1,12 +1,11 @@
 import React from 'react';
+import { useClassName, useProps } from '../../../../react-digital';
 import type { ControlledState, SafariNode } from '../../types';
 import type { BaseInputProps } from '../types';
-import { useClassName, useProps } from '../../../../react-digital';
 import './InputSwitch.styles.css';
 
 export interface InputSwitchProps extends BaseInputProps, SafariNode, ControlledState<boolean> {
     name?: string;
-    defaultChecked?: boolean;
 }
 
 export default function InputSwitch({ id, value, onChange, ...props }: InputSwitchProps) {
@@ -21,7 +20,7 @@ export default function InputSwitch({ id, value, onChange, ...props }: InputSwit
     };
 
     const handleChange = (_: React.ChangeEvent<HTMLInputElement>) => {
-        onChange?.(!value);
+        onChange(!value);
     };
 
     return (
@@ -32,11 +31,11 @@ export default function InputSwitch({ id, value, onChange, ...props }: InputSwit
                         id={props.name}
                         className="DigitalUi-InputSwitch-input"
                         name={props.name}
+                        value="true"
                         type="checkbox"
                         checked={value}
                         onClick={handleClick}
                         onChange={handleChange}
-                        defaultChecked={props.defaultChecked}
                     />,
                 )}
                 <span className="DigitalUi-InputSwitch-slider"></span>

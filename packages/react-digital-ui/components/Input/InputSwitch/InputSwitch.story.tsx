@@ -1,6 +1,6 @@
 /* eslint react-hooks/rules-of-hooks: 0 */
-import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
+import React from 'react';
 import { Box } from '../../Box';
 import InputSwitch, { type InputSwitchProps } from './InputSwitch';
 
@@ -31,7 +31,6 @@ export const Primary: Story = {
         required: false,
         loading: false,
         disabled: false,
-        defaultChecked: false,
     },
 };
 
