@@ -1,20 +1,14 @@
-<p align="center">
-    <img width="300" src="/assets/logo-v1_full.svg">
-</p>
-<div align="center">
-    <a href="https://github.com/safari-digital"><img src="https://img.shields.io/badge/safari-digital-green.svg"></a>
-    <a href="https://www.typescriptlang.org"><img src="https://img.shields.io/badge/Typescript-blue.svg"></a>
+<h1>
+    <img width="300" src="https://raw.githubusercontent.com/digital-net-org/.github/refs/heads/master/assets/logo_v2025.svg">
+</h1>
+<div justify="center">
+    <a href="https://www.typescriptlang.org/"><img src="https://img.shields.io/badge/Typescript-blue.svg?color=3178c6"></a>
+    <a href="https://puckeditor.com/"><img src="https://img.shields.io/badge/Puck-black.svg?color=111111"></a>
 </div>
 
-## digital-net
-**Digital-net** is a collection of packages that provide a set of tools and utilities to build React applications. 
-It is designed to be modular and flexible, allowing to pick and choose the tools that are needed for the project. 
+_@digital-net-org/digital-lib.js_
 
-#### ⚠️ Warnings
-- _This requires React and Vite._
-- _This is a work in progress and is not ready for production use._
-- _The documentation is incomplete and may not be up to date._
-
+A collection of packages that provide a set of tools and utilities to build **React/NextJs** applications.
 
 ## Packages
 | Package (doc)                                                             | Description                                                                                                                                                                     |
