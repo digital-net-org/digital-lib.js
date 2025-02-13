@@ -6,7 +6,7 @@ const base = 'Component';
 
 test('ClassName.resolveProps(): With className, should return merged classNames', () => {
     expect(ClassName.resolveProps(base, { className: 'custom custom-stuff custom-thing' })).toBe(
-        `${base} custom custom-stuff custom-thing`,
+        `${base} custom custom-stuff custom-thing`
     );
 });
 
@@ -55,7 +55,7 @@ test('ClassName.resolveProps(): With many properties, should return merged class
             selected: true,
             fullwidth: false,
             onClick: () => void 0,
-        }),
+        })
     ).toBe(`${base} custom ${base}-loading ${base}-selected ${base}-action`);
 });
 

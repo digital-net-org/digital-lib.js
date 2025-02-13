@@ -6,25 +6,25 @@ import { actionKeywords, booleanKeywords, excludedKeywords } from './keywords';
  */
 const resolveProps = (baseClass: string, props: Record<string, any>) => {
     const returnReduced = (acc: string, resolved: string) =>
-        (StringMatcher.isEmpty(acc) ? resolved : `${acc} ${resolved}`);
+        StringMatcher.isEmpty(acc) ? resolved : `${acc} ${resolved}`;
 
     const resolved = Object.keys(props).reduce((acc, key) => {
         if (
-            !props[key]
-            || (typeof props[key] === 'string' && StringMatcher.isEmpty(props[key]))
-            || excludedKeywords.includes(key)
-            || key.startsWith('aria')
-            || key.startsWith('data')
+            !props[key] ||
+            (typeof props[key] === 'string' && StringMatcher.isEmpty(props[key])) ||
+            excludedKeywords.has(key) ||
+            key.startsWith('aria') ||
+            key.startsWith('data')
         ) {
             return acc;
         }
         if (key === 'className' || key === 'class') {
             return returnReduced(acc, props[key]);
         }
-        if (actionKeywords.includes(key) && typeof props[key] === 'function') {
+        if (actionKeywords.has(key) && typeof props[key] === 'function') {
             return returnReduced(acc, [baseClass, 'action'].join('-'));
         }
-        if (booleanKeywords.includes(key) && props[key] === true) {
+        if (booleanKeywords.has(key) && props[key] === true) {
             return returnReduced(acc, [baseClass, key].join('-'));
         }
         if (typeof props[key] === 'string' || typeof props[key] === 'number') {

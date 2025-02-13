@@ -1,4 +1,4 @@
-export const excludedKeywords = [
+export const excludedKeywords = new Set([
     'children',
     'style',
     'id',
@@ -12,9 +12,9 @@ export const excludedKeywords = [
     'tabIndex',
     'data',
     'value',
-];
+]);
 
-export const actionKeywords = [
+export const actionKeywords = new Set([
     'onClick',
     'onMouseDown',
     'onMouseUp',
@@ -76,9 +76,9 @@ export const actionKeywords = [
     'onAnimationIteration',
     'onTransitionEnd',
     'onToggle',
-];
+]);
 
-export const booleanKeywords = [
+export const booleanKeywords = new Set([
     'isLoading',
     'loading',
     'isPending',
@@ -133,4 +133,4 @@ export const booleanKeywords = [
     'inverted',
     'borderless',
     'isBorderless',
-];
+]);
