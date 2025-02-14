@@ -25,8 +25,25 @@
         top: 16.666%;
         transform: translate(-50%, -50%);
     }
+
     & button {
         user-select: none;
+    }
+
+    &.DigitalUi-Button-align-left {
+        justify-content: flex-start;
+
+        & .DigitalUi-Button-content {
+            width: fit-content;
+        }
+    }
+
+    &.DigitalUi-Button-align-right {
+        justify-content: flex-end;
+
+        & .DigitalUi-Button-content {
+            width: fit-content;
+        }
     }
 }
 
@@ -55,10 +72,10 @@
 
 .DigitalUi-Button-content {
     display: flex;
+    width: 100%;
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    width: 100%;
     gap: var(--spacing-1);
 }
 
@@ -103,6 +120,7 @@
 .DigitalUi-Button-variant-text {
     border-color: transparent;
     background-color: transparent;
+    padding: 0 .25rem;
 
     &:hover {
         color: var(--palette-primary-light);

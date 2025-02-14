@@ -10,6 +10,7 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
     fullWidth?: boolean;
     selected?: boolean;
     href?: string;
+    align?: 'left' | 'right';
 }
 
 const Button = React.forwardRef<HTMLElement, ButtonProps>(({ children, variant = 'primary', ...props }, ref) => {
@@ -25,7 +26,7 @@ const Button = React.forwardRef<HTMLElement, ButtonProps>(({ children, variant =
                     <span className="DigitalUi-Button-content">{children}</span>
                 </React.Fragment>
             ),
-        }),
+        })
     );
 });
 

@@ -7,15 +7,13 @@ const meta: Meta<ButtonProps> = {
     title: 'Inputs/Button',
     component: Button,
     decorators: (Story, { args }) =>
-        args.variant === 'icon'
-            ? (
-                    <Button {...args}>
-                        <IconComponent.GearIcon />
-                    </Button>
-                )
-            : (
-                    <Story {...args} />
-                ),
+        args.variant === 'icon' ? (
+            <Button {...args}>
+                <IconComponent.GearIcon />
+            </Button>
+        ) : (
+            <Story {...args} />
+        ),
 };
 type Story = StoryObj<typeof meta>;
 export default meta;
@@ -40,6 +38,10 @@ export const Primary: Story = {
         variant: {
             control: { type: 'select' },
             options: ['primary', 'secondary', 'text', 'icon'],
+        },
+        align: {
+            control: { type: 'select' },
+            options: ['left', 'right', 'none'],
         },
         id: {
             control: { type: 'text' },
