@@ -1,6 +1,6 @@
 /// <reference types="vite/client" />
 import { type Resource } from 'i18next';
-import { type Namespace } from '../Namespace';
+import { type Namespace } from './Namespace';
 
 export default class ResourcesBuilder {
     public static getLocalesFiles(): Record<string, Record<string, any>> {
@@ -12,7 +12,7 @@ export default class ResourcesBuilder {
         const result: Resource = {};
         for (const file in raw) {
             const { namespace, ...locales }: Namespace = raw[file].default;
-            Object.keys(locales).forEach((key) => {
+            Object.keys(locales).forEach(key => {
                 const languages = key.match(/(fr|en)$/);
                 for (const lang of languages ?? []) {
                     result[lang] = result[lang] ?? {};

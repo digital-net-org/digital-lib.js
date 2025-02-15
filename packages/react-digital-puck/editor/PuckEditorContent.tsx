@@ -1,7 +1,7 @@
 import { t } from 'i18next';
 import React from 'react';
 import type { Entity } from '../../dto';
-import { useIDbStore } from '../../react-digital-idb';
+import { useIDbStore } from '../../react-digital';
 import { Box, Icon } from '../../react-digital-ui';
 import EntityRender from './EntityRender';
 import { type PuckEditorProps } from './PuckEditor';

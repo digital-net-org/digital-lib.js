@@ -1,4 +1,3 @@
-import type { DigitalRoute } from '../../react-digital';
 import type { StoredDigitalUser } from './StoredDigitalUser';
 
 export interface DigitalUser extends StoredDigitalUser {
@@ -9,5 +8,4 @@ export interface DigitalUser extends StoredDigitalUser {
     isUnauthorized: boolean;
     deleteStoredUser: () => void;
     updateStoredUser: (user: StoredDigitalUser) => void;
-    isRoutePublic: (route: DigitalRoute | undefined) => boolean;
 }

@@ -1,8 +1,7 @@
 import { type Data, Puck } from '@measured/puck';
 import React from 'react';
 import type { Entity } from '../../dto';
-import { useClassName } from '../../react-digital';
-import { useIDbStore, useStoredEntity } from '../../react-digital-idb';
+import { useClassName, useIDbStore, useStoredEntity } from '../../react-digital';
 import { Editor, Icon } from '../../react-digital-ui';
 import { config } from '../library';
 import PuckDataHelper from './PuckDataHelper';

@@ -1,6 +1,6 @@
 import React from 'react';
 import type { Entity, EntitySchema } from '../../dto';
-import { useIDbStore } from '../../react-digital-idb';
+import { useIDbStore } from '../../react-digital';
 import { Box } from '../../react-digital-ui';
 import usePuckState from './usePuckState';
 

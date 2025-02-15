@@ -2,31 +2,31 @@ import React from 'react';
 import { type Result } from '../../core';
 import { LocalStorage } from '../../react-digital';
 import { useDigitalClient } from '../../react-digital-client';
-import { Jwt } from '../Jwt';
 import { type StoredDigitalUser, useStoredDigitalUser } from '../DigitalUser';
-import { type DigitalUserConfig } from '../config';
+import { Jwt } from '../Jwt';
+import { config } from '../config';
 
-export default function AuthInterceptor({ authStorageKey, userApi }: DigitalUserConfig) {
+export default function AuthInterceptor() {
     const { axiosInstance } = useDigitalClient();
-    const { deleteStoredUser, updateStoredUser } = useStoredDigitalUser(authStorageKey);
+    const { deleteStoredUser, updateStoredUser } = useStoredDigitalUser(config.authStorageKey);
 
     React.useEffect(() => {
         const onRequest = axiosInstance.interceptors.request.use(
-            async (config) => {
-                const user = LocalStorage.get<StoredDigitalUser>(authStorageKey);
-                if (user?.token) config.headers['Authorization'] = `Bearer ${user.token}`;
-                return config;
+            async req => {
+                const user = LocalStorage.get<StoredDigitalUser>(config.authStorageKey);
+                if (user?.token) req.headers['Authorization'] = `Bearer ${user.token}`;
+                return req;
             },
-            (error) => {
+            error => {
                 return Promise.reject(error);
-            },
+            }
         );
 
         const onResponse = axiosInstance.interceptors.response.use(
-            (response) => {
+            response => {
                 return response;
             },
-            async (error) => {
+            async error => {
                 const originalRequest = error.config;
                 const isUnauthorized = error.response?.status === 401;
 
@@ -34,7 +34,7 @@ export default function AuthInterceptor({ authStorageKey, userApi }: DigitalUser
                     return Promise.resolve(error.response);
                 }
 
-                const isRefreshing = originalRequest.url === userApi.refreshToken;
+                const isRefreshing = originalRequest.url === config.userApi.refreshToken;
 
                 if (isRefreshing) {
                     deleteStoredUser();
@@ -48,7 +48,7 @@ export default function AuthInterceptor({ authStorageKey, userApi }: DigitalUser
                 originalRequest._retry = true;
                 const { status, data } = await axiosInstance.request<Result<string>>({
                     method: 'POST',
-                    url: userApi.refreshToken,
+                    url: config.userApi.refreshToken,
                     withCredentials: true,
                 });
                 if (status !== 200 || !data.value) {
@@ -63,20 +63,14 @@ export default function AuthInterceptor({ authStorageKey, userApi }: DigitalUser
 
                 originalRequest.headers['Authorization'] = `Bearer ${token.token}`;
                 return axiosInstance.request(originalRequest);
-            },
+            }
         );
 
         return () => {
             axiosInstance.interceptors.request.eject(onRequest);
             axiosInstance.interceptors.response.eject(onResponse);
         };
-    }, [
-        authStorageKey,
-        axiosInstance,
-        userApi,
-        updateStoredUser,
-        deleteStoredUser,
-    ]);
+    }, [axiosInstance, updateStoredUser, deleteStoredUser]);
 
     return null;
 }

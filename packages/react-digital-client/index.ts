@@ -1,4 +1,4 @@
-export { default as DigitalClientPlugin } from './DigitalClientPlugin';
+export { default as DigitalClientProvider } from './DigitalClientProvider';
 export { default as useDigitalClient } from './useDigitalClient';
 export { default as useDigitalMutation } from './useDigitalMutation';
 export { default as useDigitalQuery } from './useDigitalQuery';

@@ -1,5 +1,5 @@
 import React from 'react';
-import type { Entity } from '../dto';
+import type { Entity } from '../../dto';
 import useIDbStore from './useIDbStore';
 
 /**

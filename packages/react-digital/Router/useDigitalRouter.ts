@@ -6,6 +6,8 @@ export interface DigitalRoute {
     path: string;
     navigate: () => void;
     isCurrent: boolean;
+    isPublic: boolean;
+    displayed: boolean;
 }
 
 /**
@@ -18,34 +20,30 @@ export default function useDigitalRouter() {
     const { pathname } = useLocation();
 
     const current: DigitalRoute | undefined = React.useMemo(() => {
-        const path = (contextRouter ?? [])
+        const resolved = (contextRouter ?? [])
             .sort((a, b) => b.path.length - a.path.length)
-            .find(({ path }) => pathname.includes(path))?.path;
-        return path
+            .find(({ path }) => pathname.includes(path));
+        return resolved?.path
             ? {
-                    path,
-                    isCurrent: true,
-                    navigate: () => navigate(path),
-                }
+                  path: resolved.path,
+                  displayed: Boolean(resolved.displayed),
+                  isPublic: Boolean(resolved.isPublic),
+                  isCurrent: true,
+                  navigate: () => navigate(resolved.path),
+              }
             : undefined;
-    }, [
-        contextRouter,
-        pathname,
-        navigate,
-    ]);
+    }, [contextRouter, pathname, navigate]);
 
     const router: Array<DigitalRoute> = React.useMemo(
         () =>
-            (contextRouter ?? []).map(({ element: _, ...route }) => ({
+            (contextRouter ?? []).map(({ element: _, displayed, isPublic, ...route }) => ({
                 navigate: () => navigate(route.path),
                 isCurrent: pathname === route.path,
+                displayed: Boolean(displayed),
+                isPublic: Boolean(isPublic),
                 ...route,
             })),
-        [
-            contextRouter,
-            pathname,
-            navigate,
-        ],
+        [contextRouter, pathname, navigate]
     );
 
     return { router, current };

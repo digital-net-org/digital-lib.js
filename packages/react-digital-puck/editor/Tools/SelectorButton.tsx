@@ -1,5 +1,5 @@
 import type { Entity } from '../../../dto';
-import { useStoredEntity } from '../../../react-digital-idb';
+import { useStoredEntity } from '../../../react-digital';
 import { Box, Button, Icon } from '../../../react-digital-ui';
 import type { PuckEditorProps } from '../PuckEditor';
 

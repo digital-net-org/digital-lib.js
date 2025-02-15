@@ -1,4 +1,4 @@
-import { type Namespace } from '../react-digital-localize';
+import { type Namespace } from '../react-digital';
 
 export default {
     namespace: 'puck',

@@ -1,7 +1,7 @@
 import React from 'react';
 import type { Entity } from '../../dto';
 import { useCreate, useDelete, useGet, useGetById, usePatch } from '../../react-digital-client';
-import { useIDbStore } from '../../react-digital-idb';
+import { useIDbStore } from '../../react-digital';
 import { type PuckEditorProps } from './PuckEditor';
 import usePuckUrlState from './usePuckUrlState';
 

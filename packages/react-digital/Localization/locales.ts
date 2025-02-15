@@ -1,0 +1,29 @@
+import { type Namespace } from './Namespace';
+
+export default {
+    namespace: 'global',
+    fr: {
+        actions: {
+            save: 'Enregistrer',
+            cancel: 'Annuler',
+            delete: 'Supprimer',
+            duplicate: 'Dupliquer',
+            auth: {
+                login: 'Connexion',
+                logout: 'Déconnexion',
+            },
+        },
+    },
+    en: {
+        actions: {
+            save: 'Save',
+            cancel: 'Cancel',
+            delete: 'Delete',
+            duplicate: 'Duplicate',
+            auth: {
+                login: 'Connexion',
+                logout: 'Connexion',
+            },
+        },
+    },
+} satisfies Namespace;
