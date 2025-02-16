@@ -1,9 +1,9 @@
 .DigitalUi-AppNavigation {
     width: 100%;
 
-    & .DefaultLogo {
+    & .DigitalUi-AppLogo {
         position: absolute;
-        left: 3.5rem;
+        left: 2.75rem;
     }
 
     & .DigitalUi-Button-selected {

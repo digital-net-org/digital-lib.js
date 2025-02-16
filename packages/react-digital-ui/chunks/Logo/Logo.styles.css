@@ -1,12 +1,14 @@
 .DigitalUi-AppLogo {
-    position: absolute;
-    left: 2.75rem;
-
     & h1.DigitalUi-Text.DigitalUi-Text-variant-h1 {
         font-family: 'Noto Serif Variable', serif;
         font-weight: bold;
         letter-spacing: .0005rem;
         font-size: 1rem;
         color: var(--palette-primary);
+    }
+
+    & img {
+        padding-top: .2rem;
+        width: 7.75rem;
     }
 }
