@@ -8,6 +8,6 @@ export const config = {
     },
     router: {
         login: '/login',
-        home: '/home',
+        home: '/',
     },
 };

@@ -1,9 +1,9 @@
 import React from 'react';
-import { StringResolver } from '../../../../core';
-import { type Entity, type EntitySchema } from '../../../../dto';
-import { type BoxProps, Box } from '../../Box';
-import { InputSwitch, InputText } from '../../Input';
-import { Text } from '../../Text';
+import { StringResolver } from '../../../core';
+import { type Entity, type EntitySchema } from '../../../dto';
+import { type BoxProps, Box } from '../Box';
+import { InputSwitch, InputText } from '../Input';
+import { Text } from '../Text';
 
 export interface EntityFormProps<T extends Entity> extends Omit<BoxProps, 'onChange' | 'onSubmit'> {
     schema: EntitySchema;
@@ -25,18 +25,15 @@ export default function EntityForm<T extends Entity>({
         return onSubmit();
     };
 
-    const handleChange = (target: { value: any, name: string }) => {
-        console.log(target)
+    const handleChange = (target: { value: any; name: string }) => {
+        console.log(target);
         onChange?.({ ...value, [target.name]: target.value });
     };
 
     return (
-        <form
-            id={id}
-            onSubmit={handleSubmit}
-        >
+        <form id={id} onSubmit={handleSubmit}>
             <Box direction="column" gap={1} {...boxProps}>
-                {schema.map((s) => {
+                {schema.map(s => {
                     if (s.isForeignKey || s.isIdentity || s.isReadOnly || !s.isRequired) {
                         return;
                     }
@@ -49,7 +46,7 @@ export default function EntityForm<T extends Entity>({
                                     id={resolvedName}
                                     name={resolvedName}
                                     value={value[resolvedName as keyof T] as string}
-                                    onChange={(e) => handleChange({ name: resolvedName, value: e })}
+                                    onChange={e => handleChange({ name: resolvedName, value: e })}
                                 />
                             </React.Fragment>
                         );
@@ -63,7 +60,7 @@ export default function EntityForm<T extends Entity>({
                                         name={s.name}
                                         id={resolvedName}
                                         value={value[resolvedName as keyof T] as boolean}
-                                        onChange={(e) => handleChange({ name: resolvedName, value: e })}
+                                        onChange={e => handleChange({ name: resolvedName, value: e })}
                                     />
                                 </Box>
                             </React.Fragment>

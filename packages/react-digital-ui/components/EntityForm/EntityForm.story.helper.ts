@@ -1,4 +1,4 @@
-import type { Entity, EntitySchema } from '../../../../dto';
+import type { Entity, EntitySchema } from '../../../dto';
 
 export interface TestEntity extends Entity {
     name: string;
@@ -53,7 +53,8 @@ export const testSchema: EntitySchema = [
         maxLength: null,
         isIdentity: true,
         isForeignKey: false,
-        regexValidation: null },
+        regexValidation: null,
+    },
     {
         name: 'CreatedAt',
         path: 'CreatedAt',
@@ -66,7 +67,8 @@ export const testSchema: EntitySchema = [
         maxLength: null,
         isIdentity: false,
         isForeignKey: false,
-        regexValidation: null },
+        regexValidation: null,
+    },
     {
         name: 'UpdatedAt',
         path: 'UpdatedAt',

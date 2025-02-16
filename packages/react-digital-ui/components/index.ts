@@ -2,7 +2,7 @@ export * from './types';
 export * from './Avatar';
 export * from './Box';
 export * from './Button';
-export * from './Form';
+export * from './EntityForm';
 export * from './Icon';
 export * from './Input';
 export * from './Loader';

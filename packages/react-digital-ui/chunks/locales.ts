@@ -13,6 +13,11 @@ export default {
                 },
             },
         },
+        loginForm: {
+            login: 'Identifiant',
+            password: 'Mot de passe',
+            submit: 'Connexion',
+        },
     },
     en: {
         appBar: {
@@ -24,6 +29,11 @@ export default {
                     version: 'Application version:',
                 },
             },
+        },
+        loginForm: {
+            login: 'Login',
+            password: 'Password',
+            submit: 'Login',
         },
     },
 } satisfies Namespace;

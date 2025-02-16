@@ -1,8 +1,8 @@
 /* eslint react-hooks/rules-of-hooks: 0 */
 import type { Meta, StoryObj } from '@storybook/react';
 import React from 'react';
-import type { Entity } from '../../../../dto';
-import { Box } from '../../Box';
+import type { Entity } from '../../../dto';
+import { Box } from '../Box';
 import EntityForm, { type EntityFormProps } from './EntityForm';
 import { type TestEntity, testEntity, testSchema } from './EntityForm.story.helper';
 
@@ -21,23 +21,16 @@ export const StateTests: Story = {
 
         return (
             <Box gap={2}>
-                <EntityForm
-                    id="test"
-                    value={value}
-                    onChange={setValue}
-                    onSubmit={onSubmit}
-                    schema={testSchema}
-                />
-                <button type="submit" form="test">Submit</button>
+                <EntityForm id="test" value={value} onChange={setValue} onSubmit={onSubmit} schema={testSchema} />
+                <button type="submit" form="test">
+                    Submit
+                </button>
                 <Box>
                     Submit content:
-                    <pre>
-                        {JSON.stringify(value, null, 2)}
-                    </pre>
+                    <pre>{JSON.stringify(value, null, 2)}</pre>
                 </Box>
             </Box>
         );
     },
-    args: {
-    },
+    args: {},
 };

@@ -1,0 +1,14 @@
+.DigitalUi-LoginForm {
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: var(--palette-paper);
+    border-radius: var(--spacing-radius-1);
+    max-width: 350px;
+    box-shadow: 2px 2px 4px 0 var(--palette-shadow);
+
+    & .DigitalUi-Button {
+        width: 100%;
+    }
+}
