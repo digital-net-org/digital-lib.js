@@ -19,18 +19,16 @@ export default function LoginForm() {
                     login({ body });
                 }}
             >
-                <Box>
-                    {['login', 'password'].map(item => (
-                        <InputText
-                            label={t(`chunks:loginForm.${item}`)}
-                            onChange={v => setBody({ ...body, [item]: v })}
-                            value={body[item as keyof typeof body]}
-                            type={item === 'password' ? 'password' : 'text'}
-                            required
-                            fullWidth
-                        />
-                    ))}
-                </Box>
+                {['login', 'password'].map(item => (
+                    <InputText
+                        label={t(`chunks:loginForm.${item}`)}
+                        onChange={v => setBody({ ...body, [item]: v })}
+                        value={body[item as keyof typeof body]}
+                        type={item === 'password' ? 'password' : 'text'}
+                        required
+                        fullWidth
+                    />
+                ))}
                 <Box mt={1} justify="end" direction="row">
                     <Button loading={isLoading} type="submit">
                         {t('chunks:loginForm.submit')}
