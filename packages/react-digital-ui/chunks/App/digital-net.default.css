@@ -20,7 +20,6 @@
     --palette-shadow-light: #00000020;
     --palette-error: #b62929;
 
-    --font-family: 'Roboto', monospace;
     --font-weight-light: 300;
     --font-weight-regular: 400;
     --font-weight-medium: 500;
@@ -34,7 +33,7 @@
 }
 
 body {
-    font-family: var(--font-family);
+    font-family: 'Roboto', monospace;
     margin: 0;
     padding: 0;
 }

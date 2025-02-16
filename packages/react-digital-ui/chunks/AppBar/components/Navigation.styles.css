@@ -1,0 +1,12 @@
+.DigitalUi-AppNavigation {
+    width: 100%;
+
+    & .DefaultLogo {
+        position: absolute;
+        left: 3.5rem;
+    }
+
+    & .DigitalUi-Button-selected {
+        cursor: default;
+    }
+}

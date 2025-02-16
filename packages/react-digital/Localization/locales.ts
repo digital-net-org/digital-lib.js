@@ -21,8 +21,8 @@ export default {
             delete: 'Delete',
             duplicate: 'Duplicate',
             auth: {
-                login: 'Connexion',
-                logout: 'Connexion',
+                login: 'Login',
+                logout: 'Logout',
             },
         },
     },
