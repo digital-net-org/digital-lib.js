@@ -1,10 +1,28 @@
-import type { ViewModel } from '../../../dto';
-import { Edit, Icon, Loader, EntityForm, useEntityForm } from '../..';
+import type {Entity, EntitySchema} from '../../../dto';
+import { Edit, Icon, Loader, EntityForm } from '../..';
+import {Dispatch, SetStateAction} from "react";
 
-export default function EntityPage() {
-    const { payload, setPayload, id, schema, isLoading, isQuerying, handleDelete, handlePatch } =
-        useEntityForm<ViewModel>('view', 'views');
+interface EntityPageProps<T extends Entity>{
+    id: string | undefined;
+    isLoading: boolean;
+    isQuerying: boolean;
+    handleDelete: () => void;
+    handlePatch: () => void;
+    schema: EntitySchema;
+    payload: T | undefined;
+    setPayload:  Dispatch<SetStateAction<T | undefined>>;
+}
 
+export default function EntityPage<T extends Entity>({
+    id,
+    isLoading,
+    isQuerying,
+    handleDelete,
+    handlePatch,
+    schema,
+    payload,
+    setPayload,
+}: EntityPageProps<T>) {
     return (
         <div>
             <Edit

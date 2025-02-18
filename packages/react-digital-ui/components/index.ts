@@ -3,6 +3,7 @@ export * from './Avatar';
 export * from './Box';
 export * from './Button';
 export * from './EntityForm';
+export * from './EntityPage';
 export * from './Icon';
 export * from './Input';
 export * from './Loader';
