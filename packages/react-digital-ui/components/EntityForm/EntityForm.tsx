@@ -9,7 +9,7 @@ export interface EntityFormProps<T extends Entity> extends Omit<BoxProps, 'onCha
     schema: EntitySchema;
     value: T;
     onChange: (entity: T) => void;
-    onSubmit: () => void;
+    onSubmit?: () => void;
 }
 
 export default function EntityForm<T extends Entity>({
@@ -22,6 +22,9 @@ export default function EntityForm<T extends Entity>({
 }: EntityFormProps<T>) {
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        if (!onSubmit) {
+            return;
+        }
         return onSubmit();
     };
 
