@@ -25,11 +25,11 @@ export default function useEntityForm<T extends Entity>(endpoint: string, redire
 
     const isLoading = React.useMemo(() => isSchemaLoading || isQuerying, [isSchemaLoading, isQuerying]);
 
-    const { patch } = usePatch<T>(endpoint, {
+    const { patch, isPatching } = usePatch<T>(endpoint, {
         onSuccess: async () => await invalidate(),
     });
 
-    const { delete: _delete } = useDelete(endpoint, {
+    const { delete: _delete, isDeleting } = useDelete(endpoint, {
         onSuccess: async () => await invalidate(),
     });
 
@@ -38,7 +38,7 @@ export default function useEntityForm<T extends Entity>(endpoint: string, redire
             return;
         }
         patch(id, payload);
-    }, [id, isLoading, patch]);
+    }, [id, isLoading, patch, payload]);
 
     const handleDelete = React.useCallback(async () => {
         if (!id || isLoading) {
@@ -53,6 +53,8 @@ export default function useEntityForm<T extends Entity>(endpoint: string, redire
         schema,
         isLoading,
         isQuerying,
+        isPatching,
+        isDeleting,
         handlePatch,
         handleDelete,
         payload,
