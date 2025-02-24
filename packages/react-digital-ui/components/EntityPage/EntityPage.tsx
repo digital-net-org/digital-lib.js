@@ -1,9 +1,9 @@
-import type {Entity, EntitySchema} from '../../../dto';
-import {Icon, Loader, EntityForm, Box, Button} from '../..';
-import React, {Dispatch, SetStateAction} from "react";
-import {useClassName} from "../../../react-digital";
+import type { Entity, EntitySchema } from '../../../dto';
+import { Icon, Loader, EntityForm, Box, Button, Edit } from '../..';
+import React, { type Dispatch, type SetStateAction } from 'react';
+import { useClassName } from '../../../react-digital';
 
-interface EntityPageProps<T extends Entity>{
+interface EntityPageProps<T extends Entity> {
     id: string | undefined;
     isLoading: boolean;
     isQuerying: boolean;
@@ -11,7 +11,7 @@ interface EntityPageProps<T extends Entity>{
     onSave?: () => void;
     schema: EntitySchema;
     payload: T | undefined;
-    setPayload:  Dispatch<SetStateAction<T | undefined>>;
+    setPayload: Dispatch<SetStateAction<T | undefined>>;
     title: string | undefined;
 }
 
@@ -26,46 +26,21 @@ export default function EntityPage<T extends Entity>({
     setPayload,
     title,
 }: EntityPageProps<T>) {
-    const className = useClassName({}, 'Edit');
-
     return (
         <Box>
-            <Box className={className}>
-                <Box className={`${className}-State`}>
-                    <Box />
-                    <Box>
-                        {title}
-                    </Box>
-                    <Box direction="row" align="center" gap={1} p={1}>
-                        {onSave && (
-                            <Button
-                                form={id}
-                                type="submit"
-                                variant="icon"
-                                disabled={isLoading}
-                                onClick={onSave}
-                            >
-                                <Icon.FloppyIcon variant="outlined" size="small" color="text" />
-                            </Button>
-                        )}
-                        {onDelete && (
-                            <Button
-                                type="button"
-                                variant="icon"
-                                disabled={isLoading}
-                                onClick={onDelete}
-                            >
-                                <Icon.TrashIcon variant="outlined" size="small" color="text" />
-                            </Button>
-                        )}
-                    </Box>
-                </Box>
+            <Edit
+                renderName={() => title}
+                actions={[
+                    ...(onSave ? [{ icon: Icon.FloppyIcon, disabled: isLoading, action: onSave }] : []),
+                    ...(onDelete ? [{ icon: Icon.TrashIcon, disabled: isLoading, action: onDelete }] : []),
+                ]}
+            >
                 {isQuerying || !payload ? (
                     <Loader />
                 ) : (
                     <EntityForm id={id} schema={schema} value={payload} onChange={setPayload} onSubmit={onSave} />
                 )}
-            </Box>
+            </Edit>
         </Box>
     );
 }
