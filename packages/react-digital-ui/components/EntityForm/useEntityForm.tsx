@@ -2,6 +2,7 @@ import React from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useDelete, useGetById, usePatch, useSchema } from '../../../react-digital-client';
 import type { Entity } from '../../../dto';
+import { ObjectMatcher } from '@digital-lib/core';
 
 /* TODO: @horameus
     - PATCH: Handle schema for constraints
@@ -17,11 +18,20 @@ export default function useEntityForm<T extends Entity>(endpoint: string, redire
     const { id } = useParams();
     const navigate = useNavigate();
     const [payload, setPayload] = React.useState<T>();
+    const [isMutated, setIsMutated] = React.useState(false);
 
     const { entity, isQuerying, invalidateQuery: invalidate } = useGetById<T>(endpoint, id);
     const { schema, isLoading: isSchemaLoading } = useSchema(endpoint);
 
     React.useEffect(() => (entity ? setPayload(entity) : void 0), [entity]);
+
+    React.useEffect(() => {
+        if (!ObjectMatcher.deepEquality(payload, entity)) {
+            setIsMutated(true);
+        } else {
+            setIsMutated(false);
+        }
+    }, [payload, entity]);
 
     const isLoading = React.useMemo(() => isSchemaLoading || isQuerying, [isSchemaLoading, isQuerying]);
 
@@ -52,9 +62,9 @@ export default function useEntityForm<T extends Entity>(endpoint: string, redire
         id,
         schema,
         isLoading,
-        isQuerying,
         isPatching,
         isDeleting,
+        isMutated,
         handlePatch,
         handleDelete,
         payload,

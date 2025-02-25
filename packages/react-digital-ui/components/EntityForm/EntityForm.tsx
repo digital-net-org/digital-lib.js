@@ -29,7 +29,6 @@ export default function EntityForm<T extends Entity>({
     };
 
     const handleChange = (target: { value: any; name: string }) => {
-        console.log(target);
         onChange?.({ ...value, [target.name]: target.value });
     };
 
@@ -37,9 +36,7 @@ export default function EntityForm<T extends Entity>({
         <form id={id} onSubmit={handleSubmit}>
             <Box direction="column" gap={1} {...boxProps}>
                 {schema.map(s => {
-                    if (s.isForeignKey || s.isIdentity || s.isReadOnly || !s.isRequired) {
-                        return;
-                    }
+                    const isDisabled = s.isForeignKey || s.isIdentity || s.isReadOnly || !s.isRequired;
                     const resolvedName = StringResolver.toCamelCase(s.name);
                     if (s.type === 'String') {
                         return (
@@ -50,6 +47,7 @@ export default function EntityForm<T extends Entity>({
                                     name={resolvedName}
                                     value={value[resolvedName as keyof T] as string}
                                     onChange={e => handleChange({ name: resolvedName, value: e })}
+                                    disabled={isDisabled}
                                 />
                             </React.Fragment>
                         );
@@ -64,6 +62,7 @@ export default function EntityForm<T extends Entity>({
                                         id={resolvedName}
                                         value={value[resolvedName as keyof T] as boolean}
                                         onChange={e => handleChange({ name: resolvedName, value: e })}
+                                        disabled={isDisabled}
                                     />
                                 </Box>
                             </React.Fragment>
