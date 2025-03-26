@@ -8,17 +8,18 @@ import usePuckUrlState from './usePuckUrlState';
 export default function usePuckCrud<T extends Entity>(store: PuckEditorProps<T>['store'], onReset: () => void) {
     const { currentEntity } = usePuckUrlState();
     const iDbStore = useIDbStore<T>(store);
+    const url = React.useMemo(() => `${PAGES_API_URL}/${store}`, [store]);
 
-    const { entities, invalidateQuery: invalidateAll, ...queryApi } = useGet<T>(store);
-    const { entity, isQuerying, invalidateQuery: invalidate } = useGetById<T>(store, currentEntity);
+    const { entities, invalidateQuery: invalidateAll, ...queryApi } = useGet<T>(url);
+    const { entity, isQuerying, invalidateQuery: invalidate } = useGetById<T>(url, currentEntity);
 
-    const { create, isCreating } = useCreate<T>(store, {
+    const { create, isCreating } = useCreate<T>(url, {
         onSuccess: async () => {
             await invalidateAll();
         },
     });
 
-    const { delete: _delete, isDeleting } = useDelete(store, {
+    const { delete: _delete, isDeleting } = useDelete(url, {
         onSuccess: async () => {
             onReset();
             await iDbStore.delete(currentEntity);
@@ -27,7 +28,7 @@ export default function usePuckCrud<T extends Entity>(store: PuckEditorProps<T>[
         },
     });
 
-    const { patch, isPatching } = usePatch<T>(store, {
+    const { patch, isPatching } = usePatch<T>(url, {
         onSuccess: async () => {
             await iDbStore.delete(currentEntity);
             await invalidate();

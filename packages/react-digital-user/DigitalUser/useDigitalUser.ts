@@ -6,26 +6,27 @@ import type { Result } from '../../dto';
 import type { DigitalUser } from './DigitalUser';
 import { Jwt } from '../Jwt';
 import useStoredDigitalUser from './useStoredDigitalUser';
-import { config } from '../config';
+
+const authApiUrl = `${CORE_API_URL}/authentication/user`;
 
 export default function useDigitalUser(): DigitalUser {
     const { current } = useDigitalRouter();
     const navigate = useNavigate();
-    const { storedUser, deleteStoredUser, updateStoredUser } = useStoredDigitalUser(config.authStorageKey);
+    const { storedUser, deleteStoredUser, updateStoredUser } = useStoredDigitalUser(STORAGE_KEY_AUTH);
 
-    const { mutate: login, isPending: loginLoading } = useDigitalMutation(config.userApi.login, {
+    const { mutate: login, isPending: loginLoading } = useDigitalMutation(`${authApiUrl}/login`, {
         onSuccess: ({ value }: Result<string>) => {
             const decoded = Jwt.decode(value);
             if (!decoded) return;
             updateStoredUser({ ...decoded.content, token: decoded.token });
-            navigate(config.router.home);
+            navigate(ROUTER_HOME);
         },
         withCredentials: true,
     });
-    const { mutate: logout, isPending: logoutLoading } = useDigitalMutation(config.userApi.logout, {
+    const { mutate: logout, isPending: logoutLoading } = useDigitalMutation(`${authApiUrl}/logout`, {
         onSuccess: () => {
             deleteStoredUser();
-            navigate(config.router.login);
+            navigate(ROUTER_LOGIN);
         },
         withCredentials: true,
     });

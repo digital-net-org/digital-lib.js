@@ -2,7 +2,6 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDigitalRouter } from '../../react-digital';
 import { useDigitalUser } from '../DigitalUser';
-import { config } from '../config';
 
 export default function AuthRedirect() {
     const navigate = useNavigate();
@@ -11,10 +10,10 @@ export default function AuthRedirect() {
 
     React.useEffect(() => {
         if (isUnauthorized) {
-            navigate(config.router.login);
+            navigate(ROUTER_LOGIN);
         }
-        if (isLogged && current?.path === config.router.login) {
-            navigate(config.router.home);
+        if (isLogged && current?.path === ROUTER_LOGIN) {
+            navigate(ROUTER_HOME);
         }
     }, [isLogged, navigate, current?.path, isUnauthorized]);
 

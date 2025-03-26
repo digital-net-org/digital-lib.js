@@ -9,7 +9,7 @@ export default function useDigitalQuery<T, E = unknown>(
     key: string | undefined,
     { method, onError, onSuccess, ...options }: QueryConfig<T, E> = {
         autoRefetch: true,
-    },
+    }
 ) {
     const { axiosInstance, queryClient } = useDigitalClient();
     const { data: queryResult, ...response } = useQuery<T, AxiosError<E>>({
@@ -35,8 +35,8 @@ export default function useDigitalQuery<T, E = unknown>(
     };
 
     const data = React.useMemo(
-        () => ObjectMatcher.deepEquality(queryResult, {} as typeof queryResult) ? undefined : queryResult,
-        [queryResult],
+        () => (ObjectMatcher.deepEquality(queryResult, {} as typeof queryResult) ? undefined : queryResult),
+        [queryResult]
     );
 
     return { data, ...response, refetch };

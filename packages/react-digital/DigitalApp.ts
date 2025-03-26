@@ -1,13 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { Router, type RouterProps } from './Router';
-import { type ClientConfig, DigitalClientProvider } from '../react-digital-client';
+import { DigitalClientProvider } from '../react-digital-client';
 import { AuthInterceptor, AuthRedirect } from '../react-digital-user';
 import { ThemeProvider } from '../react-digital-ui';
 import { DigitalIdbProvider, type IDbConfig } from './IdbStorage';
 import { LocalizationProvider } from './Localization';
 
-export interface DigitalConfig extends ClientConfig {
+export interface DigitalConfig {
     idbConfig: IDbConfig;
     rootElement?: HTMLElement | null;
     strictMode?: boolean;
@@ -31,7 +31,7 @@ export default class DigitalApp {
      */
     public static createReactApp(
         renderLayout: RouterProps['renderLayout'],
-        { idbConfig, tanstackConfig, axiosConfig, router, strictMode, rootElement }: DigitalConfig
+        { idbConfig, router, strictMode, rootElement }: DigitalConfig
     ) {
         const appRoot = rootElement ?? document.getElementById('root');
         if (appRoot === null) {
@@ -44,7 +44,7 @@ export default class DigitalApp {
             [
                 { component: LocalizationProvider, props: {} },
                 { component: DigitalIdbProvider, props: idbConfig },
-                { component: DigitalClientProvider, props: { axiosConfig, tanstackConfig } },
+                { component: DigitalClientProvider, props: {} },
                 { component: ThemeProvider, props: {} },
             ] as Array<{ component: React.FunctionComponent<any>; props: any }>
         ).reduceRight(

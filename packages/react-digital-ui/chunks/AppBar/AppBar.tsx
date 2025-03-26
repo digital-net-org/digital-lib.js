@@ -1,8 +1,8 @@
 import { t } from 'i18next';
 import { useDigitalUser } from '../../../react-digital-user';
-import { useDigitalQuery } from '../../../react-digital-client';
+import { useGetById } from '../../../react-digital-client';
 import { useDigitalRouter } from '../../../react-digital';
-import type { Result, UserModel } from '../../../dto';
+import type { UserModel } from '../../../dto';
 import { Box } from '../../components';
 import Navigation, { type NavigationProps } from './components/Navigation';
 import Parameters, { type ParametersProps } from './components/Parameters';
@@ -34,7 +34,7 @@ export function AppBarLayout({
 export default function AppBar({ version }: AppBarProps) {
     const { router, current } = useDigitalRouter();
     const appUser = useDigitalUser();
-    const { isLoading, data } = useDigitalQuery<Result<UserModel>>(`/user/${appUser.id}`);
+    const { isQuerying, entity } = useGetById<UserModel>(`${CORE_API_URL}/user/`, appUser.id);
 
     return (
         <AppBarLayout
@@ -47,8 +47,8 @@ export default function AppBar({ version }: AppBarProps) {
                     selected: r.isCurrent,
                     label: t(`router:page.title.${r.path}`),
                 }))}
-            user={data?.value}
-            isLoading={isLoading}
+            user={entity}
+            isLoading={isQuerying}
             onLogout={appUser.logout}
             parameters={[]}
             version={version}

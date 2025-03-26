@@ -4,16 +4,17 @@ import { LocalStorage } from '../../react-digital';
 import { useDigitalClient } from '../../react-digital-client';
 import { type StoredDigitalUser, useStoredDigitalUser } from '../DigitalUser';
 import { Jwt } from '../Jwt';
-import { config } from '../config';
+
+const refreshTokenUrl = `${CORE_API_URL}/authentication/user/refresh`;
 
 export default function AuthInterceptor() {
     const { axiosInstance } = useDigitalClient();
-    const { deleteStoredUser, updateStoredUser } = useStoredDigitalUser(config.authStorageKey);
+    const { deleteStoredUser, updateStoredUser } = useStoredDigitalUser(STORAGE_KEY_AUTH);
 
     React.useEffect(() => {
         const onRequest = axiosInstance.interceptors.request.use(
             async req => {
-                const user = LocalStorage.get<StoredDigitalUser>(config.authStorageKey);
+                const user = LocalStorage.get<StoredDigitalUser>(STORAGE_KEY_AUTH);
                 if (user?.token) req.headers['Authorization'] = `Bearer ${user.token}`;
                 return req;
             },
@@ -34,7 +35,7 @@ export default function AuthInterceptor() {
                     return Promise.resolve(error.response);
                 }
 
-                const isRefreshing = originalRequest.url === config.userApi.refreshToken;
+                const isRefreshing = originalRequest.url === refreshTokenUrl;
 
                 if (isRefreshing) {
                     deleteStoredUser();
@@ -48,7 +49,7 @@ export default function AuthInterceptor() {
                 originalRequest._retry = true;
                 const { status, data } = await axiosInstance.request<Result<string>>({
                     method: 'POST',
-                    url: config.userApi.refreshToken,
+                    url: refreshTokenUrl,
                     withCredentials: true,
                 });
                 if (status !== 200 || !data.value) {
