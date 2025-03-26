@@ -2,7 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDigitalRouter } from '../../react-digital';
 import { useDigitalMutation } from '../../react-digital-client';
-import type { Result } from '../../core';
+import type { Result } from '../../dto';
 import type { DigitalUser } from './DigitalUser';
 import { Jwt } from '../Jwt';
 import useStoredDigitalUser from './useStoredDigitalUser';

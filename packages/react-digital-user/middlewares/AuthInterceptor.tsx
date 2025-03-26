@@ -1,5 +1,5 @@
 import React from 'react';
-import { type Result } from '../../core';
+import { type Result } from '../../dto';
 import { LocalStorage } from '../../react-digital';
 import { useDigitalClient } from '../../react-digital-client';
 import { type StoredDigitalUser, useStoredDigitalUser } from '../DigitalUser';
