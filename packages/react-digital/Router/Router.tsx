@@ -2,7 +2,7 @@ import * as React from 'react';
 import { createBrowserRouter, RouterProvider as ReactRouter } from 'react-router-dom';
 import RouterBuilder from './builder/RouterBuilder';
 import type { RouteObject } from './RouteObject';
-import { LoginView } from '../../react-digital-ui';
+import { LoginView } from '../../react-digital-user';
 import DefaultRouter from './DefaultRouter';
 
 export interface RouterProps {

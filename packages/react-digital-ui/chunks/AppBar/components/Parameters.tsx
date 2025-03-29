@@ -2,7 +2,7 @@ import { t } from 'i18next';
 import { ThemeSwitch } from '../../../theme';
 import type { UserModel } from '../../../../dto';
 import { Avatar, Box, Icon } from '../../../components';
-import ListMenu, { MenuAction } from './ListMenu';
+import ListMenu, { type MenuAction } from './ListMenu';
 
 export interface ParametersProps {
     parameters: MenuAction[];
