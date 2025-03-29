@@ -1,5 +1,5 @@
 import React from 'react';
-import { Property, useClassName } from '../../../react-digital';
+import { Property, useClassName } from '../../../core';
 import type { SafariNodeWithChildren } from '../types';
 import './Text.styles.css';
 
@@ -24,11 +24,7 @@ export default function Text({ children, ...props }: TextProps) {
     }, [props.variant]);
 
     if (props.variant === 'JSON') {
-        return (
-            <pre className={className}>
-                {JSON.stringify(children, null, 2)}
-            </pre>
-        );
+        return <pre className={className}>{JSON.stringify(children, null, 2)}</pre>;
     }
 
     return React.createElement(tag, { ...Property.toHtml(props), className }, children);

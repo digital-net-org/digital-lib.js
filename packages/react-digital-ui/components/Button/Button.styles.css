@@ -120,7 +120,7 @@
 .DigitalUi-Button-variant-text {
     border-color: transparent;
     background-color: transparent;
-    padding: 0 .25rem;
+    padding: 0 0.25rem;
 
     &:hover {
         color: var(--palette-primary-light);

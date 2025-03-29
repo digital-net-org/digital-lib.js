@@ -1,10 +1,10 @@
 import React from 'react';
+import { useClassName } from '../../../../core';
 import type { ControlledHandler } from '../../types';
 import type { SafariInputNode } from '../types';
-import { useClassName } from '../../../../react-digital';
 import useInputRef from '../useInputRef';
-import './InputSelect.styles.css';
 import InputBox from '../InputBox';
+import './InputSelect.styles.css';
 
 export interface InputSelectProps<T = any> extends SafariInputNode {
     value: T | undefined;
@@ -30,7 +30,7 @@ export default function InputSelect<T>({
 
     const options = React.useMemo(
         () => [...props.options, ...(!props.required ? [undefined] : [])],
-        [props.options, props.required],
+        [props.options, props.required]
     );
 
     const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -42,12 +42,7 @@ export default function InputSelect<T>({
     };
 
     return (
-        <InputBox
-            id={props.id}
-            className={className}
-            label={label}
-            {...props}
-        >
+        <InputBox id={props.id} className={className} label={label} {...props}>
             <div className={resolvedClassName}>
                 <label>
                     <select
@@ -58,10 +53,7 @@ export default function InputSelect<T>({
                         disabled={props.disabled || props.loading}
                     >
                         {options.map(option => (
-                            <option
-                                key={option ? onAccess(option) : 'null'}
-                                value={option ? onAccess(option) : 'null'}
-                            >
+                            <option key={option ? onAccess(option) : 'null'} value={option ? onAccess(option) : 'null'}>
                                 {onRender(option)}
                             </option>
                         ))}

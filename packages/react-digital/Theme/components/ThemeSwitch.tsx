@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Icon } from '../../components';
+import { Button, Icon } from '../../../react-digital-ui';
 import useTheme from '../useTheme';
 
 export default function ThemeSwitch() {

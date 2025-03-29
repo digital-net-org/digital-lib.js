@@ -1,4 +1,4 @@
-import { StringMatcher } from '../../core';
+import { StringMatcher } from '../String';
 import { actionKeywords, booleanKeywords, excludedKeywords } from './keywords';
 
 /**

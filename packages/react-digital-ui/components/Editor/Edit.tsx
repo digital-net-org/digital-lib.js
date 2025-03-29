@@ -1,6 +1,6 @@
 import React, { type PropsWithChildren } from 'react';
 import { Box, Text } from '../../../react-digital-ui';
-import { useClassName } from '../../../react-digital';
+import { useClassName } from '../../../core';
 import EditActions, { type EditActionsProps } from './EditActions';
 import './Edit.styles.css';
 import { t } from 'i18next';

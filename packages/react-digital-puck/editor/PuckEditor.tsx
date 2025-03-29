@@ -1,16 +1,17 @@
 import { type Data, Puck } from '@measured/puck';
 import React from 'react';
 import type { Entity } from '../../dto';
-import { useClassName, useIDbStore, useStoredEntity } from '../../react-digital';
+import { useClassName } from '../../core';
+import { useIDbStore, useStoredEntity } from '../../react-digital';
 import { Editor, Icon } from '../../react-digital-ui';
 import { config } from '../library';
+import { Tools } from './Tools';
 import PuckDataHelper from './PuckDataHelper';
-import './PuckEditor.styles.css';
 import PuckEditorContent from './PuckEditorContent';
 import PuckEditorHeader from './PuckEditorHeader';
-import { Tools } from './Tools';
 import usePuckCrud from './usePuckCrud';
 import usePuckUrlState from './usePuckUrlState';
+import './PuckEditor.styles.css';
 
 export interface PuckEditorProps<T extends Entity> {
     accessor: keyof T;

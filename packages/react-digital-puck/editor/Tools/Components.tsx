@@ -1,7 +1,7 @@
 import React from 'react';
 import { Puck } from '@measured/puck';
 import { BaseTool } from '../../../react-digital-ui';
-import { useClassName } from '../../../react-digital';
+import { useClassName } from '../../../core';
 
 interface Props {
     renderToolName: (id: string) => string;

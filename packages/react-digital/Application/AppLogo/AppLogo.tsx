@@ -1,6 +1,6 @@
-import './Logo.styles.css';
+import './AppLogo.styles.css';
 
-export default function Logo() {
+export default function AppLogo() {
     return (
         <div className="DigitalUi-AppLogo">
             <img src="/assets/logo.png" />

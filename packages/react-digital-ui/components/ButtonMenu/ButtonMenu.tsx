@@ -1,7 +1,10 @@
 import React from 'react';
-import { Box, Button, Loader, PopOver, type PopOverProps } from '../../../components';
-import { useClassName } from '../../../../react-digital';
-import './ListMenu.styles.css';
+import { Box } from '../Box';
+import { Button } from '../Button';
+import { Loader } from '../Loader';
+import { PopOver, type PopOverProps } from '../PopOver';
+import { useClassName } from '../../../core';
+import './ButtonMenu.styles.css';
 
 export interface MenuAction {
     label: React.ReactNode;
@@ -9,7 +12,7 @@ export interface MenuAction {
     selected?: boolean;
 }
 
-export interface AppMenuProps {
+export interface ButtonMenuProps {
     icon: React.ReactNode;
     actions: MenuAction[];
     label?: string;
@@ -17,8 +20,8 @@ export interface AppMenuProps {
     direction?: PopOverProps['direction'];
 }
 
-export default function AppMenu({ actions, icon, label, loading, direction = 'left' }: AppMenuProps) {
-    const className = useClassName({ direction }, 'DigitalUi-AppListMenu');
+export default function ButtonMenu({ actions, icon, label, loading, direction = 'left' }: ButtonMenuProps) {
+    const className = useClassName({ direction }, 'DigitalUi-ButtonMenu');
     const buttonRef = React.useRef<HTMLButtonElement>(null);
     const menuRef = React.useRef<HTMLDivElement>(null);
 
@@ -30,9 +33,9 @@ export default function AppMenu({ actions, icon, label, loading, direction = 'le
     ) : (
         <React.Fragment>
             <Button ref={buttonRef} variant="icon" onClick={handleMenu} selected={isMenuOpen}>
-                {direction === 'right' ? icon : null}
-                {isMenuOpen && label ? <span>{label}</span> : null}
-                {direction === 'left' ? icon : null}
+                {direction === 'left' && icon}
+                {isMenuOpen && label && <span>{label}</span>}
+                {direction === 'right' && icon}
             </Button>
             <PopOver
                 anchor={buttonRef.current}

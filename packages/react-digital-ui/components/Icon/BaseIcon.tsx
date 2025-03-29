@@ -1,6 +1,6 @@
 import type React from 'react';
+import { useClassName, useProps } from '../../../core';
 import type { SafariNode } from '../types';
-import { useClassName, useProps } from '../../../react-digital';
 import './Icon.styles.css';
 
 export interface IconProps extends SafariNode {

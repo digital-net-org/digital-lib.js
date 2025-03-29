@@ -1,7 +1,7 @@
 import React, { type PropsWithChildren } from 'react';
+import { useClassName, useImage, useProps } from '../../../core';
 import { Icon } from '../Icon';
 import type { SafariNode } from '../types';
-import { useClassName, useImage, useProps } from '../../../react-digital';
 import './Avatar.styles.css';
 
 export interface AvatarProps extends SafariNode {
@@ -19,16 +19,14 @@ export default function Avatar({ src, color = 'text', size = 'small', fullWidth 
 
     return (
         <AvatarContainer className={classNames} color={color} size={size} fullWidth={fullWidth} {...props}>
-            {src && !hasError
-                ? (
-                        <div className="DigitalUi-Avatar-container">
-                            <img src={src} alt="" />
-                            <Icon.CircleIcon {...svgProps} />
-                        </div>
-                    )
-                : (
-                        <Icon.AccountIcon {...svgProps} />
-                    )}
+            {src && !hasError ? (
+                <div className="DigitalUi-Avatar-container">
+                    <img src={src} alt="" />
+                    <Icon.CircleIcon {...svgProps} />
+                </div>
+            ) : (
+                <Icon.AccountIcon {...svgProps} />
+            )}
         </AvatarContainer>
     );
 }

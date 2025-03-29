@@ -1,5 +1,5 @@
 import React from 'react';
-import { useElement, useWindow } from '../../../react-digital';
+import { useElement, useWindow } from '../../../core';
 import { type PopOverProps } from './PopOver';
 
 export function useAnchor(
@@ -9,7 +9,7 @@ export function useAnchor(
     options?: {
         direction?: PopOverProps['direction'];
         includeAnchor?: PopOverProps['includeAnchor'];
-    },
+    }
 ) {
     const windowState = useWindow();
     const anchorState = useElement(anchor);

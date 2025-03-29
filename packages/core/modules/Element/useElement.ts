@@ -1,5 +1,5 @@
 import React from 'react';
-import { useElementSpacing } from './index';
+import useElementSpacing from './useElementSpacing';
 import useElementPosition from './useElementPosition';
 
 export default function useElement<T extends HTMLElement>(element: React.RefObject<T> | HTMLElement | string | null) {
@@ -19,7 +19,7 @@ export default function useElement<T extends HTMLElement>(element: React.RefObje
 
     const mutateStyle = React.useCallback(
         (style: Partial<CSSStyleDeclaration>) => (state ? Object.assign(state.style, style) : void 0),
-        [state],
+        [state]
     );
 
     const spacingState = useElementSpacing(state);

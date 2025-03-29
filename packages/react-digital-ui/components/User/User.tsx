@@ -2,7 +2,7 @@ import React from 'react';
 import { Button } from '../Button';
 import { Avatar } from '../Avatar';
 import type { SafariNode } from '../types';
-import { useClassName } from '../../../react-digital';
+import { useClassName } from '../../../core';
 import './User.styles.css';
 
 export interface UserProps extends SafariNode {
@@ -17,17 +17,15 @@ export default function User({ size = 'small', onClick, id, username, inverted }
     const className = useClassName({ size, inverted }, 'DigitalUi-User');
     return (
         <div className={className}>
-            {onClick
-                ? (
-                        <Button variant="icon" onClick={handleClick}>
-                            <UserContent username={username} size={size} />
-                        </Button>
-                    )
-                : (
-                        <div className="DigitalUi-User-row">
-                            <UserContent username={username} size={size} />
-                        </div>
-                    )}
+            {onClick ? (
+                <Button variant="icon" onClick={handleClick}>
+                    <UserContent username={username} size={size} />
+                </Button>
+            ) : (
+                <div className="DigitalUi-User-row">
+                    <UserContent username={username} size={size} />
+                </div>
+            )}
         </div>
     );
 }

@@ -1,8 +1,8 @@
 import React from 'react';
+import { useClassName, useProps } from '../../../core';
 import type { SafariNodeWithChildren } from '../types';
 import { useOnOpen } from './useOnOpen';
 import { useAnchor } from './useAnchor';
-import { useClassName, useProps } from '../../../react-digital';
 import './PopOver.styles.css';
 
 export interface PopOverProps extends SafariNodeWithChildren {
@@ -31,7 +31,7 @@ export default function PopOver({ children, anchor, open, onOpen, onClose, ...pr
                 <dialog ref={dialogRef} open={open} className={className}>
                     <div ref={placeHolderRef} className="DigitalUi-PopOver-placeholder" />
                     <div className="DigitalUi-PopOver-content">{children}</div>
-                </dialog>,
+                </dialog>
             )}
             {open ? <div ref={backgroundRef} className="DigitalUi-PopOver-background" onClick={onClose} /> : null}
         </React.Fragment>

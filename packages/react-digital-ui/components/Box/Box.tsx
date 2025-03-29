@@ -1,7 +1,7 @@
 import React from 'react';
 import type { SafariNodeWithChildren } from '../types';
 import './Box.styles.css';
-import { useClassName } from '../../../react-digital';
+import { useClassName } from '../../../core';
 
 type BaseBoxProps = React.HTMLAttributes<HTMLDivElement> & SafariNodeWithChildren;
 
@@ -42,7 +42,7 @@ const Box = React.forwardRef<HTMLDivElement, BoxProps>(
             color,
             ...props
         }: BoxProps,
-        ref,
+        ref
     ) => {
         const className = useClassName(
             {
@@ -58,11 +58,11 @@ const Box = React.forwardRef<HTMLDivElement, BoxProps>(
                 justify,
                 ...props,
             },
-            'DigitalUi-Box',
+            'DigitalUi-Box'
         );
 
         return <div {...props} style={{ backgroundColor: color }} ref={ref} className={className} />;
-    },
+    }
 );
 
 export default Box;

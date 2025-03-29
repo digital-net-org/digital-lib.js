@@ -1,11 +1,13 @@
 import React, { createContext, type PropsWithChildren } from 'react';
-import { LocalStorage } from '../../react-digital';
+import { LocalStorage } from '../LocalStorage';
 
 export type ThemeOption = 'dark' | 'light';
 
 export const ThemeContext = createContext({
     theme: undefined as ThemeOption | undefined,
-    switchTheme: () => {},
+    switchTheme: () => {
+        return;
+    },
 });
 
 const lsKey = 'data-theme';
@@ -28,10 +30,9 @@ export default function ThemeProvider(props: PropsWithChildren) {
 
     React.useEffect(() => (value ? document.documentElement.setAttribute(lsKey, value) : void 0), [value]);
 
-    const switchTheme = () => {
-        const newTheme = value === 'light' ? 'dark' : 'light';
-        LocalStorage.set(lsKey, newTheme);
-    };
+    const switchTheme = React.useCallback(() => {
+        LocalStorage.set(lsKey, value === 'light' ? 'dark' : 'light');
+    }, [value]);
 
     return <ThemeContext.Provider {...props} value={{ theme: value, switchTheme }} />;
 }

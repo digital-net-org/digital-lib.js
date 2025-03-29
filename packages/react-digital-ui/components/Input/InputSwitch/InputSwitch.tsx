@@ -1,5 +1,5 @@
 import React from 'react';
-import { useClassName, useProps } from '../../../../react-digital';
+import { useClassName, useProps } from '../../../../core';
 import type { ControlledState, SafariNode } from '../../types';
 import type { BaseInputProps } from '../types';
 import './InputSwitch.styles.css';
@@ -36,7 +36,7 @@ export default function InputSwitch({ id, value, onChange, ...props }: InputSwit
                         checked={value}
                         onClick={handleClick}
                         onChange={handleChange}
-                    />,
+                    />
                 )}
                 <span className="DigitalUi-InputSwitch-slider"></span>
             </label>

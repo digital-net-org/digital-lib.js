@@ -1,9 +1,8 @@
 /* eslint react-hooks/rules-of-hooks: 0 */
 import React from 'react';
-import useElement from './useElement';
-import { Box } from '../../react-digital-ui/components/Box';
-import { Text } from '../../react-digital-ui/components/Text';
 import type { StoryObj } from '@storybook/react';
+import useElement from './useElement';
+import { Box, Text } from '../../../react-digital-ui/';
 
 export default { title: 'Utilities/ReactHooks' };
 

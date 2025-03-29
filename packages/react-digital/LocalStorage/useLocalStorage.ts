@@ -1,6 +1,6 @@
 import React from 'react';
 import LocalStorage from './LocalStorage';
-import { useFirstRender } from '../../react-digital';
+import { useFirstRender } from '../../core';
 
 /**
  * Accessor to local storage. It will automatically update the state when the value changes.

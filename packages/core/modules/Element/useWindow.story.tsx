@@ -1,9 +1,9 @@
 /* eslint react-hooks/rules-of-hooks: 0 */
 import React from 'react';
-import useWindow from './useWindow';
-import { Box } from '../../react-digital-ui/components/Box';
 import type { StoryObj } from '@storybook/react';
+import { Box } from '../../../react-digital-ui';
 import { Color } from '../Color';
+import useWindow from './useWindow';
 
 export default { title: 'Utilities/ReactHooks' };
 

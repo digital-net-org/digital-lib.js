@@ -2,6 +2,7 @@ export * from './types';
 export * from './Avatar';
 export * from './Box';
 export * from './Button';
+export * from './ButtonMenu';
 export * from './EntityForm';
 export * from './EntityPage';
 export * from './Icon';

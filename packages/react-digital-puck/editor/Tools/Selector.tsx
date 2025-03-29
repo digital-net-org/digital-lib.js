@@ -1,5 +1,5 @@
 import type { Entity } from '../../../dto';
-import { useClassName } from '../../../react-digital';
+import { useClassName } from '../../../core';
 import { type EditorProps, BaseTool } from '../../../react-digital-ui';
 import { type PuckEditorProps } from '../PuckEditor';
 import SelectorButton from './SelectorButton';

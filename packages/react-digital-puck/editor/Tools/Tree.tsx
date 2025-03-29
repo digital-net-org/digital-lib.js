@@ -1,6 +1,6 @@
 import React from 'react';
 import { Puck } from '@measured/puck';
-import { useClassName } from '../../../react-digital';
+import { useClassName } from '../../../core';
 import { BaseTool } from '../../../react-digital-ui';
 
 interface Props {

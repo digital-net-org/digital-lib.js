@@ -1,15 +1,15 @@
 /* eslint react-hooks/rules-of-hooks: 0 */
 import React from 'react';
-import useImage from './useImage';
-import { Box } from '../../react-digital-ui/components/Box';
 import type { StoryObj } from '@storybook/react';
+import { Box } from '../../../react-digital-ui';
+import useImage from './useImage';
 
 export default { title: 'Utilities/ReactHooks' };
 
 export const UseImage: StoryObj = {
     decorators: () => {
         const [src, setSrc] = React.useState<string | undefined>(
-            'https://avatars.githubusercontent.com/u/88612813?v=4',
+            'https://avatars.githubusercontent.com/u/88612813?v=4'
         );
         const { hasError, htmlImage } = useImage(src);
         return (

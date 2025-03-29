@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client';
 import { Router, type RouterProps } from './Router';
 import { DigitalClientProvider } from '../react-digital-client';
 import { AuthInterceptor, AuthRedirect } from '../react-digital-user';
-import { ThemeProvider } from '../react-digital-ui';
+import { ThemeProvider } from './Theme';
 import { DigitalIdbProvider, type IDbConfig } from './IdbStorage';
 import { LocalizationProvider } from './Localization';
 

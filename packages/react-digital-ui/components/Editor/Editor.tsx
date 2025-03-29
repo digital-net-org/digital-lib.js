@@ -1,4 +1,4 @@
-import { useClassName } from '../../../react-digital';
+import { useClassName } from '../../../core';
 import { Box } from '../../../react-digital-ui';
 import Edit, { type EditProps } from './Edit';
 import ToolBar, { type ToolBarProps } from './ToolBar';
@@ -21,17 +21,8 @@ export default function Editor({
 
     return (
         <Box className={resolvedClassname}>
-            <ToolBar
-                tools={tools}
-                {...state}
-            />
-            <Edit
-                renderName={renderName}
-                actions={actions}
-                isLoading={false}
-                disabled={false}
-                {...state}
-            >
+            <ToolBar tools={tools} {...state} />
+            <Edit renderName={renderName} actions={actions} isLoading={false} disabled={false} {...state}>
                 {children}
             </Edit>
         </Box>

@@ -1,10 +1,10 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
-import { AppBarLayout as AppBar, AppBarProps } from './AppBar';
-import { UserModel } from '../../../dto';
+import { type UserModel } from '../../../dto';
+import { AppBarLayout as AppBar, type AppBarProps } from './AppBar';
 
 const meta: Meta<AppBarProps> = {
-    title: 'Chunks/Layout/AppBar',
+    title: 'Application/Layout/AppBar',
     render: _ => {
         return (
             <div
