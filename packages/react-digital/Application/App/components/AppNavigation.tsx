@@ -1,7 +1,7 @@
 import React from 'react';
 import { t } from 'i18next';
 import { Box, Icon, InputNavButton } from '../../../../react-digital-ui';
-import { useDigitalRouter } from '../../../../react-digital';
+import { useDigitalRouter } from '../../../Router';
 import { AppLogo } from '../../AppLogo';
 
 export default function AppNavigation() {
