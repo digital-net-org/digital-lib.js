@@ -1,4 +1,7 @@
 .DigitalUi-Button {
+    --button-prime-color: var(--palette-primary);
+    --button-prime-color-light: var(--palette-primary-light);
+
     height: fit-content;
     width: fit-content;
     min-width: 0;
@@ -79,14 +82,19 @@
     gap: var(--spacing-1);
 }
 
+.DigitalUi-Button-critical {
+    --button-prime-color: var(--palette-error);
+    --button-prime-color-light: var(--palette-error);
+}
+
 .DigitalUi-Button-variant-primary {
-    background-color: var(--palette-primary);
-    border-color: var(--palette-primary);
+    background-color: var(--button-prime-color);
+    border-color: var(--button-prime-color);
 
     &:hover,
     &.DigitalUi-Button-selected {
-        background-color: var(--palette-primary-light);
-        border-color: var(--palette-primary-light);
+        background-color: var(--button-prime-color-light);
+        border-color: var(--button-prime-color-light);
     }
 
     &.DigitalUi-Button-disabled {
@@ -98,17 +106,17 @@
 
 .DigitalUi-Button-variant-secondary {
     background-color: transparent;
-    border-color: var(--palette-primary);
+    border-color: var(--button-prime-color);
 
     &:hover {
-        border-color: var(--palette-primary-light);
-        color: var(--palette-primary-light);
+        border-color: var(--button-prime-color-light);
+        color: var(--button-prime-color-light);
     }
 
     &:hover,
     &.DigitalUi-Button-selected {
-        border-color: var(--palette-primary);
-        color: var(--palette-primary);
+        border-color: var(--button-prime-color);
+        color: var(--button-prime-color);
     }
 
     &.DigitalUi-Button-disabled {
@@ -123,12 +131,12 @@
     padding: 0 0.25rem;
 
     &:hover {
-        color: var(--palette-primary-light);
+        color: var(--button-prime-color-light);
     }
 
     &:hover,
     &.DigitalUi-Button-selected {
-        color: var(--palette-primary);
+        color: var(--button-prime-color);
     }
 
     &.DigitalUi-Button-disabled {
@@ -144,11 +152,11 @@
     border-color: transparent;
 
     &:hover {
-        background-color: var(--palette-primary-light);
+        background-color: var(--button-prime-color-light);
     }
 
     &.DigitalUi-Button-selected {
-        background-color: var(--palette-primary);
+        background-color: var(--button-prime-color);
     }
 
     &.DigitalUi-Button-disabled svg {

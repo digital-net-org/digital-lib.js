@@ -29,6 +29,9 @@ export const Primary: Story = {
         disabled: {
             control: { type: 'boolean' },
         },
+        critical: {
+            control: { type: 'boolean' },
+        },
         selected: {
             control: { type: 'boolean' },
         },
@@ -55,6 +58,7 @@ export const Primary: Story = {
         children: 'Primary Button',
         disabled: false,
         selected: false,
+        critical: false,
         loading: false,
         fullWidth: false,
     },

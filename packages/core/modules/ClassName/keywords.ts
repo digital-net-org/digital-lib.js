@@ -95,6 +95,8 @@ export const booleanKeywords = new Set([
     'warning',
     'isInfo',
     'info',
+    'critical',
+    'isCritical',
     'isVisible',
     'visible',
     'isHidden',

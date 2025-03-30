@@ -9,6 +9,7 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
     disabled?: boolean;
     fullWidth?: boolean;
     selected?: boolean;
+    critical?: boolean;
     href?: string;
     align?: 'left' | 'right';
 }
