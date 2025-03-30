@@ -9,6 +9,7 @@ export * from './Icon';
 export * from './Input';
 export * from './Loader';
 export * from './PopOver';
+export * from './PopUp';
 export * from './Text';
 export * from './User';
 export * from './Editor';

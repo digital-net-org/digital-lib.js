@@ -1,0 +1,49 @@
+.DigitalUi-PopUp {
+    z-index: 1001;
+    margin: var(--spacing-3) auto;
+    max-width: 780px;
+    padding: 0.75rem 0.75rem;
+    box-sizing: border-box;
+    box-shadow: 0 2px 4px 0 var(--palette-shadow);
+    border: none;
+    border-radius: var(--spacing-radius-1);
+    background-color: var(--palette-paper);
+    animation: grow 0.2s ease;
+
+    & hr {
+        border-bottom: none;
+    }
+
+    @media (max-width: 800px) {
+        max-width: 95%;
+    }
+    @media (max-width: 400px) {
+        max-width: 90%;
+    }
+}
+
+.DigitalUi-PopUp-background {
+    position: fixed;
+    z-index: 1000;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background-color: var(--palette-shadow);
+}
+
+.DigitalUi-PopUp-content {
+    width: 100%;
+    margin: var(--spacing-2) 0;
+}
+
+@keyframes grow {
+    0% {
+        opacity: 0;
+        transform: scale(0.5);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
