@@ -3,12 +3,6 @@ import { Button } from '../../Button';
 import { PopOver } from '../../PopOver';
 import { InputNav, type InputNavProps } from '../InputNav';
 
-export interface MenuAction {
-    label: React.ReactNode;
-    callback?: () => void;
-    selected?: boolean;
-}
-
 export interface InputNavButtonProps
     extends Omit<InputNavProps, 'textDirection' | 'direction'>,
         React.PropsWithChildren {
