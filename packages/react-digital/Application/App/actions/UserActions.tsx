@@ -1,18 +1,18 @@
 import React from 'react';
-import { t } from 'i18next';
 import { type UserModel } from '../../../../dto';
 import { Avatar, InputNavButton } from '../../../../react-digital-ui';
 import { useDigitalUser } from '../../../../react-digital-user';
 import { useGetById } from '../../../../react-digital-client';
+import { Localization } from '../../../Localization';
 
-export default function AppUser() {
+export default function UserActions() {
     const { logout, id } = useDigitalUser();
     const { isQuerying, entity } = useGetById<UserModel>(`${CORE_API_URL}/user`, id);
 
     const options = React.useMemo(
         () => [
             {
-                label: t('global:actions.auth.logout'),
+                label: Localization.translate('global:actions.auth.logout'),
                 callback: logout,
             },
         ],

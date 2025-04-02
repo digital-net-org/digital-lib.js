@@ -8,9 +8,20 @@ export default {
         },
         settings: {
             label: 'Paramètres',
-            actions: {
-                version: "Version de l'application:",
+            menu: {
+                user: 'Mon compte',
+                preferences: 'Préférences',
             },
+            options: {
+                language: {
+                    label: 'Langage',
+                    inputs: {
+                        fr: 'Français',
+                        en: 'Anglais',
+                    },
+                },
+            },
+            version: 'version',
         },
     },
     en: {
@@ -18,10 +29,21 @@ export default {
             label: 'Navigation',
         },
         settings: {
-            label: 'Settings',
-            actions: {
-                version: 'Application version:',
+            label: 'Paramètres',
+            menu: {
+                user: 'My account',
+                preferences: 'Preferences',
             },
+            options: {
+                language: {
+                    label: 'Language',
+                    inputs: {
+                        fr: 'French',
+                        en: 'English',
+                    },
+                },
+            },
+            version: 'version',
         },
     },
 } satisfies Namespace;

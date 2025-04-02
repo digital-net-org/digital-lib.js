@@ -4,7 +4,8 @@ import { useDigitalUser } from '../../../react-digital-user';
 import { Box, Button, Icon } from '../../../react-digital-ui';
 import { ThemeSwitch } from '../../Theme';
 import { useDigitalRouter } from '../../Router';
-import { AppNavigation, AppUser } from './components';
+import { Actions } from './actions';
+import { AppSettings } from './settings';
 import './fontsources';
 import './digital-net.default.css';
 import './App.styles.css';
@@ -21,17 +22,20 @@ export default function App({ children }: AppProps) {
         <main className="Page">
             {isLogged && !current?.isPublic && (
                 <React.Fragment>
-                    <AppNavigation />
-                    <Box justify="center" fullWidth>
-                        {t(`router:page.title.${current?.path}`)}
-                    </Box>
-                    <Box>
-                        <AppUser />
-                        <ThemeSwitch />
-                        <Button variant="icon" onClick={() => setIsSettingsOpen(true)}>
-                            <Icon.GearIcon variant="filled" />
-                        </Button>
-                    </Box>
+                    <header className="DigitalUi-AppBar">
+                        <Actions.Navigation />
+                        <Box justify="center" fullWidth>
+                            {t(`router:page.title.${current?.path}`)}
+                        </Box>
+                        <Box>
+                            <Actions.User />
+                            <ThemeSwitch />
+                            <Button variant="icon" onClick={() => setIsSettingsOpen(true)}>
+                                <Icon.GearIcon variant="filled" />
+                            </Button>
+                        </Box>
+                    </header>
+                    <AppSettings open={isSettingsOpen} onClose={() => setIsSettingsOpen(false)} />
                 </React.Fragment>
             )}
             {children}

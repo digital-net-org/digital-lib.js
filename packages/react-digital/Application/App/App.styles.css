@@ -57,3 +57,7 @@
         cursor: default;
     }
 }
+
+.AppVersion {
+    padding-left: calc(var(--spacing-1) * 0.75);
+}
