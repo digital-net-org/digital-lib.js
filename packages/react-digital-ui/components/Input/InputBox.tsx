@@ -12,7 +12,7 @@ export default function InputBox({ children, id, label, ...props }: PropsWithChi
             id={id}
             className={className}
             direction="row"
-            mt={1}
+            mt={label ? 2 : 1}
             gap={2}
             justify="space-between"
             align="center"

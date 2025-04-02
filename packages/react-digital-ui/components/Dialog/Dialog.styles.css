@@ -16,10 +16,6 @@
     @media (max-width: 400px) {
         max-width: 90%;
     }
-
-    .DigitalUi-Box {
-        height: auto;
-    }
 }
 
 .DigitalUi-Dialog-wrapper {

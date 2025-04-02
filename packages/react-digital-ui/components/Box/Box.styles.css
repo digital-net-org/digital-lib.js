@@ -1,7 +1,7 @@
 .DigitalUi-Box {
     display: flex;
     box-sizing: border-box;
-    height: fit-content;
+    height: auto;
 }
 
 .DigitalUi-Box-fullWidth {
