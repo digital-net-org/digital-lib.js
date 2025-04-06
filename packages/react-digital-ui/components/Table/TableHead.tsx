@@ -1,4 +1,4 @@
-import { t } from 'i18next';
+import { useLocalization } from '../../../react-digital';
 import type { EntitySchema } from '../../../dto';
 import { Text } from '../Text';
 
@@ -7,6 +7,7 @@ interface TableHeadProps {
 }
 
 export default function TableHead({ schema }: TableHeadProps) {
+    const { translate } = useLocalization();
     return (
         <thead>
             <tr>
@@ -19,7 +20,7 @@ export default function TableHead({ schema }: TableHeadProps) {
                     </th>
                 ))}
                 <th>
-                    <Text size="small">{t('ui-table:actions')}</Text>
+                    <Text size="small">{translate('ui-table:actions')}</Text>
                 </th>
             </tr>
         </thead>

@@ -1,6 +1,6 @@
 /// <reference types="vite/client" />
 import { type Resource } from 'i18next';
-import { type Namespace } from './Namespace';
+import { type Namespace } from '../Namespaces';
 
 export default class ResourcesBuilder {
     public static getLocalesFiles(): Record<string, Record<string, any>> {

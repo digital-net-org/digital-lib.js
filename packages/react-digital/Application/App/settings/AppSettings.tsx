@@ -1,6 +1,6 @@
 import React from 'react';
-import { Box, Dialog, InputNav, InputNavButton, Text } from '../../../../react-digital-ui';
-import { Localization } from '../../../Localization';
+import { Box, Dialog, InputNav, Text } from '../../../../react-digital-ui';
+import { useLocalization } from '../../../Localization';
 import useSettingsState from './useSettingsState';
 
 interface AppSettingsProps {
@@ -9,6 +9,7 @@ interface AppSettingsProps {
 }
 
 export default function AppSettings(props: AppSettingsProps) {
+    const { translate } = useLocalization();
     const { renderView, renderLabel, ...navProps } = useSettingsState();
 
     return (
@@ -24,7 +25,7 @@ export default function AppSettings(props: AppSettingsProps) {
                             className="AppVersion"
                             variant="caption"
                             size="xsmall"
-                        >{`${Localization.translate('app:settings.version')} ${APP_VERSION}`}</Text>
+                        >{`${translate('app:settings.version')} ${APP_VERSION}`}</Text>
                     </Box>
                 </Dialog.Panel>
                 <Dialog.Content>{renderView()}</Dialog.Content>

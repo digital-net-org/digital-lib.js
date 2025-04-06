@@ -1,6 +1,6 @@
 import React from 'react';
 import Preferences from './views/Preferences';
-import { Localization } from '../../../Localization';
+import { useLocalization } from '../../../Localization';
 
 const views = {
     Preferences: Preferences,
@@ -9,14 +9,13 @@ const views = {
 const keys = Object.keys(views);
 
 export default function useSettingsState() {
+    const { translate } = useLocalization();
     const [selected, setSelected] = React.useState<string>('Preferences');
 
     const renderLabel = React.useCallback(
         (value?: string) =>
-            Localization.translate(
-                `app:settings.menu.${(value ? (keys.find(x => x == value) ?? '') : selected).toLowerCase()}`
-            ),
-        [selected]
+            translate(`app:settings.menu.${(value ? (keys.find(x => x == value) ?? '') : selected).toLowerCase()}`),
+        [selected, translate]
     );
 
     const renderView = React.useCallback(

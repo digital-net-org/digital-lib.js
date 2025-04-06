@@ -1,28 +1,29 @@
 import React from 'react';
-import { Localization, type SupportedLanguage } from '@digital-lib/react-digital';
+import { localizationDefaults, type SupportedLanguage } from './config';
+import { useTranslation } from 'react-i18next';
 
 export default function useLocalization() {
-    const [currentLanguage, setCurrentLanguage] = React.useState<string>(Localization.getCurrentLanguage());
+    const { i18n, t } = useTranslation();
     const [isLoading, setIsLoading] = React.useState<boolean>(false);
 
     const setLanguage = React.useCallback(
-        (value: string | undefined) => {
+        (value: SupportedLanguage | undefined) => {
             (async () => {
-                if (!value || !Localization.supportedLanguages.find(x => x == value)) {
+                if (!value || !localizationDefaults.supportedLanguages.find(x => x == value)) {
                     return;
                 }
                 setIsLoading(true);
-                await Localization.setLanguage(value as SupportedLanguage);
-                setCurrentLanguage(value);
+                await i18n.changeLanguage(value);
                 setIsLoading(false);
             })();
         },
-        [setIsLoading]
+        [i18n]
     );
 
     return {
-        isLoading,
-        currentLanguage,
+        currentLanguage: i18n.language as SupportedLanguage,
         setLanguage,
+        translate: t,
+        isLoading,
     };
 }

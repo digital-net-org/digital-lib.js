@@ -3,20 +3,21 @@ import { type UserModel } from '../../../../dto';
 import { Avatar, InputNavButton } from '../../../../react-digital-ui';
 import { useDigitalUser } from '../../../../react-digital-user';
 import { useGetById } from '../../../../react-digital-client';
-import { Localization } from '../../../Localization';
+import { useLocalization } from '../../../Localization';
 
 export default function UserActions() {
+    const { translate } = useLocalization();
     const { logout, id } = useDigitalUser();
     const { isQuerying, entity } = useGetById<UserModel>(`${CORE_API_URL}/user`, id);
 
     const options = React.useMemo(
         () => [
             {
-                label: Localization.translate('global:actions.auth.logout'),
+                label: translate('global:actions.auth.logout'),
                 callback: logout,
             },
         ],
-        [logout]
+        [logout, translate]
     );
 
     return (

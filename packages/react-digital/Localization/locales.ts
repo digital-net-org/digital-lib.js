@@ -1,4 +1,4 @@
-import { type Namespace } from './Namespace';
+import { type Namespace } from './Namespaces/Namespace';
 
 export default {
     namespace: 'global',

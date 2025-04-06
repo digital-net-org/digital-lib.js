@@ -2,8 +2,8 @@ import React, { type PropsWithChildren } from 'react';
 import { I18nextProvider } from 'react-i18next';
 import i18next from 'i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
-import ResourcesBuilder from './ResourcesBuilder';
-import Localization from './Localization';
+import { ResourcesBuilder } from './Resources';
+import { localizationDefaults } from './config';
 
 export default function LocalizationProvider(props: PropsWithChildren) {
     React.useEffect(() => {
@@ -13,8 +13,8 @@ export default function LocalizationProvider(props: PropsWithChildren) {
                     order: ['navigator', 'localStorage'],
                     caches: ['localStorage'],
                 },
-                supportedLngs: Localization.supportedLanguages,
-                fallbackLng: Localization.defaultLanguage,
+                supportedLngs: localizationDefaults.supportedLanguages,
+                fallbackLng: localizationDefaults.defaultLanguage,
                 resources: ResourcesBuilder.build(),
             });
         })();
