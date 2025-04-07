@@ -20,14 +20,16 @@ export default function LoginForm() {
                 }}
             >
                 {['login', 'password'].map(item => (
-                    <InputText
-                        label={t(`login:form.${item}`)}
-                        onChange={v => setBody({ ...body, [item]: v })}
-                        value={body[item as keyof typeof body]}
-                        type={item === 'password' ? 'password' : 'text'}
-                        required
-                        fullWidth
-                    />
+                    <React.Fragment key={item}>
+                        <InputText
+                            label={t(`login:form.${item}`)}
+                            onChange={v => setBody({ ...body, [item]: v })}
+                            value={body[item as keyof typeof body]}
+                            type={item === 'password' ? 'password' : 'text'}
+                            required
+                            fullWidth
+                        />
+                    </React.Fragment>
                 ))}
                 <Box mt={1} justify="end" direction="row">
                     <Button loading={isLoading} type="submit">
