@@ -15,7 +15,7 @@ export const RouterContext = React.createContext<Omit<RouterProps, 'middlewares'
 });
 
 export default function Router({ middlewares, renderLayout, router }: RouterProps) {
-    const resolved = React.useMemo(() => [...(router ?? []), ...RouterBuilder.build(), ...DefaultRouter], [router]);
+    const resolved = React.useMemo(() => [...router, ...RouterBuilder.build(), ...DefaultRouter], [router]);
     return (
         <RouterContext.Provider value={{ router: resolved }}>
             <ReactRouter

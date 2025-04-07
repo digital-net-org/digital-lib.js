@@ -1,8 +1,7 @@
 import React from 'react';
 import { type EntityRaw, type Result, type UserModel, EntityHelper } from '../../../dto';
-import { useLocalStorage } from '../../../core';
 import { useDigitalQuery } from '../../../react-digital-client';
-import { Jwt } from '../Jwt';
+import { useJwt } from '../Jwt';
 
 interface UserContextState extends Partial<UserModel> {
     isLoading: boolean;
@@ -17,14 +16,14 @@ export const UserContext = React.createContext<UserContextState>({
 export const getSelfUrl = `${CORE_API_URL}/user/self`;
 
 export default function UserProvider({ children }: React.PropsWithChildren) {
-    const [token] = useLocalStorage<string | undefined>(STORAGE_KEY_AUTH);
+    const [token, setToken] = useJwt();
 
     const {
         data: userData,
         isLoading,
         refetch: refresh,
     } = useDigitalQuery<Result<EntityRaw>>(!token ? undefined : getSelfUrl, {
-        onError: error => (error.status === 401 ? Jwt.set() : void 0),
+        onError: error => (error.status === 401 ? setToken(undefined) : void 0),
     });
 
     const user = React.useMemo(

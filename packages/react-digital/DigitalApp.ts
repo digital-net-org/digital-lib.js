@@ -50,7 +50,7 @@ export default class DigitalApp {
             (acc, { component, props }) => React.createElement(component, { children: acc, ...(props ?? {}) }),
             React.createElement(Router, { renderLayout, middlewares, router: router ?? [] })
         );
-
+        console.log('coucou');
         return ReactDOM.createRoot(appRoot).render(
             React.createElement(strictMode ? React.StrictMode : React.Fragment, {}, providers)
         );

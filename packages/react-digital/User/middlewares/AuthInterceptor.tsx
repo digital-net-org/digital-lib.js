@@ -1,17 +1,17 @@
 import React from 'react';
 import { type Result } from '../../../dto';
 import { useDigitalClient } from '../../../react-digital-client';
-import { Jwt } from '../Jwt';
+import { useJwt } from '../Jwt';
 
 const refreshTokenUrl = `${CORE_API_URL}/authentication/user/refresh`;
 
 export default function AuthInterceptor() {
     const { axiosInstance } = useDigitalClient();
+    const [token, setToken] = useJwt();
 
     React.useEffect(() => {
         const onRequest = axiosInstance.interceptors.request.use(
             async req => {
-                const token = Jwt.get();
                 if (token) req.headers['Authorization'] = `Bearer ${token}`;
                 return req;
             },
@@ -35,7 +35,7 @@ export default function AuthInterceptor() {
                 const isRefreshing = originalRequest.url === refreshTokenUrl;
 
                 if (isRefreshing) {
-                    Jwt.set();
+                    setToken(undefined);
                     return Promise.reject(error);
                 }
 
@@ -50,10 +50,10 @@ export default function AuthInterceptor() {
                     withCredentials: true,
                 });
                 if (status !== 200 || !data.value) {
-                    Jwt.set();
+                    setToken(undefined);
                     return Promise.reject(error);
                 }
-                Jwt.set(data.value);
+                setToken(data.value);
                 originalRequest.headers['Authorization'] = `Bearer ${data.value}`;
                 return axiosInstance.request(originalRequest);
             }
