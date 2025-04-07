@@ -1,5 +1,5 @@
 import React, { createContext, type PropsWithChildren } from 'react';
-import { LocalStorage } from '../LocalStorage';
+import { LocalStorage } from '../../core/modules/LocalStorage';
 
 export type ThemeOption = 'dark' | 'light';
 

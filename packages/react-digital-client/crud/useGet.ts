@@ -21,7 +21,7 @@ export default function useGet<T extends Entity>(
     }
 ) {
     const { queryClient } = useDigitalClient();
-    const { data, isLoading, refetch } = useDigitalQuery<QueryResult<EntityRaw>>(endpoint, {
+    const { data, isLoading } = useDigitalQuery<QueryResult<EntityRaw>>(endpoint, {
         onSuccess: async e => {
             await options?.onSuccess?.({ ...e, value: e.value.map(EntityHelper.build<T>) });
         },
@@ -36,17 +36,11 @@ export default function useGet<T extends Entity>(
         });
     }, [endpoint, queryClient]);
 
-    const refetchQuery = React.useCallback(async () => {
-        await invalidateQuery();
-        await refetch();
-    }, [invalidateQuery, refetch]);
-
     const entities: T[] = React.useMemo(() => (data?.value ?? []).map(EntityHelper.build<T>), [data]);
 
     return {
         entities,
         isQuerying: isLoading,
         invalidateQuery,
-        refetchQuery,
     };
 }

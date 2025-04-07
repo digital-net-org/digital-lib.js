@@ -1,3 +1,3 @@
 export { type DecodedJwt } from './DecodedJwt';
-export { type JwtContent } from './JwtContent';
 export { default as Jwt } from './Jwt';
+export { default as useJwt } from './useJwt';

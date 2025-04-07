@@ -1,4 +1,4 @@
-import { type Namespace } from '../../../react-digital';
+import { type Namespace } from '../../Localization';
 
 export default {
     namespace: 'login',

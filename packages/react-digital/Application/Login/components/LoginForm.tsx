@@ -1,13 +1,13 @@
 import React from 'react';
 import { t } from 'i18next';
-import { AppLogo } from '../../../../react-digital';
+import { AppLogo } from '../../AppLogo';
 import { Button, Box, InputText } from '../../../../react-digital-ui';
-import { useDigitalUser } from '../../../DigitalUser';
+import { useUser } from '../../../User';
 import './LoginForm.styles.css';
 
 export default function LoginForm() {
     const [body, setBody] = React.useState({ login: '', password: '' });
-    const { login, isLoading } = useDigitalUser();
+    const { login, isLoading } = useUser();
 
     return (
         <Box className="DigitalUi-LoginForm" p={3} fullWidth>

@@ -1,6 +1,5 @@
 import * as React from 'react';
-import { ErrorView } from '../Application';
-import { LoginView } from '../../react-digital-user';
+import { ErrorView, LoginView } from '../Application';
 import { type RouteObject } from './RouteObject';
 
 export default [

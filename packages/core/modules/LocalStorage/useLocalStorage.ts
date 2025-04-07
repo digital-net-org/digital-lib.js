@@ -1,10 +1,11 @@
 import React from 'react';
 import LocalStorage from './LocalStorage';
-import { useFirstRender } from '../../core';
+import { useFirstRender } from '../../index';
 
 /**
  * Accessor to local storage. It will automatically update the state when the value changes.
  * @param key - local storage key
+ * @param defaultValue - value to set if storage is empty
  * @returns state and setter
  */
 export default function useLocalStorage<T>(key: string, defaultValue?: T) {

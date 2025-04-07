@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { Router, type RouterProps } from './Router';
 import { DigitalClientProvider } from '../react-digital-client';
-import { AuthInterceptor, AuthRedirect } from '../react-digital-user';
+import { AuthInterceptor, AuthRedirect, UserProvider } from './User';
 import { ThemeProvider } from './Theme';
 import { DigitalIdbProvider, type IDbConfig } from './IdbStorage';
 import { LocalizationProvider } from './Localization';
@@ -25,11 +25,9 @@ export default class DigitalApp {
      * @param config.rootElement - The root element to append the react tree.
      * @param config.strictMode - If true, the react tree will be wrapped in a React.StrictMode component.
      * @param config.idbConfig - Indexed database configuration object
-     * @param config.axiosConfig - Axios client config
-     * @param config.tanstackConfig - Tanstack config
      * @param config.router - Application additional routes
      */
-    public static createReactApp(
+    public static create(
         renderLayout: RouterProps['renderLayout'],
         { idbConfig, router, strictMode, rootElement }: DigitalConfig
     ) {
@@ -42,10 +40,11 @@ export default class DigitalApp {
 
         const providers = (
             [
-                { component: LocalizationProvider, props: {} },
+                { component: LocalizationProvider },
                 { component: DigitalIdbProvider, props: idbConfig },
-                { component: DigitalClientProvider, props: {} },
-                { component: ThemeProvider, props: {} },
+                { component: DigitalClientProvider },
+                { component: UserProvider },
+                { component: ThemeProvider },
             ] as Array<{ component: React.FunctionComponent<any>; props: any }>
         ).reduceRight(
             (acc, { component, props }) => React.createElement(component, { children: acc, ...(props ?? {}) }),

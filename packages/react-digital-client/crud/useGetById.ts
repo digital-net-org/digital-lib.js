@@ -24,7 +24,7 @@ export default function useGetById<T extends Entity>(
 ) {
     const { queryClient } = useDigitalClient();
 
-    const { data, isLoading, refetch } = useDigitalQuery<Result<EntityRaw>>(!id ? undefined : `${endpoint}/${id}`, {
+    const { data, isLoading } = useDigitalQuery<Result<EntityRaw>>(!id ? undefined : `${endpoint}/${id}`, {
         onSuccess: async e => {
             await options?.onSuccess?.({ ...e, value: EntityHelper.build<T>(e.value) });
         },
@@ -41,15 +41,9 @@ export default function useGetById<T extends Entity>(
         });
     }, [endpoint, id, queryClient]);
 
-    const refetchQuery = React.useCallback(async () => {
-        await invalidateQuery();
-        await refetch();
-    }, [invalidateQuery, refetch]);
-
     return {
         entity,
         isQuerying: isLoading,
         invalidateQuery,
-        refetchQuery,
     };
 }

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box } from '../../../react-digital-ui/components';
+import { Box } from '../../../react-digital-ui';
 import LoginForm from './components/LoginForm';
 import './LoginView.styles.css';
 

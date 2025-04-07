@@ -1,14 +1,11 @@
 import React from 'react';
-import { type UserModel } from '../../../../dto';
 import { Avatar, InputNavButton } from '../../../../react-digital-ui';
-import { useDigitalUser } from '../../../../react-digital-user';
-import { useGetById } from '../../../../react-digital-client';
+import { useUser } from '../../../User';
 import { useLocalization } from '../../../Localization';
 
 export default function UserActions() {
     const { translate } = useLocalization();
-    const { logout, id } = useDigitalUser();
-    const { isQuerying, entity } = useGetById<UserModel>(`${CORE_API_URL}/user`, id);
+    const { isLoading, logout, username } = useUser();
 
     const options = React.useMemo(
         () => [
@@ -25,10 +22,10 @@ export default function UserActions() {
             options={options.map(({ label }) => label)}
             onSelect={label => options.find(x => x.label === label)?.callback()}
             icon={<Avatar size="small" />}
-            loading={isQuerying}
+            loading={isLoading}
             direction="right"
         >
-            {entity?.username}
+            {username}
         </InputNavButton>
     );
 }

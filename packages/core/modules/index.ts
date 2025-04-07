@@ -6,6 +6,7 @@ export * from './Effect';
 export * from './Element';
 export * from './Image';
 export * from './JSON';
+export * from './LocalStorage';
 export * from './Object';
 export * from './Property';
 export * from './Spacing';

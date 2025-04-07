@@ -1,6 +1,6 @@
 import React, { type PropsWithChildren } from 'react';
 import { t } from 'i18next';
-import { useDigitalUser } from '../../../react-digital-user';
+import { useUser } from '../../User';
 import { Box, Button, Icon } from '../../../react-digital-ui';
 import { ThemeSwitch } from '../../Theme';
 import { useDigitalRouter } from '../../Router';
@@ -14,7 +14,7 @@ export interface AppProps extends PropsWithChildren {}
 
 export default function App({ children }: AppProps) {
     const { current } = useDigitalRouter();
-    const { isLogged } = useDigitalUser();
+    const { isLogged } = useUser();
 
     const [isSettingsOpen, setIsSettingsOpen] = React.useState(false);
 

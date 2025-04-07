@@ -1,7 +1,5 @@
-import type { JwtContent } from './JwtContent';
-
-export interface DecodedJwt {
-    content: JwtContent;
+export interface DecodedJwt<T = any> {
+    content: T;
     token: string;
     nbf: number;
     exp: number;

@@ -1,21 +1,18 @@
 import React from 'react';
-import { type Result } from '../../dto';
-import { LocalStorage } from '../../react-digital';
-import { useDigitalClient } from '../../react-digital-client';
-import { type StoredDigitalUser, useStoredDigitalUser } from '../DigitalUser';
+import { type Result } from '../../../dto';
+import { useDigitalClient } from '../../../react-digital-client';
 import { Jwt } from '../Jwt';
 
 const refreshTokenUrl = `${CORE_API_URL}/authentication/user/refresh`;
 
 export default function AuthInterceptor() {
     const { axiosInstance } = useDigitalClient();
-    const { deleteStoredUser, updateStoredUser } = useStoredDigitalUser(STORAGE_KEY_AUTH);
 
     React.useEffect(() => {
         const onRequest = axiosInstance.interceptors.request.use(
             async req => {
-                const user = LocalStorage.get<StoredDigitalUser>(STORAGE_KEY_AUTH);
-                if (user?.token) req.headers['Authorization'] = `Bearer ${user.token}`;
+                const token = Jwt.get();
+                if (token) req.headers['Authorization'] = `Bearer ${token}`;
                 return req;
             },
             error => {
@@ -38,7 +35,7 @@ export default function AuthInterceptor() {
                 const isRefreshing = originalRequest.url === refreshTokenUrl;
 
                 if (isRefreshing) {
-                    deleteStoredUser();
+                    Jwt.set();
                     return Promise.reject(error);
                 }
 
@@ -53,16 +50,11 @@ export default function AuthInterceptor() {
                     withCredentials: true,
                 });
                 if (status !== 200 || !data.value) {
-                    deleteStoredUser();
+                    Jwt.set();
                     return Promise.reject(error);
                 }
-                const token = { ...Jwt.decode(data.value), token: data.value };
-                updateStoredUser({
-                    ...token.content,
-                    token: token.token,
-                });
-
-                originalRequest.headers['Authorization'] = `Bearer ${token.token}`;
+                Jwt.set(data.value);
+                originalRequest.headers['Authorization'] = `Bearer ${data.value}`;
                 return axiosInstance.request(originalRequest);
             }
         );
@@ -71,7 +63,7 @@ export default function AuthInterceptor() {
             axiosInstance.interceptors.request.eject(onRequest);
             axiosInstance.interceptors.response.eject(onResponse);
         };
-    }, [axiosInstance, updateStoredUser, deleteStoredUser]);
+    }, [axiosInstance]);
 
     return null;
 }

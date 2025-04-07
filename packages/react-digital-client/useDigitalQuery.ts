@@ -1,19 +1,19 @@
-import { useQuery } from '@tanstack/react-query';
+import React from 'react';
 import { type AxiosError } from 'axios';
+import { useQuery } from '@tanstack/react-query';
+import { ObjectMatcher } from '../core';
 import { type QueryConfig } from './types';
 import useDigitalClient from './useDigitalClient';
-import React from 'react';
-import { ObjectMatcher } from '../core';
 
 export default function useDigitalQuery<T, E = unknown>(
     key: string | undefined,
-    { method, onError, onSuccess, ...options }: QueryConfig<T, E> = {
+    { onError, onSuccess, ...options }: QueryConfig<T, E> = {
         autoRefetch: true,
     }
 ) {
-    const { axiosInstance, queryClient } = useDigitalClient();
+    const { axiosInstance } = useDigitalClient();
     const { data: queryResult, ...response } = useQuery<T, AxiosError<E>>({
-        queryKey: [key],
+        queryKey: key ? [key] : [],
         queryFn: async () => {
             if (!key) {
                 return {} as T;
@@ -29,15 +29,10 @@ export default function useDigitalQuery<T, E = unknown>(
         ...options,
     });
 
-    const refetch = async () => {
-        await queryClient.invalidateQueries({ queryKey: [key] });
-        await response.refetch();
-    };
-
     const data = React.useMemo(
         () => (ObjectMatcher.deepEquality(queryResult, {} as typeof queryResult) ? undefined : queryResult),
         [queryResult]
     );
 
-    return { data, ...response, refetch };
+    return { data, ...response };
 }
