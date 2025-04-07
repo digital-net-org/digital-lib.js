@@ -1,16 +1,16 @@
 import React from 'react';
 import { Localization } from '../../../Localization';
 import Preferences from './views/Preferences';
-import { useLocalization } from '../../../Localization';
+import User from './views/User';
 
 const views = {
     Preferences: Preferences,
+    User: User,
 };
 
 const keys = Object.keys(views);
 
 export default function useSettingsState() {
-    const { translate } = useLocalization();
     const [selected, setSelected] = React.useState<string>('Preferences');
 
     const renderLabel = React.useCallback(

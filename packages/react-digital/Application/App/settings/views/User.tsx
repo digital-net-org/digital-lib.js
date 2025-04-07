@@ -1,18 +1,12 @@
-import { Box, InputSelect } from '../../../../../react-digital-ui';
-import { localizationDefaults, useLocalization } from '../../../../Localization';
+import { Avatar, Box, Text } from '../../../../../react-digital-ui';
+import { useUser } from '@digital-lib/react-digital';
 
 export default function User() {
-    const { translate, currentLanguage, setLanguage } = useLocalization();
+    const { username } = useUser();
     return (
         <Box gap={2}>
-            <InputSelect
-                required
-                options={[...localizationDefaults.supportedLanguages]}
-                label={translate('app:settings.options.language.label')}
-                value={currentLanguage}
-                onChange={setLanguage}
-                onRender={value => translate(`app:settings.options.language.inputs.${value}`)}
-            />
+            <Avatar />
+            <Text variant="text">{username}</Text>
         </Box>
     );
 }

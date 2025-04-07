@@ -22,12 +22,12 @@ const Header = ({ children }: React.PropsWithChildren) => (
 const Panel = ({ children }: React.PropsWithChildren) => <Box className={`${className}-panel`}>{children}</Box>;
 const Content = ({ children }: React.PropsWithChildren) => <Box className={`${className}-content`}>{children}</Box>;
 
-function Dialog({ children, ...props }: DialogProps) {
+function Dialog({ children, className: propsClassName, ...props }: DialogProps) {
     const resolvedClassName = useClassName(props, className);
     const { mapTypeOf } = useChildren(children);
     return (
         <React.Fragment>
-            <dialog className={resolvedClassName} {...props}>
+            <dialog className={`${resolvedClassName}${propsClassName ? ` ${propsClassName}` : ''}`} {...props}>
                 <Box className={`${className}-wrapper`} direction="row">
                     {mapTypeOf(Panel)}
                     <Box className={`${className}-main`}>
