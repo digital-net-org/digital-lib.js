@@ -1,13 +1,16 @@
-import { safeParse } from '../../index';
+import { safeParse } from '../JSON';
 
 export default class LocalStorage {
     public static get<T>(key: string): T | undefined {
         const item = localStorage.getItem(key);
-        return item ? (safeParse(item) as T) : undefined;
+        if (!item) {
+            return undefined;
+        }
+        return (safeParse(item) ?? item) as T;
     }
 
     public static set<T>(key: string, value: T): void {
-        localStorage.setItem(key, JSON.stringify(value));
+        localStorage.setItem(key, typeof value === 'string' ? value : JSON.stringify(value));
         window.dispatchEvent(new Event(`LS_SET_${key}`));
     }
 

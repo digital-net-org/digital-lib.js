@@ -1,17 +1,17 @@
 import { Box, InputSelect } from '../../../../../react-digital-ui';
-import { localizationDefaults, useLocalization } from '../../../../Localization';
+import { Localization, useLocalization } from '../../../../Localization';
 
 export default function Preferences() {
-    const { translate, currentLanguage, setLanguage } = useLocalization();
+    const { currentLanguage, setLanguage } = useLocalization();
     return (
         <Box gap={2}>
             <InputSelect
                 required
-                options={[...localizationDefaults.supportedLanguages]}
-                label={translate('app:settings.options.language.label')}
+                options={[...Localization.supportedLanguages]}
+                label={Localization.translate('app:settings.options.language.label')}
                 value={currentLanguage}
                 onChange={setLanguage}
-                onRender={value => translate(`app:settings.options.language.inputs.${value}`)}
+                onRender={value => Localization.translate(`app:settings.options.language.inputs.${value}`)}
             />
         </Box>
     );

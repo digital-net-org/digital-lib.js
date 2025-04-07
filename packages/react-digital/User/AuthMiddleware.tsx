@@ -1,11 +1,11 @@
 import React from 'react';
-import { type Result } from '../../../dto';
-import { useDigitalClient } from '../../../react-digital-client';
-import { useJwt } from '../Jwt';
+import { type Result } from '../../dto';
+import { useDigitalClient } from '../../react-digital-client';
+import { useJwt } from './Jwt';
 
 const refreshTokenUrl = `${CORE_API_URL}/authentication/user/refresh`;
 
-export default function AuthInterceptor() {
+export default function AuthMiddleware() {
     const { axiosInstance } = useDigitalClient();
     const [token, setToken] = useJwt();
 
@@ -63,7 +63,7 @@ export default function AuthInterceptor() {
             axiosInstance.interceptors.request.eject(onRequest);
             axiosInstance.interceptors.response.eject(onResponse);
         };
-    }, [axiosInstance]);
+    }, [axiosInstance, setToken, token]);
 
-    return null;
+    return <React.Fragment />;
 }

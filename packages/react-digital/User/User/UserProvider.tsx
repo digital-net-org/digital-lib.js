@@ -16,15 +16,12 @@ export const UserContext = React.createContext<UserContextState>({
 export const getSelfUrl = `${CORE_API_URL}/user/self`;
 
 export default function UserProvider({ children }: React.PropsWithChildren) {
-    const [token, setToken] = useJwt();
-
+    const [token] = useJwt();
     const {
         data: userData,
         isLoading,
         refetch: refresh,
-    } = useDigitalQuery<Result<EntityRaw>>(!token ? undefined : getSelfUrl, {
-        onError: error => (error.status === 401 ? setToken(undefined) : void 0),
-    });
+    } = useDigitalQuery<Result<EntityRaw>>(!token ? undefined : getSelfUrl);
 
     const user = React.useMemo(
         () => (userData?.value ? EntityHelper.build<UserModel>(userData.value) : undefined),

@@ -1,6 +1,6 @@
 import React, { type PropsWithChildren } from 'react';
 import { useClassName } from '../../../core';
-import { useLocalization } from '../../../react-digital';
+import { Localization } from '../../../react-digital';
 import { Box, Text } from '../../../react-digital-ui';
 import EditActions, { type EditActionsProps } from './EditActions';
 import './Edit.styles.css';
@@ -13,7 +13,6 @@ export interface EditProps extends EditActionsProps {
 }
 
 export default function Edit({ children, actions, renderName, isModified, ...state }: PropsWithChildren<EditProps>) {
-    const { translate } = useLocalization();
     const className = useClassName({}, 'Edit');
 
     return (
@@ -23,7 +22,7 @@ export default function Edit({ children, actions, renderName, isModified, ...sta
                 <Box direction="row" align="center" gap={1}>
                     <Text variant="span">{renderName ? renderName() : null}</Text>
                     <Text variant="span" size="small" italic>
-                        {isModified ? translate('puck:state:modified') : ''}
+                        {isModified ? Localization.translate('puck:state:modified') : ''}
                     </Text>
                 </Box>
                 <EditActions actions={actions} {...state} />

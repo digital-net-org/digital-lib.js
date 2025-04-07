@@ -1,8 +1,8 @@
 import React from 'react';
-import { t } from 'i18next';
-import { AppLogo } from '../../AppLogo';
 import { Button, Box, InputText } from '../../../../react-digital-ui';
 import { useUser } from '../../../User';
+import { Localization } from '../../../Localization';
+import { AppLogo } from '../../AppLogo';
 import './LoginForm.styles.css';
 
 export default function LoginForm() {
@@ -22,7 +22,7 @@ export default function LoginForm() {
                 {['login', 'password'].map(item => (
                     <React.Fragment key={item}>
                         <InputText
-                            label={t(`login:form.${item}`)}
+                            label={Localization.translate(`login:form.${item}`)}
                             onChange={v => setBody({ ...body, [item]: v })}
                             value={body[item as keyof typeof body]}
                             type={item === 'password' ? 'password' : 'text'}
@@ -33,7 +33,7 @@ export default function LoginForm() {
                 ))}
                 <Box mt={1} justify="end" direction="row">
                     <Button loading={isLoading} type="submit">
-                        {t('login:form.submit')}
+                        {Localization.translate('login:form.submit')}
                     </Button>
                 </Box>
             </form>

@@ -1,5 +1,5 @@
-export { default as LocalizationProvider } from './LocalizationProvider';
+export { default as LocalizationMiddleware } from './LocalizationMiddleware';
 export { default as useLocalization } from './useLocalization';
-export * from './config';
+export { default as Localization } from './Localization';
 export * from './Namespaces';
 export * from './Resources';

@@ -1,20 +1,19 @@
 import React from 'react';
 import { Avatar, InputNavButton } from '../../../../react-digital-ui';
+import { Localization } from '../../../Localization';
 import { useUser } from '../../../User';
-import { useLocalization } from '../../../Localization';
 
 export default function UserActions() {
-    const { translate } = useLocalization();
     const { isLoading, logout, username } = useUser();
 
     const options = React.useMemo(
         () => [
             {
-                label: translate('global:actions.auth.logout'),
+                label: Localization.translate('global:actions.auth.logout'),
                 callback: logout,
             },
         ],
-        [logout, translate]
+        [logout]
     );
 
     return (

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Localization } from '../../../Localization';
 import Preferences from './views/Preferences';
 import { useLocalization } from '../../../Localization';
 
@@ -14,8 +15,10 @@ export default function useSettingsState() {
 
     const renderLabel = React.useCallback(
         (value?: string) =>
-            translate(`app:settings.menu.${(value ? (keys.find(x => x == value) ?? '') : selected).toLowerCase()}`),
-        [selected, translate]
+            Localization.translate(
+                `app:settings.menu.${(value ? (keys.find(x => x == value) ?? '') : selected).toLowerCase()}`
+            ),
+        [selected]
     );
 
     const renderView = React.useCallback(

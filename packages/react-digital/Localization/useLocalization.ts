@@ -1,29 +1,19 @@
 import React from 'react';
-import { localizationDefaults, type SupportedLanguage } from './config';
-import { useTranslation } from 'react-i18next';
+import Localization, { type SupportedLanguage } from './Localization';
 
 export default function useLocalization() {
-    const { i18n, t } = useTranslation();
-    const [isLoading, setIsLoading] = React.useState<boolean>(false);
+    const [currentLanguage, setCurrentLanguage] = React.useState<SupportedLanguage>(Localization.initLanguage());
 
-    const setLanguage = React.useCallback(
-        (value: SupportedLanguage | undefined) => {
-            (async () => {
-                if (!value || !localizationDefaults.supportedLanguages.find(x => x == value)) {
-                    return;
-                }
-                setIsLoading(true);
-                await i18n.changeLanguage(value);
-                setIsLoading(false);
-            })();
-        },
-        [i18n]
-    );
+    const setLanguage = React.useCallback((value: SupportedLanguage | undefined) => {
+        if (!value) {
+            return;
+        }
+        Localization.updateLanguage(value);
+        setCurrentLanguage(value);
+    }, []);
 
     return {
-        currentLanguage: i18n.language as SupportedLanguage,
+        currentLanguage,
         setLanguage,
-        translate: t,
-        isLoading,
     };
 }

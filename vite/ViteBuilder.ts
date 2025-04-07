@@ -54,7 +54,7 @@ export default class ViteBuilder {
             plugins: [
                 react(),
                 checker({ typescript: true }),
-                ...(config?.additionalPlugins ? config?.additionalPlugins : []),
+                ...(config?.additionalPlugins ? config.additionalPlugins : []),
             ],
         });
     }
