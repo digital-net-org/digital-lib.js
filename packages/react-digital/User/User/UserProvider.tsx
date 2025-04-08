@@ -1,7 +1,7 @@
 import React from 'react';
-import { type EntityRaw, type Result, type UserModel, EntityHelper } from '../../../dto';
-import { useDigitalQuery } from '../../../react-digital-client';
-import { useJwt } from '../Jwt';
+import { type EntityRaw, type Result, type UserModel, EntityHelper } from '@digital-lib/dto';
+import { useDigitalQuery } from '@digital-lib/react-digital-client';
+import useJwt from './useJwt';
 
 interface UserContextState extends Partial<UserModel> {
     isLoading: boolean;
@@ -16,7 +16,7 @@ export const UserContext = React.createContext<UserContextState>({
 export const getSelfUrl = `${CORE_API_URL}/user/self`;
 
 export default function UserProvider({ children }: React.PropsWithChildren) {
-    const [token, setToken] = useJwt();
+    const [token, _] = useJwt();
     const {
         data: userData,
         isLoading,

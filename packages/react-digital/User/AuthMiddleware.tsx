@@ -1,7 +1,7 @@
 import React from 'react';
-import { type Result } from '../../dto';
-import { useDigitalClient } from '../../react-digital-client';
-import { useJwt } from './Jwt';
+import { type Result } from '@digital-lib/dto';
+import { useDigitalClient } from '@digital-lib/react-digital-client';
+import { useJwt } from './User';
 
 const refreshTokenUrl = `${CORE_API_URL}/authentication/user/refresh`;
 

@@ -1,9 +1,9 @@
 import React from 'react';
-import type { Result } from '../../../dto';
-import { useDigitalClient, useDigitalMutation } from '../../../react-digital-client';
-import { useJwt } from '../Jwt';
+import type { Result } from '@digital-lib/dto';
+import { useDigitalClient, useDigitalMutation } from '@digital-lib/react-digital-client';
 import { getSelfUrl, UserContext } from './UserProvider';
 import type { User } from './User';
+import useJwt from './useJwt';
 
 const authApiUrl = `${CORE_API_URL}/authentication/user`;
 
