@@ -24,3 +24,13 @@
         margin: 0;
     }
 }
+
+.DigitalUi-InputText-disabled {
+    & button {
+        cursor: default;
+    }
+
+    & svg {
+        fill: var(--palette-text-disabled);
+    }
+}

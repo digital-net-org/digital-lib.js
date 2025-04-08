@@ -16,7 +16,7 @@ export const UserContext = React.createContext<UserContextState>({
 export const getSelfUrl = `${CORE_API_URL}/user/self`;
 
 export default function UserProvider({ children }: React.PropsWithChildren) {
-    const [token] = useJwt();
+    const [token, setToken] = useJwt();
     const {
         data: userData,
         isLoading,

@@ -25,6 +25,15 @@ export default {
                 username: {
                     label: "Nom d'utilisateur",
                 },
+                security: {
+                    label: 'Sécurité',
+                    password: {
+                        label: 'Mot de passe',
+                    },
+                    email: {
+                        label: 'E-mail',
+                    },
+                },
             },
             version: 'version',
         },
@@ -51,6 +60,15 @@ export default {
             user: {
                 username: {
                     label: 'Username',
+                },
+                security: {
+                    label: 'Security',
+                    password: {
+                        label: 'Password',
+                    },
+                    email: {
+                        label: 'E-mail',
+                    },
                 },
             },
             version: 'version',

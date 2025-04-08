@@ -6,6 +6,7 @@ import { type SafariInputNode } from '../types';
 import useInputPattern, { type InputPatternProps } from '../useInputPattern';
 import useInputRef from '../useInputRef';
 import './InputText.styles.css';
+import { useClassName } from '@digital-lib/core';
 
 export interface InputTextProps extends SafariInputNode, InputPatternProps, ControlledState<string | undefined> {
     onSelect?: () => void;
@@ -14,6 +15,7 @@ export interface InputTextProps extends SafariInputNode, InputPatternProps, Cont
 }
 
 export default function InputText({ type = 'text', pattern, patternMessage, name, label, ...props }: InputTextProps) {
+    const className = useClassName(props, 'DigitalUi-InputText');
     const [selected, setSelected] = React.useState(false);
     const [hidden, setHidden] = React.useState(type === 'password');
     const ref = useInputRef<HTMLInputElement>(props);
@@ -44,7 +46,7 @@ export default function InputText({ type = 'text', pattern, patternMessage, name
 
     return (
         <InputBox id={props.id} label={label} error={error} selected={selected} {...props}>
-            <div className="DigitalUi-InputText">
+            <div className={className}>
                 <input
                     ref={ref}
                     value={props.value}
@@ -59,7 +61,7 @@ export default function InputText({ type = 'text', pattern, patternMessage, name
                     onInvalid={handleInvalid}
                 />
                 {type === 'password' && (
-                    <button onClick={handleHidden} type="button">
+                    <button onClick={handleHidden} type="button" disabled={props.disabled}>
                         {hidden ? <Icon.EyeSlashedIcon variant="filled" /> : <Icon.EyeIcon variant="filled" />}
                     </button>
                 )}
