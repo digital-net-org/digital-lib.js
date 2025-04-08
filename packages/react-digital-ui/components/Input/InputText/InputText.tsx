@@ -1,4 +1,5 @@
 import React from 'react';
+import { useClassName } from '@digital-lib/core';
 import { Icon } from '../../Icon';
 import { type ControlledState } from '../../types';
 import InputBox from '../InputBox';
@@ -6,7 +7,6 @@ import { type SafariInputNode } from '../types';
 import useInputPattern, { type InputPatternProps } from '../useInputPattern';
 import useInputRef from '../useInputRef';
 import './InputText.styles.css';
-import { useClassName } from '@digital-lib/core';
 
 export interface InputTextProps extends SafariInputNode, InputPatternProps, ControlledState<string | undefined> {
     onSelect?: () => void;
@@ -15,21 +15,13 @@ export interface InputTextProps extends SafariInputNode, InputPatternProps, Cont
     disableAdornment?: boolean;
 }
 
-export default function InputText({
-    type = 'text',
-    pattern,
-    patternMessage,
-    name,
-    label,
-    disableAdornment,
-    ...props
-}: InputTextProps) {
+export default function InputText({ type = 'text', pattern, name, label, disableAdornment, ...props }: InputTextProps) {
     const className = useClassName(props, 'DigitalUi-InputText');
     const [selected, setSelected] = React.useState(false);
     const [hidden, setHidden] = React.useState(type === 'password');
     const ref = useInputRef<HTMLInputElement>(props);
 
-    const { handleChange, handleError, handleInvalid, error } = useInputPattern({ ...props, pattern, patternMessage });
+    const { handleChange, handleError, handleInvalid, error } = useInputPattern({ ...props, pattern });
 
     const resolvedType = React.useMemo(() => {
         if (type !== 'password') {
@@ -61,6 +53,7 @@ export default function InputText({
                     value={props.value}
                     name={name}
                     pattern={pattern}
+                    required={props.required}
                     disabled={props.disabled}
                     type={resolvedType}
                     onChange={handleChange}

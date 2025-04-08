@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Box, InputText } from '../../../../react-digital-ui';
+import { Button, Box, InputText, Form } from '@digital-lib/react-digital-ui';
 import { useUser } from '../../../User';
 import { Localization } from '../../../Localization';
 import { AppLogo } from '../../AppLogo';
@@ -12,13 +12,7 @@ export default function LoginForm() {
     return (
         <Box className="DigitalUi-LoginForm" p={3} fullWidth>
             <AppLogo />
-            <form
-                id="login"
-                onSubmit={(e: React.FormEvent) => {
-                    e.preventDefault();
-                    login({ body });
-                }}
-            >
+            <Form id="login" onSubmit={() => login({ body })}>
                 {['login', 'password'].map(item => (
                     <React.Fragment key={item}>
                         <InputText
@@ -36,7 +30,7 @@ export default function LoginForm() {
                         {Localization.translate('login:form.submit')}
                     </Button>
                 </Box>
-            </form>
+            </Form>
         </Box>
     );
 }

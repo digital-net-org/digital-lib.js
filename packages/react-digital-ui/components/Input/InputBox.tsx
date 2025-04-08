@@ -1,8 +1,8 @@
 import React, { type PropsWithChildren } from 'react';
+import { useClassName } from '@digital-lib/core';
 import { Box } from '../Box';
-import { useClassName } from '../../../core';
-import type { InputBoxProps } from './types';
 import type { SafariNode } from '../types';
+import type { InputBoxProps } from './types';
 import './InputBox.styles.css';
 
 export default function InputBox({ children, id, label, ...props }: PropsWithChildren<InputBoxProps & SafariNode>) {

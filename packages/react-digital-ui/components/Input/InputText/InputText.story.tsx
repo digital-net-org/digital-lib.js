@@ -28,7 +28,6 @@ export const StateTests: Story = {
     args: {
         type: 'text',
         pattern: undefined,
-        patternMessage: 'Invalid input',
         required: false,
         loading: false,
         disabled: false,
@@ -40,7 +39,6 @@ export const StateTests: Story = {
 export const Primary: Story = {
     argTypes: {
         pattern: { control: 'select', options: ['[a-zA-Z0-9]+', '[0-9]+'] },
-        patternMessage: { control: 'text' },
         type: { control: 'radio', options: ['text', 'password', 'email'] },
         required: { control: 'boolean' },
         loading: { control: 'boolean' },
@@ -51,7 +49,6 @@ export const Primary: Story = {
     args: {
         type: 'text',
         pattern: undefined,
-        patternMessage: 'Invalid input',
         required: false,
         loading: false,
         disabled: false,

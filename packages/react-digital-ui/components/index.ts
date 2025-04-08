@@ -4,6 +4,7 @@ export * from './Box';
 export * from './Button';
 export * from './EntityForm';
 export * from './EntityPage';
+export * from './Form';
 export * from './Icon';
 export * from './Input';
 export * from './Loader';

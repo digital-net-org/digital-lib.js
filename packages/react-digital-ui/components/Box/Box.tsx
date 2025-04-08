@@ -1,13 +1,14 @@
 import React from 'react';
+import { useProps, useClassName } from '@digital-lib/core';
 import type { SafariNodeWithChildren } from '../types';
 import './Box.styles.css';
-import { useClassName } from '../../../core';
 
 type BaseBoxProps = React.HTMLAttributes<HTMLDivElement> & SafariNodeWithChildren;
 
 type spacing = null | 0 | 1 | 2 | 3;
 
 export interface BoxProps extends BaseBoxProps {
+    element?: 'div' | 'span' | 'form' | 'section' | 'main';
     p?: spacing;
     pt?: spacing;
     pb?: spacing;
@@ -26,9 +27,10 @@ export interface BoxProps extends BaseBoxProps {
     overflow?: 'hidden' | 'scroll' | 'auto';
 }
 
-const Box = React.forwardRef<HTMLDivElement, BoxProps>(
+const Box = React.forwardRef<HTMLElement, BoxProps>(
     (
         {
+            element = 'div',
             resizable = false,
             fullWidth = false,
             fullHeight = false,
@@ -60,8 +62,7 @@ const Box = React.forwardRef<HTMLDivElement, BoxProps>(
             },
             'DigitalUi-Box'
         );
-
-        return <div {...props} style={{ backgroundColor: color }} ref={ref} className={className} />;
+        return React.createElement(element, { ...props, style: { backgroundColor: color }, ref, className });
     }
 );
 
