@@ -1,4 +1,4 @@
-import i18next, { changeLanguage, reloadResources, t } from 'i18next';
+import i18next, { type i18n, changeLanguage, reloadResources, t } from 'i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
 import { initReactI18next } from 'react-i18next';
 import { LocalStorage } from '../../core';
@@ -11,8 +11,8 @@ export default class Localization {
     public static supportedLanguages = ['fr', 'en'] as const;
     public static defaultLanguage = 'en';
 
-    public static translate(value: string) {
-        return t(value);
+    public static translate(value: string, interpolation?: Record<string, any>) {
+        return t(value, interpolation);
     }
 
     public static initLanguage() {
@@ -39,6 +39,9 @@ export default class Localization {
                         order: ['localStorage', 'navigator'],
                         caches: ['localStorage'],
                         lookupLocalStorage: Localization.accessor,
+                    },
+                    interpolation: {
+                        escapeValue: false,
                     },
                     react: {
                         bindI18n: 'loaded languageChanged',
