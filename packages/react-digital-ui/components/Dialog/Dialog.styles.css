@@ -28,18 +28,17 @@
     text-wrap: nowrap;
 }
 
+.DigitalUi-Dialog-main {
+    width: 100%;
+}
+
 .DigitalUi-Dialog-content {
     width: 100%;
     padding: var(--spacing-2);
 }
 
 .DigitalUi-Dialog-header {
-    width: 100%;
-    padding: var(--spacing-2) var(--spacing-1) 0 var(--spacing-2);
-    & hr {
-        border-bottom: none;
-        width: 100%;
-    }
+    padding: var(--spacing-2) var(--spacing-1) 0 var(--spacing-2) ;
 }
 
 .DigitalUi-Dialog-actions {

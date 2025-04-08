@@ -21,6 +21,11 @@ export default {
                     },
                 },
             },
+            user: {
+                username: {
+                    label: "Nom d'utilisateur",
+                },
+            },
             version: 'version',
         },
     },
@@ -41,6 +46,11 @@ export default {
                         fr: 'French',
                         en: 'English',
                     },
+                },
+            },
+            user: {
+                username: {
+                    label: 'Username',
                 },
             },
             version: 'version',

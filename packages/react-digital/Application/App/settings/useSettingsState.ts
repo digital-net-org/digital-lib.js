@@ -1,11 +1,10 @@
 import React from 'react';
 import { Localization } from '../../../Localization';
-import Preferences from './views/Preferences';
-import User from './views/User';
+import { UserView, PreferencesView } from './views';
 
 const views = {
-    Preferences: Preferences,
-    User: User,
+    Preferences: PreferencesView,
+    User: UserView,
 };
 
 const keys = Object.keys(views);

@@ -7,6 +7,15 @@
     text-transform: uppercase;
 }
 
+.DigitalUi-Text-variant-section-title {
+    width: 100%;
+    height: fit-content;
+    & hr {
+        border-bottom: none;
+        width: 100%;
+    }
+}
+
 .DigitalUi-Text-variant-h3 .DigitalUi-Text-variant-h2 .DigitalUi-Text-variant-h1 {
     text-transform: capitalize;
 }

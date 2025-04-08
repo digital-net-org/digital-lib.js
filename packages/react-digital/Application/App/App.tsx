@@ -16,7 +16,7 @@ export default function App({ children }: AppProps) {
     const { current } = useDigitalRouter();
     const { isLogged } = useUser();
 
-    const [isSettingsOpen, setIsSettingsOpen] = React.useState(false);
+    const [isSettingsOpen, setIsSettingsOpen] = React.useState(true);
 
     return (
         <main className="Page">

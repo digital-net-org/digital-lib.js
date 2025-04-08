@@ -7,32 +7,18 @@ import useInputPattern, { type InputPatternProps } from '../useInputPattern';
 import useInputRef from '../useInputRef';
 import './InputText.styles.css';
 
-export interface InputTextProps extends SafariInputNode, InputPatternProps, ControlledState<string> {
+export interface InputTextProps extends SafariInputNode, InputPatternProps, ControlledState<string | undefined> {
     onSelect?: () => void;
     onBlur?: () => void;
     type?: 'text' | 'password' | 'email';
 }
 
-export default function InputText(
-    {
-        type = 'text',
-        pattern,
-        patternMessage,
-        name,
-        label,
-        ...props
-    }: InputTextProps,
-) {
+export default function InputText({ type = 'text', pattern, patternMessage, name, label, ...props }: InputTextProps) {
     const [selected, setSelected] = React.useState(false);
     const [hidden, setHidden] = React.useState(type === 'password');
     const ref = useInputRef<HTMLInputElement>(props);
 
-    const {
-        handleChange,
-        handleError,
-        handleInvalid,
-        error,
-    } = useInputPattern({ ...props, pattern, patternMessage });
+    const { handleChange, handleError, handleInvalid, error } = useInputPattern({ ...props, pattern, patternMessage });
 
     const resolvedType = React.useMemo(() => {
         if (type !== 'password') {
@@ -57,16 +43,9 @@ export default function InputText(
     };
 
     return (
-        <InputBox
-            id={props.id}
-            label={label}
-            error={error}
-            selected={selected}
-            {...props}
-        >
+        <InputBox id={props.id} label={label} error={error} selected={selected} {...props}>
             <div className="DigitalUi-InputText">
                 <input
-
                     ref={ref}
                     value={props.value}
                     name={name}

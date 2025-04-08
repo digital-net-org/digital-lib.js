@@ -21,7 +21,7 @@ export const Primary: Story = {
         },
         variant: {
             control: { type: 'select' },
-            options: ['h1', 'h2', 'h3', 'text', 'caption'],
+            options: ['h1', 'h2', 'h3', 'text', 'span', 'caption', 'JSON', 'section-title'],
         },
     },
     args: {

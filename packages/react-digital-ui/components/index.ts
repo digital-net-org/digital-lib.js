@@ -10,6 +10,5 @@ export * from './Loader';
 export * from './PopOver';
 export * from './Dialog';
 export * from './Text';
-export * from './User';
 export * from './Editor';
 export * from './Table';

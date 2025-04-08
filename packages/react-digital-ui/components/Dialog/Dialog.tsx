@@ -4,6 +4,7 @@ import type { SafariNodeWithChildren } from '../types';
 import { Button } from '../Button';
 import { Box } from '../Box';
 import { Icon } from '../Icon';
+import { Text } from '../Text';
 import './Dialog.styles.css';
 
 export interface DialogProps extends SafariNodeWithChildren {
@@ -14,10 +15,9 @@ export interface DialogProps extends SafariNodeWithChildren {
 const className = 'DigitalUi-Dialog';
 
 const Header = ({ children }: React.PropsWithChildren) => (
-    <Box className={`${className}-header`}>
-        <Box fullWidth>{children}</Box>
-        <hr />
-    </Box>
+    <Text variant="section-title" className={`${className}-header`}>
+        {children}
+    </Text>
 );
 const Panel = ({ children }: React.PropsWithChildren) => <Box className={`${className}-panel`}>{children}</Box>;
 const Content = ({ children }: React.PropsWithChildren) => <Box className={`${className}-content`}>{children}</Box>;

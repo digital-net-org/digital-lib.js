@@ -2,6 +2,7 @@ import React from 'react';
 import { Box, Dialog, InputNav, Text } from '../../../../react-digital-ui';
 import { Localization } from '../../../Localization';
 import useSettingsState from './useSettingsState';
+import './AppSettings.styles.css';
 
 interface AppSettingsProps {
     open: boolean;
@@ -13,7 +14,7 @@ export default function AppSettings(props: AppSettingsProps) {
 
     return (
         <React.Fragment>
-            <Dialog {...props} className="DigitalUi-Settings">
+            <Dialog {...props} className="DigitalUi-AppSettings">
                 <Dialog.Header>{renderLabel()}</Dialog.Header>
                 <Dialog.Panel>
                     <Box justify="space-between" fullHeight>

@@ -34,8 +34,8 @@ export default class DigitalApp {
                 <LocalizationMiddleware />
                 <DigitalIdbProvider {...idbConfig}>
                     <DigitalClientProvider>
+                        <AuthMiddleware />
                         <UserProvider>
-                            <AuthMiddleware />
                             <ThemeProvider>
                                 <Router renderLayout={renderLayout} router={router ?? []} />
                             </ThemeProvider>

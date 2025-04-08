@@ -26,5 +26,8 @@ export default function useLocalStorage<T>(key: string, defaultValue?: T) {
         return () => LocalStorage.clearListeners(key);
     }, [key]);
 
-    return [state as T, (value: T | undefined) => LocalStorage.set(key, value)] as const;
+    const handleSetState = (value: T | undefined) =>
+        value === undefined ? LocalStorage.remove(key) : LocalStorage.set(key, value);
+
+    return [state as T, handleSetState] as const;
 }

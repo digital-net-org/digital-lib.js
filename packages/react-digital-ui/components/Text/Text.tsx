@@ -2,11 +2,12 @@ import React from 'react';
 import { Property, useClassName } from '../../../core';
 import type { SafariNodeWithChildren } from '../types';
 import './Text.styles.css';
+import { Box } from '@digital-lib/react-digital-ui';
 
 export interface TextProps extends SafariNodeWithChildren {
     bold?: boolean;
     italic?: boolean;
-    variant?: 'h1' | 'h2' | 'h3' | 'text' | 'span' | 'caption' | 'JSON';
+    variant?: 'h1' | 'h2' | 'h3' | 'text' | 'span' | 'caption' | 'JSON' | 'section-title';
     size?: 'xsmall' | 'small' | 'regular' | 'medium' | 'large' | 'xlarge';
 }
 
@@ -25,6 +26,15 @@ export default function Text({ children, ...props }: TextProps) {
 
     if (props.variant === 'JSON') {
         return <pre className={className}>{JSON.stringify(children, null, 2)}</pre>;
+    }
+
+    if (props.variant === 'section-title') {
+        return (
+            <Box className={className}>
+                <Box fullWidth>{children}</Box>
+                <hr />
+            </Box>
+        );
     }
 
     return React.createElement(tag, { ...Property.toHtml(props), className }, children);

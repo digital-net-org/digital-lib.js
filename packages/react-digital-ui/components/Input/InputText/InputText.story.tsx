@@ -14,15 +14,13 @@ export default meta;
 
 export const StateTests: Story = {
     decorators: () => {
-        const [value, setValue] = React.useState('');
+        const [value, setValue] = React.useState<string>();
         return (
             <Box gap={2}>
                 <InputText type="text" onChange={setValue} value={value} />
                 <Box>
                     State content:
-                    <pre>
-                        {JSON.stringify(value, null, 2)}
-                    </pre>
+                    <pre>{JSON.stringify(value, null, 2)}</pre>
                 </Box>
             </Box>
         );

@@ -1,0 +1,7 @@
+.DigitalUi-AppSettings {
+    width: 100%;
+}
+
+.AppVersion {
+    padding-left: calc(var(--spacing-1) * 0.75);
+}
