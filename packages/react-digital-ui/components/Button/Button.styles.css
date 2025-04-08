@@ -144,7 +144,7 @@
     }
 }
 
-.DigitalUi-Button-variant-icon {
+.DigitalUi-Button-variant-icon, .DigitalUi-Button-variant-icon-filled, .DigitalUi-Button-variant-icon-bordered {
     padding: calc(var(--spacing-1) * 0.5);
 
     line-height: 0.8rem;
@@ -162,4 +162,12 @@
     &.DigitalUi-Button-disabled svg {
         fill: var(--palette-text-disabled);
     }
+}
+
+.DigitalUi-Button-variant-icon-filled {
+    background-color: var(--button-prime-color);
+}
+
+.DigitalUi-Button-variant-icon-bordered {
+    border-color: var(--palette-text-disabled);
 }

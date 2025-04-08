@@ -12,9 +12,18 @@ export interface InputTextProps extends SafariInputNode, InputPatternProps, Cont
     onSelect?: () => void;
     onBlur?: () => void;
     type?: 'text' | 'password' | 'email';
+    disableAdornment?: boolean;
 }
 
-export default function InputText({ type = 'text', pattern, patternMessage, name, label, ...props }: InputTextProps) {
+export default function InputText({
+    type = 'text',
+    pattern,
+    patternMessage,
+    name,
+    label,
+    disableAdornment,
+    ...props
+}: InputTextProps) {
     const className = useClassName(props, 'DigitalUi-InputText');
     const [selected, setSelected] = React.useState(false);
     const [hidden, setHidden] = React.useState(type === 'password');
@@ -60,7 +69,7 @@ export default function InputText({ type = 'text', pattern, patternMessage, name
                     onError={handleError}
                     onInvalid={handleInvalid}
                 />
-                {type === 'password' && (
+                {type === 'password' && !disableAdornment && (
                     <button onClick={handleHidden} type="button" disabled={props.disabled}>
                         {hidden ? <Icon.EyeSlashedIcon variant="filled" /> : <Icon.EyeIcon variant="filled" />}
                     </button>

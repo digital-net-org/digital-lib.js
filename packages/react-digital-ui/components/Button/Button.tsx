@@ -4,7 +4,7 @@ import { Loader } from '../Loader';
 import './Button.styles.css';
 
 export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement | HTMLAnchorElement> {
-    variant?: 'primary' | 'secondary' | 'text' | 'icon';
+    variant?: 'primary' | 'secondary' | 'text' | 'icon' | 'icon-filled' | 'icon-bordered';
     loading?: boolean;
     disabled?: boolean;
     fullWidth?: boolean;
