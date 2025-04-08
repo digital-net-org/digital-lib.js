@@ -4,6 +4,7 @@ export default {
     namespace: 'global',
     fr: {
         actions: {
+            validate: 'Valider',
             save: 'Enregistrer',
             cancel: 'Annuler',
             delete: 'Supprimer',
@@ -16,6 +17,7 @@ export default {
     },
     en: {
         actions: {
+            validate: 'Confirm',
             save: 'Save',
             cancel: 'Cancel',
             delete: 'Delete',

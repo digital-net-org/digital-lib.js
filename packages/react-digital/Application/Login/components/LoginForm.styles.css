@@ -15,8 +15,4 @@
         padding-top: var(--spacing-2);
         gap: var(--spacing-2);
     }
-
-    & .DigitalUi-Button {
-        width: 100%;
-    }
 }

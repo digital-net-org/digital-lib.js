@@ -14,6 +14,10 @@
     margin-bottom: var(--spacing-2);
 }
 
+.DigitalUi-AppSettings-Password-Tip {
+    max-width: 250px;
+}
+
 .AppVersion {
     color: var(--palette-text-disabled);
 }

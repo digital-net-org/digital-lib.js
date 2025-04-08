@@ -12,7 +12,7 @@ export default function LoginForm() {
     return (
         <Box className="DigitalUi-LoginForm" p={3} fullWidth>
             <AppLogo />
-            <Form id="login" onSubmit={() => login({ body })}>
+            <Form id="login" onSubmit={() => login({ body })} fullWidth>
                 {['login', 'password'].map(item => (
                     <React.Fragment key={item}>
                         <InputText
@@ -20,16 +20,15 @@ export default function LoginForm() {
                             onChange={v => setBody({ ...body, [item]: v })}
                             value={body[item as keyof typeof body]}
                             type={item === 'password' ? 'password' : 'text'}
+                            focusOnMount={item === 'login'}
                             required
                             fullWidth
                         />
                     </React.Fragment>
                 ))}
-                <Box mt={1} justify="end" direction="row">
-                    <Button loading={isLoading} type="submit">
-                        {Localization.translate('login:form.submit')}
-                    </Button>
-                </Box>
+                <Button loading={isLoading} type="submit" fullWidth>
+                    {Localization.translate('login:form.submit')}
+                </Button>
             </Form>
         </Box>
     );
