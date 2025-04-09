@@ -28,7 +28,7 @@ export default function AuthMiddleware() {
                 const originalRequest = error.config;
                 const isUnauthorized = error.response?.status === 401;
 
-                if (!isUnauthorized) {
+                if (!isUnauthorized || !token) {
                     return Promise.resolve(error.response);
                 }
 
