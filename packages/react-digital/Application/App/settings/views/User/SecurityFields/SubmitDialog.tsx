@@ -1,6 +1,7 @@
 import React from 'react';
 import { Box, Button, Dialog, Form, InputText } from '@digital-lib/react-digital-ui';
 import { useDigitalMutation } from '@digital-lib/react-digital-client';
+import { useToaster } from '../../../../../../Toaster';
 import { Localization } from '../../../../../../Localization';
 import { useUser } from '../../../../../../User';
 
@@ -11,12 +12,19 @@ interface SubmitDialogProps {
 }
 
 export default function SubmitDialog({ open, payload, onCancel }: SubmitDialogProps) {
+    const { toast } = useToaster();
     const { id } = useUser();
     const [currentPassword, setCurrentPassword] = React.useState<string | undefined>();
     const { mutate, isPending } = useDigitalMutation(`${CORE_API_URL}/user/${id}/password`, {
         method: 'PUT',
-        onSuccess: () => onCancel(),
-        onError: () => onCancel(),
+        onSuccess: () => {
+            onCancel();
+            toast('app:settings.user.security.password.success', 'success');
+        },
+        onError: () => {
+            onCancel();
+            toast('user:auth.error', 'error');
+        },
     });
 
     const handleSubmit = () => mutate({ body: { currentPassword, newPassword: payload ?? '' } });

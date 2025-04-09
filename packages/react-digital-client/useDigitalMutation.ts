@@ -5,11 +5,11 @@ import useDigitalClient from './useDigitalClient';
 
 export default function useDigitalMutation<T, P = object, E = unknown>(
     key: ((payload: P) => string) | string,
-    { method, retry, onError, onSuccess, ...options }: MutationConfig<T, E>,
+    { method, retry, onError, onSuccess, ...options }: MutationConfig<T, E>
 ) {
     const { axiosInstance } = useDigitalClient();
     const mutation = useMutation<T, AxiosError<E, any>, MutationPayload<P>>({
-        mutationFn: async (payload) => {
+        mutationFn: async payload => {
             const url = key instanceof Function && payload.params ? key(payload.params) : (key as string);
             const { data, status } = await axiosInstance.request<T>({
                 method: method ?? 'POST',

@@ -38,8 +38,11 @@ export default function InputText({
         if (type !== 'password') {
             return type;
         }
+        if (props.disabled) {
+            return 'password';
+        }
         return hidden ? 'password' : 'text';
-    }, [hidden, type]);
+    }, [hidden, props.disabled, type]);
 
     const handleSelect = () => {
         props.onSelect?.();
@@ -57,7 +60,7 @@ export default function InputText({
     };
 
     return (
-        <InputBox id={props.id} label={label} error={error} selected={selected} {...props}>
+        <InputBox id={props.id} label={label} error={props.disabled ? false : error} selected={selected} {...props}>
             <div className={className}>
                 <input
                     ref={ref}

@@ -119,6 +119,8 @@ export const booleanKeywords = new Set([
     'animated',
     'isBold',
     'bold',
+    'isLight',
+    'light',
     'isItalic',
     'italic',
     'isUppercase',

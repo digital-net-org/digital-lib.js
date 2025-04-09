@@ -1,4 +1,4 @@
-import { type Namespace } from '../../react-digital';
+import { type Namespace } from '../Localization';
 
 export default {
     namespace: 'app',
@@ -33,6 +33,7 @@ export default {
                         pattern:
                             'Votre mot de passe doit contenir entre 12 et 128 caractères, avec au moins une majuscule, une minuscule, un chiffre, et un symbole parmi {{symboles}}.',
                         update: 'Saisissez votre mot de passe',
+                        success: 'Votre mot de passe a été mis à jour',
                     },
                     email: {
                         label: 'E-mail',
@@ -72,6 +73,8 @@ export default {
                         labelConfirm: 'Confirm password',
                         pattern:
                             'Your password must be between 12 and 128 characters long, and include at least one uppercase letter, one lowercase letter, one number, and one symbol from the following list: {{symboles}}.',
+                        update: 'Enter your password',
+                        success: 'Your password has been updated',
                     },
                     email: {
                         label: 'E-mail',

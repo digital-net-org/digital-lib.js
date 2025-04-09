@@ -45,7 +45,7 @@ export default function PasswordField() {
                     />
                     {isEditing ? (
                         <Box direction="row">
-                            <IconButton icon="CheckIcon" onClick={handleSubmit} />
+                            <IconButton type="submit" icon="CheckIcon" />
                             <IconButton icon="CloseIcon" critical onClick={handleCancel} />
                         </Box>
                     ) : (
