@@ -6,6 +6,7 @@ import { Box } from '@digital-lib/react-digital-ui';
 
 export interface TextProps extends SafariNodeWithChildren {
     bold?: boolean;
+    light?: boolean;
     italic?: boolean;
     variant?: 'h1' | 'h2' | 'h3' | 'text' | 'span' | 'caption' | 'JSON' | 'section-title';
     size?: 'xsmall' | 'small' | 'regular' | 'medium' | 'large' | 'xlarge';

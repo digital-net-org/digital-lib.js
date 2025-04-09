@@ -20,6 +20,11 @@
     text-transform: capitalize;
 }
 
+.DigitalUi-Text-light {
+    font-weight: lighter;
+    letter-spacing: calc(var(--font-letter-spacing) * 1.75);
+}
+
 .DigitalUi-Text-bold {
     font-weight: bold;
 }

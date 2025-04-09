@@ -6,6 +6,7 @@ import { DigitalIdbProvider, type IDbConfig } from './IdbStorage';
 import { UserProvider, AuthMiddleware } from './User';
 import { ThemeProvider } from './Theme';
 import { Router, type RouterProps } from './Router';
+import { ToasterProvider } from './Toaster';
 
 interface DigitalConfig {
     idbConfig: IDbConfig;
@@ -32,16 +33,18 @@ export default class DigitalApp {
         return ReactDOM.createRoot(appRoot).render(
             <React.StrictMode>
                 <LocalizationMiddleware />
-                <DigitalIdbProvider {...idbConfig}>
-                    <DigitalClientProvider>
-                        <AuthMiddleware />
-                        <UserProvider>
-                            <ThemeProvider>
-                                <Router renderLayout={renderLayout} router={router ?? []} />
-                            </ThemeProvider>
-                        </UserProvider>
-                    </DigitalClientProvider>
-                </DigitalIdbProvider>
+                <ToasterProvider>
+                    <DigitalIdbProvider {...idbConfig}>
+                        <DigitalClientProvider>
+                            <AuthMiddleware />
+                            <UserProvider>
+                                <ThemeProvider>
+                                    <Router renderLayout={renderLayout} router={router ?? []} />
+                                </ThemeProvider>
+                            </UserProvider>
+                        </DigitalClientProvider>
+                    </DigitalIdbProvider>
+                </ToasterProvider>
             </React.StrictMode>
         );
     }

@@ -4,6 +4,8 @@ import { AddIcon } from './icons/AddIcon';
 import { ArrowIcon } from './icons/ArrowIcon';
 import { Asterisk } from './icons/Asterisk';
 import { BoxIcon } from './icons/BoxIcon';
+import { CheckIcon } from './icons/CheckIcon';
+import { CheckBoxIcon } from './icons/CheckBoxIcon';
 import { CircleIcon } from './icons/CircleIcon';
 import { CircleFill } from './icons/CircleFill';
 import { CloseIcon } from './icons/CloseIcon';
@@ -31,7 +33,7 @@ import { SearchIcon } from './icons/SearchIcon';
 import { ThemeMoonIcon } from './icons/ThemeMoonIcon';
 import { ThemeSunIcon } from './icons/ThemeSunIcon';
 import { TrashIcon } from './icons/TrashIcon';
-import { CheckIcon } from '@digital-lib/react-digital-ui/components/Icon/icons/CheckIcon';
+import { WarnBoxIcon } from './icons/WarnBoxIcon';
 
 export type { IconProps } from './BaseIcon';
 
@@ -42,6 +44,7 @@ export const Icon = Object.assign(Component, {
     Asterisk,
     BoxIcon,
     CheckIcon,
+    CheckBoxIcon,
     CircleIcon,
     CircleFill,
     CloseIcon,
@@ -69,4 +72,5 @@ export const Icon = Object.assign(Component, {
     ThemeMoonIcon,
     ThemeSunIcon,
     TrashIcon,
+    WarnBoxIcon,
 });

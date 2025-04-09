@@ -3,6 +3,9 @@ import { type Namespace } from './Namespaces/Namespace';
 export default {
     namespace: 'global',
     fr: {
+        errors: {
+            unhandled: 'Une erreur est survenue',
+        },
         actions: {
             validate: 'Valider',
             save: 'Enregistrer',
@@ -16,6 +19,9 @@ export default {
         },
     },
     en: {
+        errors: {
+            unhandled: 'Something went wrong',
+        },
         actions: {
             validate: 'Confirm',
             save: 'Save',

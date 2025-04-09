@@ -4,6 +4,7 @@ export * from './ClassName';
 export * from './Color';
 export * from './Effect';
 export * from './Element';
+export * from './Event';
 export * from './Image';
 export * from './JSON';
 export * from './LocalStorage';
