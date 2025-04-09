@@ -1,6 +1,6 @@
 import React from 'react';
 import { type Result } from '@digital-lib/dto';
-import { useDigitalClient } from '@digital-lib/react-digital-client';
+import { useDigitalClient, skipRefreshHeader } from '@digital-lib/react-digital-client';
 import { useJwt } from './User';
 
 const refreshTokenUrl = `${CORE_API_URL}/authentication/user/refresh`;
@@ -27,8 +27,9 @@ export default function AuthMiddleware() {
             async error => {
                 const originalRequest = error.config;
                 const isUnauthorized = error.response?.status === 401;
+                const skipRefresh = originalRequest.headers?.[skipRefreshHeader] === 'true';
 
-                if (!isUnauthorized || !token) {
+                if (!isUnauthorized || !token || skipRefresh) {
                     return Promise.resolve(error.response);
                 }
 

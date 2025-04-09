@@ -25,6 +25,7 @@ export default function SubmitDialog({ open, payload, onCancel }: SubmitDialogPr
             onCancel();
             toast('user:auth.error', 'error');
         },
+        skipRefresh: true,
     });
 
     const handleSubmit = () => mutate({ body: { currentPassword, newPassword: payload ?? '' } });

@@ -6,6 +6,7 @@ export interface QueryConfig<T, E> extends RequestConfig {
     onSuccess?: SuccessCallback<T>;
     onError?: ErrorCallback<E>;
     autoRefetch?: boolean;
+    skipRefresh?: boolean;
 }
 
 export interface MutationConfig<T, E> extends RequestConfig {
@@ -13,6 +14,7 @@ export interface MutationConfig<T, E> extends RequestConfig {
     onError?: ErrorCallback<E>;
     method?: Method;
     retry?: number;
+    skipRefresh?: boolean;
 }
 
 export interface MutationPayload<T = object> {

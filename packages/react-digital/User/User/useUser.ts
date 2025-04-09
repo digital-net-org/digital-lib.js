@@ -34,6 +34,7 @@ export default function useUser(): User {
             toast('user:auth.revoked');
         },
         withCredentials: true,
+        skipRefresh: true,
     });
 
     const isLoading = React.useMemo(

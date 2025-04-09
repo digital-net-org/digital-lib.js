@@ -3,11 +3,12 @@ import { type AxiosError } from 'axios';
 import { useQuery } from '@tanstack/react-query';
 import { ObjectMatcher } from '../core';
 import { type QueryConfig } from './types';
+import { skipRefreshHeader } from './config';
 import useDigitalClient from './useDigitalClient';
 
 export default function useDigitalQuery<T, E = unknown>(
     key: string | undefined,
-    { onError, onSuccess, ...options }: QueryConfig<T, E> = {
+    { onError, onSuccess, skipRefresh, ...options }: QueryConfig<T, E> = {
         autoRefetch: true,
     }
 ) {
@@ -18,7 +19,13 @@ export default function useDigitalQuery<T, E = unknown>(
             if (!key) {
                 return {} as T;
             }
-            const { data, status } = await axiosInstance.get<T>(key, options);
+            const { data, status } = await axiosInstance.get<T>(key, {
+                ...options,
+                headers: {
+                    ...options.headers,
+                    [skipRefreshHeader]: skipRefresh ? 'true' : 'false',
+                },
+            });
             if (status >= 400) {
                 await onError?.(data);
             } else {
