@@ -48,7 +48,7 @@ export default {
             label: 'Navigation',
         },
         settings: {
-            label: 'Paramètres',
+            label: 'Parameters',
             menu: {
                 user: 'My account',
                 preferences: 'Preferences',

@@ -5,18 +5,20 @@ import { useUser } from '../../User';
 import { ThemeSwitch } from '../../Theme';
 import { useDigitalRouter } from '../../Router';
 import { Actions } from './actions';
-import { AppSettings } from './settings';
+import { AppSettings, type AppSettingsProps } from './settings';
 import './fontsources';
 import './digital-net.default.css';
 import './App.styles.css';
 
-export interface AppProps extends PropsWithChildren {}
+export interface AppProps extends PropsWithChildren {
+    renderSettings?: AppSettingsProps['renderSettings'];
+}
 
-export default function App({ children }: AppProps) {
+export default function App({ children, renderSettings }: AppProps) {
     const { current } = useDigitalRouter();
     const { isLogged } = useUser();
 
-    const [isSettingsOpen, setIsSettingsOpen] = React.useState(true);
+    const [isSettingsOpen, setIsSettingsOpen] = React.useState(false);
 
     return (
         <main className="Page">
@@ -35,7 +37,11 @@ export default function App({ children }: AppProps) {
                             </Button>
                         </Box>
                     </header>
-                    <AppSettings open={isSettingsOpen} onClose={() => setIsSettingsOpen(false)} />
+                    <AppSettings
+                        open={isSettingsOpen}
+                        onClose={() => setIsSettingsOpen(false)}
+                        renderSettings={renderSettings}
+                    />
                 </React.Fragment>
             )}
             {children}

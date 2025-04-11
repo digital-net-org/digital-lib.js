@@ -1,1 +1,1 @@
-export { default as AppSettings } from './AppSettings';
+export { default as AppSettings, type AppSettingsProps } from './AppSettings';
