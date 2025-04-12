@@ -1,5 +1,5 @@
 import React, { type PropsWithChildren } from 'react';
-import { Box, Button, Icon } from '../../../react-digital-ui';
+import { Box, Button, Icon } from '@digital-lib/react-digital-ui';
 import { Localization } from '../../Localization';
 import { useUser } from '../../User';
 import { ThemeSwitch } from '../../Theme';
@@ -7,8 +7,8 @@ import { useDigitalRouter } from '../../Router';
 import { Actions } from './actions';
 import { AppSettings, type AppSettingsProps } from './settings';
 import './fontsources';
-import './digital-net.default.css';
 import './App.styles.css';
+import './AppBar.styles.css';
 
 export interface AppProps extends PropsWithChildren {
     renderSettings?: AppSettingsProps['renderSettings'];

@@ -7,6 +7,7 @@ import { UserProvider, AuthMiddleware } from './User';
 import { ThemeProvider } from './Theme';
 import { Router, type RouterProps } from './Router';
 import { ToasterProvider } from './Toaster';
+import '@digital-lib/react-digital-ui/digital.net.defaults.css';
 
 interface DigitalConfig {
     idbConfig: IDbConfig;
