@@ -28,7 +28,7 @@ export default class LocalStorage {
     }
 
     public static clearListeners(key: string) {
-        window?.removeEventListener?.(`LS_SET_${key}`, () => {});
-        window?.removeEventListener?.(`LS_REMOVE_${key}`, () => {});
+        window?.removeEventListener?.(`LS_SET_${key}`, () => void 0);
+        window?.removeEventListener?.(`LS_REMOVE_${key}`, () => void 0);
     }
 }
