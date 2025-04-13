@@ -5,4 +5,5 @@ export type { EntitySchema, EntitySchemaProperty } from './EntitySchema';
 export { default as EntitySchemaHelper } from './EntitySchemaHelper';
 
 export * from './Avatar';
+export * from './Document';
 export * from './User';
