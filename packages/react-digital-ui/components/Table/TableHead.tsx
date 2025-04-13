@@ -1,26 +1,32 @@
-import type { EntitySchema } from '../../../dto';
-import { Localization } from '../../../react-digital';
+import type { Entity } from '@digital-lib/dto';
 import { Text } from '../Text';
+import { IconButton } from '../Button';
+import { Box } from '../Box';
+import { type TableProps, tableClassName } from './Table';
 
-interface TableHeadProps {
-    schema: EntitySchema;
+export interface TableHeadProps<T extends Entity> extends Omit<TableProps<T>, 'columns' | 'entities' | 'renderRow'> {
+    columns: Array<keyof T>;
 }
 
-export default function TableHead({ schema }: TableHeadProps) {
+export default function TableHead<T extends Entity>({ columns, renderHeader, onCreate }: TableHeadProps<T>) {
+    const className = `${tableClassName}-Header-Cell`;
     return (
         <thead>
-            <tr>
-                {schema.map(s => (
-                    <th key={s.name} style={{ border: 'solid 1px white', padding: '.5rem' }}>
-                        <Text size="small">{s.name}</Text>
-                        <Text size="small" italic variant="caption">
-                            {s.type}
+            <tr className={`${tableClassName}-Header`}>
+                {columns.map(s => (
+                    <th key={String(s)} className={className}>
+                        <Text variant="caption" size="small" bold>
+                            {renderHeader?.(s) ?? String(s)}
                         </Text>
                     </th>
                 ))}
-                <th>
-                    <Text size="small">{Localization.translate('ui-table:actions')}</Text>
-                </th>
+                {onCreate !== undefined && (
+                    <th className={className}>
+                        <Box className={`${tableClassName}-Create`} fullWidth align="end">
+                            <IconButton icon="AddIcon" onClick={onCreate} variant="icon-filled" />
+                        </Box>
+                    </th>
+                )}
             </tr>
         </thead>
     );

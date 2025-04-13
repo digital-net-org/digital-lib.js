@@ -1,34 +1,41 @@
 import React from 'react';
-import { type Entity, type EntitySchema } from '../../../dto';
-import { EditActions } from '../Editor';
-import { Icon } from '../Icon';
-import TableCell from './TableCell';
+import { type Entity } from '@digital-lib/dto';
+import { Text } from '../Text';
+import { Box } from '../Box';
+import { IconButton } from '../Button';
+import { type TableProps, tableClassName } from './Table';
 
-interface TableRowProps<T extends Entity> {
-    schema: EntitySchema;
+interface TableRowProps<T extends Entity> extends Omit<TableProps<T>, 'entities' | 'columns'> {
     entity: T;
-    onEdit: (id: string | number) => void;
-    onDelete: (id: string | number) => void;
-    disabled?: boolean;
-    isLoading?: boolean;
+    columns: Array<keyof T>;
 }
 
-export default function TableRow<T extends Entity>({ schema, entity, onEdit, onDelete, ...props }: TableRowProps<T>) {
+export default function TableRow<T extends Entity>({
+    entity,
+    onEdit,
+    onDelete,
+    renderRow,
+    columns,
+    ...props
+}: TableRowProps<T>) {
     return (
-        <tr key={entity.id}>
-            {schema.map(s => (
-                <React.Fragment key={s.name}>
-                    <TableCell schema={s} entity={entity} />
-                </React.Fragment>
+        <tr key={entity.id} className={`${tableClassName}-Body-Row`}>
+            {columns.map(s => (
+                <td key={`${entity.id}_${String(s)}`} className={`${tableClassName}-Body-Cell`}>
+                    <Text>{renderRow?.(entity) ?? String(entity[s])}</Text>
+                </td>
             ))}
-            <td>
-                <EditActions
-                    actions={[
-                        { icon: Icon.PencilSquare, action: () => onEdit(entity.id) },
-                        { icon: Icon.TrashIcon, action: () => onDelete(entity.id) },
-                    ]}
-                    {...props}
-                />
+            <td className={`${tableClassName}-Body-Cell`}>
+                <Box direction="row" justify="end" gap={1}>
+                    {[
+                        { cb: onEdit, icon: 'PencilSquare' as const },
+                        { cb: onDelete, critical: true, icon: 'TrashIcon' as const },
+                    ].map(({ cb, ...action }) =>
+                        cb !== undefined ? (
+                            <IconButton onClick={() => cb(entity.id)} variant="icon-filled" {...action} {...props} />
+                        ) : null
+                    )}
+                </Box>
             </td>
         </tr>
     );
