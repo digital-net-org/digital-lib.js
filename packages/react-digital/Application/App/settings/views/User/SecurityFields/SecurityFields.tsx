@@ -5,7 +5,9 @@ import { Localization } from '../../../../../../Localization';
 export default function SecurityFields({ children }: React.PropsWithChildren) {
     return (
         <Box gap={2} fullWidth>
-            <Text variant="section-title">{Localization.translate('app:settings.user.security.label')}</Text>
+            <Text variant="section-title">
+                {Localization.translate('app:settings.user.account.form.security.label')}
+            </Text>
             {children}
         </Box>
     );

@@ -1,4 +1,4 @@
-import { Box, InputSelect } from '../../../../../../react-digital-ui';
+import { Box, InputSelect } from '@digital-lib/react-digital-ui';
 import { Localization, useLocalization } from '../../../../../Localization';
 
 export default function PreferencesView() {
@@ -8,10 +8,12 @@ export default function PreferencesView() {
             <InputSelect
                 required
                 options={[...Localization.supportedLanguages]}
-                label={Localization.translate('app:settings.options.language.label')}
+                label={Localization.translate('app:settings.user.preferences.options.language.label')}
                 value={currentLanguage}
                 onChange={setLanguage}
-                onRender={value => Localization.translate(`app:settings.options.language.inputs.${value}`)}
+                onRender={value =>
+                    Localization.translate(`app:settings.user.preferences.options.language.inputs.${value}`)
+                }
             />
         </Box>
     );

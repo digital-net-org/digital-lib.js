@@ -38,7 +38,7 @@ export default function PasswordField() {
                         type="password"
                         value={newPassword}
                         onChange={setNewPassword}
-                        label={Localization.translate('app:settings.user.security.password.label')}
+                        label={Localization.translate('app:settings.user.account.form.security.password.label')}
                         pattern={pattern}
                         disabled={!isEditing}
                         required
@@ -58,13 +58,15 @@ export default function PasswordField() {
                             type="password"
                             value={confirmPassword}
                             onChange={setConfirmPassword}
-                            label={Localization.translate('app:settings.user.security.password.labelConfirm')}
+                            label={Localization.translate(
+                                'app:settings.user.account.form.security.password.labelConfirm'
+                            )}
                             pattern={newPassword}
                             disableAdornment
                             required
                         />
                         <Text className="DigitalUi-AppSettings-Password-Tip" variant="span" size="xsmall" italic>
-                            {Localization.translate('app:settings.user.security.password.pattern', {
+                            {Localization.translate('app:settings.user.account.form.security.password.pattern', {
                                 symboles: allowedSymboles,
                             })}
                         </Text>

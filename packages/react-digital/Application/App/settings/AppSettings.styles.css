@@ -11,7 +11,7 @@
     user-select: none;
     color: var(--palette-text-disabled);
     font-weight: var(--font-weight-bold);
-    margin-bottom: var(--spacing-2);
+    margin-bottom: calc(var(--spacing-1) * 0.5);
 }
 
 .DigitalUi-AppSettings-Password-Tip {

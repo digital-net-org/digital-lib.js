@@ -11,10 +11,13 @@ import './App.styles.css';
 import './AppBar.styles.css';
 
 export interface AppProps extends PropsWithChildren {
-    renderSettings?: AppSettingsProps['renderSettings'];
+    settingsViews?: {
+        views: AppSettingsProps['views'];
+        onLabelRender: AppSettingsProps['onLabelRender'];
+    };
 }
 
-export default function App({ children, renderSettings }: AppProps) {
+export default function App({ children, settingsViews }: AppProps) {
     const { current } = useDigitalRouter();
     const { isLogged } = useUser();
 
@@ -37,11 +40,7 @@ export default function App({ children, renderSettings }: AppProps) {
                             </Button>
                         </Box>
                     </header>
-                    <AppSettings
-                        open={isSettingsOpen}
-                        onClose={() => setIsSettingsOpen(false)}
-                        renderSettings={renderSettings}
-                    />
+                    <AppSettings open={isSettingsOpen} onClose={() => setIsSettingsOpen(false)} {...settingsViews} />
                 </React.Fragment>
             )}
             {children}
