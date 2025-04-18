@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { DigitalClientProvider } from '../react-digital-client';
+import { ErrorBoundary } from '@digital-lib/core';
+import { DigitalClientProvider } from '@digital-lib/react-digital-client';
 import { LocalizationMiddleware } from './Localization';
 import { DigitalIdbProvider, type IDbConfig } from './IdbStorage';
 import { UserProvider, AuthMiddleware } from './User';
@@ -33,19 +34,21 @@ export default class DigitalApp {
 
         return ReactDOM.createRoot(appRoot).render(
             <React.StrictMode>
-                <LocalizationMiddleware />
-                <ToasterProvider>
-                    <DigitalIdbProvider {...idbConfig}>
-                        <DigitalClientProvider>
-                            <AuthMiddleware />
-                            <UserProvider>
-                                <ThemeProvider>
-                                    <Router renderLayout={renderLayout} router={router ?? []} />
-                                </ThemeProvider>
-                            </UserProvider>
-                        </DigitalClientProvider>
-                    </DigitalIdbProvider>
-                </ToasterProvider>
+                <ErrorBoundary>
+                    <LocalizationMiddleware />
+                    <ToasterProvider>
+                        <DigitalIdbProvider {...idbConfig}>
+                            <DigitalClientProvider>
+                                <AuthMiddleware />
+                                <UserProvider>
+                                    <ThemeProvider>
+                                        <Router renderLayout={renderLayout} router={router ?? []} />
+                                    </ThemeProvider>
+                                </UserProvider>
+                            </DigitalClientProvider>
+                        </DigitalIdbProvider>
+                    </ToasterProvider>
+                </ErrorBoundary>
             </React.StrictMode>
         );
     }
