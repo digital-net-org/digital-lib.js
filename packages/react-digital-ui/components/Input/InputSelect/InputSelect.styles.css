@@ -6,5 +6,10 @@
         border: none;
         cursor: pointer;
         background: transparent;
+        color: var(--palette-text);
+    }
+
+    & option {
+        color: var(--palette-background);
     }
 }

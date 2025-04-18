@@ -1,5 +1,5 @@
 import React from 'react';
-import { type InputNavProps, InputNav, Text } from '../../../../../react-digital-ui';
+import { type InputNavProps, InputNav, Text, Box } from '@digital-lib/react-digital-ui';
 
 export interface PanelNavProps extends InputNavProps {
     label: string;
@@ -7,11 +7,11 @@ export interface PanelNavProps extends InputNavProps {
 
 export default function PanelNav({ label, ...navProps }: PanelNavProps) {
     return (
-        <React.Fragment>
+        <Box gap={1}>
             <Text size="xsmall" variant="caption" className="DigitalUi-AppSettings-NavSection">
                 {label}
             </Text>
             <InputNav gap={1} {...navProps} />
-        </React.Fragment>
+        </Box>
     );
 }

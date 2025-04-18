@@ -5,7 +5,7 @@ import { Localization } from '../../../../Localization';
 export default function Panel({ children }: React.PropsWithChildren) {
     return (
         <Box justify="space-between" fullHeight>
-            <Box gap={1} fullWidth>
+            <Box gap={3} fullWidth>
                 {children}
             </Box>
             <Text

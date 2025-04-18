@@ -1,8 +1,10 @@
 .DigitalUi-InputNav {
     text-wrap: nowrap;
     user-select: none;
+    color: var(--palette-text-light);
 
     & .DigitalUi-Button-selected {
         cursor: default;
     }
+
 }
