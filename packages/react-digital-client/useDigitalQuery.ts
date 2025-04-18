@@ -4,7 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 import { ObjectMatcher } from '../core';
 import { type QueryConfig } from './types';
 import { skipRefreshHeader } from './config';
-import useDigitalClient from './useDigitalClient';
+import DigitalClient from './DigitalClient';
 
 export default function useDigitalQuery<T, E = unknown>(
     key: string | undefined,
@@ -12,14 +12,13 @@ export default function useDigitalQuery<T, E = unknown>(
         autoRefetch: true,
     }
 ) {
-    const { axiosInstance } = useDigitalClient();
     const { data: queryResult, ...response } = useQuery<T, AxiosError<E>>({
         queryKey: key ? [key] : [],
         queryFn: async () => {
             if (!key) {
                 return {} as T;
             }
-            const { data, status } = await axiosInstance.get<T>(key, {
+            const { data, status } = await DigitalClient.get<T>(key, {
                 ...options,
                 headers: {
                     ...options.headers,

@@ -1,7 +1,7 @@
 import React from 'react';
 import { type Entity, EntityHelper, type EntityRaw, type QueryResult } from '../../dto';
 import { type MutationConfig } from '../types';
-import useDigitalClient from '../useDigitalClient';
+import DigitalClient from '../DigitalClient';
 import useDigitalQuery from '../useDigitalQuery';
 
 type Callback<T> = MutationConfig<QueryResult<T>, null>;
@@ -20,7 +20,6 @@ export default function useGet<T extends Entity>(
         onError?: Callback<T>['onError'];
     }
 ) {
-    const { queryClient } = useDigitalClient();
     const { data, isLoading } = useDigitalQuery<QueryResult<EntityRaw>>(endpoint, {
         onSuccess: async e => {
             await options?.onSuccess?.({ ...e, value: e.value.map(EntityHelper.build<T>) });
@@ -30,11 +29,7 @@ export default function useGet<T extends Entity>(
         },
     });
 
-    const invalidateQuery = React.useCallback(async () => {
-        await queryClient.invalidateQueries({
-            predicate: query => query.queryKey[0] === endpoint,
-        });
-    }, [endpoint, queryClient]);
+    const invalidateQuery = React.useCallback(() => DigitalClient.invalidate(endpoint), [endpoint]);
 
     const entities: T[] = React.useMemo(() => (data?.value ?? []).map(EntityHelper.build<T>), [data]);
 

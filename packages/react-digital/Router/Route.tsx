@@ -12,7 +12,6 @@ export default function Route({ children, path, isPublic }: RouteProps) {
     const [token] = useJwt();
 
     React.useEffect(() => {
-        console.log('Route state: ', { isLogged: Boolean(token) }, isPublic);
         if (!token && !isPublic) {
             navigate(ROUTER_LOGIN);
         }

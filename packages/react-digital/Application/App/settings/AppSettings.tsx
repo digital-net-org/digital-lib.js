@@ -61,7 +61,7 @@ export default function AppSettings({ onLabelRender, views, ...props }: AppSetti
                         )}
                     </Panel>
                 </Dialog.Panel>
-                <Dialog.Content>{options[selected]}</Dialog.Content>
+                <Dialog.Content>{props.open ? options[selected] : null}</Dialog.Content>
             </Dialog>
         </React.Fragment>
     );

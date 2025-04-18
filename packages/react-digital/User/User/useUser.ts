@@ -1,8 +1,8 @@
 import React from 'react';
 import type { Result } from '@digital-lib/dto';
-import { useDigitalClient, useDigitalMutation } from '@digital-lib/react-digital-client';
+import { useDigitalMutation } from '@digital-lib/react-digital-client';
 import { useToaster } from '../../Toaster';
-import { getSelfUrl, UserContext } from './UserProvider';
+import { UserContext } from './UserProvider';
 import type { User } from './User';
 import useJwt from './useJwt';
 
@@ -11,14 +11,12 @@ const authApiUrl = `${CORE_API_URL}/authentication/user`;
 export default function useUser(): User {
     const { toast } = useToaster();
     const [token, setToken] = useJwt();
-    const { queryClient } = useDigitalClient();
     const { isLoading: isQuerying, refresh, ...user } = React.useContext(UserContext);
 
     const { mutate: login, isPending: loginLoading } = useDigitalMutation(`${authApiUrl}/login`, {
         onSuccess: async ({ value }: Result<string>) => {
             setToken(value);
             toast('user:auth.success');
-            await queryClient.invalidateQueries({ queryKey: [getSelfUrl], refetchType: 'all' });
         },
         onError: () => toast('user:auth.error', 'error'),
         withCredentials: true,

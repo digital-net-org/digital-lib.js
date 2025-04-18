@@ -1,6 +1,6 @@
 import React from 'react';
 import { type EntityRaw, type Result, type UserModel, EntityHelper } from '@digital-lib/dto';
-import { useDigitalQuery } from '@digital-lib/react-digital-client';
+import { DigitalClient, useDigitalQuery } from '@digital-lib/react-digital-client';
 import { useToaster } from '../../Toaster';
 import useJwt from './useJwt';
 
@@ -14,7 +14,7 @@ export const UserContext = React.createContext<UserContextState>({
     refresh: () => void 0,
 });
 
-export const getSelfUrl = `${CORE_API_URL}/user/self`;
+const getSelfUrl = `${CORE_API_URL}/user/self`;
 
 export default function UserProvider({ children }: React.PropsWithChildren) {
     const { toast } = useToaster();
@@ -31,6 +31,8 @@ export default function UserProvider({ children }: React.PropsWithChildren) {
         () => (userData?.value ? EntityHelper.build<UserModel>(userData.value) : undefined),
         [userData]
     );
+
+    React.useEffect(() => (token !== undefined ? DigitalClient.invalidate(getSelfUrl) : void 0), [token]);
 
     return <UserContext.Provider value={{ isLoading, refresh, ...user }}>{children}</UserContext.Provider>;
 }

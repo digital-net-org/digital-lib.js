@@ -2,17 +2,16 @@ import { useMutation } from '@tanstack/react-query';
 import { type AxiosError } from 'axios';
 import { type MutationConfig, type MutationPayload } from './types';
 import { skipRefreshHeader } from './config';
-import useDigitalClient from './useDigitalClient';
+import DigitalClient from './DigitalClient';
 
 export default function useDigitalMutation<T, P = object, E = unknown>(
     key: ((payload: P) => string) | string,
     { method, retry, onError, onSuccess, skipRefresh, ...options }: MutationConfig<T, E>
 ) {
-    const { axiosInstance } = useDigitalClient();
     const mutation = useMutation<T, AxiosError<E, any>, MutationPayload<P>>({
         mutationFn: async payload => {
             const url = key instanceof Function && payload.params ? key(payload.params) : (key as string);
-            const { data, status } = await axiosInstance.request<T>({
+            const { data, status } = await DigitalClient.request<T>({
                 method: method ?? 'POST',
                 url,
                 data: payload.patch ?? payload.body ?? {},
