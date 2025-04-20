@@ -1,4 +1,4 @@
-import { type Namespace } from '../../../react-digital';
+import { type Namespace } from '@digital-lib/react-digital';
 
 export default {
     namespace: 'ui-form',

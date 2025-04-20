@@ -1,3 +1,4 @@
+export * from './InputFile';
 export * from './InputNav';
 export * from './InputNavButton';
 export * from './InputSelect';

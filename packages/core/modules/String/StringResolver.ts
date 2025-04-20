@@ -22,4 +22,18 @@ export default class StringResolver {
         console.warn(`StringResolver.toCamelCase(), Could not convert string to camel case: ${str}`);
         return str;
     }
+
+    /**
+     * Truncate a string that exceeds the provided length
+     */
+    public static truncateWithEllipsis(input: string, maxLength: number): string {
+        const ellipsis = '...';
+        if (input.length <= maxLength) {
+            return input;
+        }
+        if (maxLength - 3 < 3) {
+            return ellipsis;
+        }
+        return input.slice(0, maxLength - 3) + ellipsis;
+    }
 }

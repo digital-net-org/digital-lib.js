@@ -1,0 +1,44 @@
+.DigitalUi-InputFile {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--spacing-1);
+    user-select: none;
+
+    .DigitalUi-InputFile-input {
+        display: none;
+    }
+
+    .DigitalUi-InputFile-label {
+        width: 100%;
+        padding: calc(var(--spacing-1) * 1) 0;
+        cursor: pointer;
+
+        &:hover {
+            .DigitalUi-Text {
+                color: var(--palette-primary-light);
+                transition: 0.2s;
+            }
+        }
+    }
+}
+
+.DigitalUi-InputFile-disabled, .DigitalUi-InputFile-loading {
+    & .DigitalUi-Text {
+        color: var(--palette-text-disabled);
+    }
+    & .DigitalUi-InputFile-label {
+        cursor: default;
+        &:hover {
+            .DigitalUi-Text {
+                color: var(--palette-text-disabled);
+            }
+        }
+    }
+    & .DigitalUi-Loader {
+        margin-right: .35rem;
+        margin-bottom: .35rem;
+    }
+}

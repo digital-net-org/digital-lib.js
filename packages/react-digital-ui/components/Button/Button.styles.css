@@ -159,8 +159,13 @@
         background-color: var(--button-prime-color);
     }
 
-    &.DigitalUi-Button-disabled svg {
-        fill: var(--palette-text-disabled);
+    &.DigitalUi-Button-disabled {
+        background-color: var(--palette-background-disabled);
+        border-color: var(--palette-background-disabled);
+        color: var(--palette-text-disabled);
+        svg {
+            fill: var(--palette-text-disabled);
+        }
     }
 }
 

@@ -1,10 +1,11 @@
 import React from 'react';
 import { Property, useClassName } from '../../../core';
-import type { SafariNodeWithChildren } from '../types';
+import type { SafariNode } from '../types';
 import './Text.styles.css';
 import { Box } from '@digital-lib/react-digital-ui';
 
-export interface TextProps extends SafariNodeWithChildren {
+export interface TextProps extends SafariNode {
+    children: any;
     bold?: boolean;
     light?: boolean;
     italic?: boolean;
@@ -26,7 +27,9 @@ export default function Text({ children, ...props }: TextProps) {
     }, [props.variant]);
 
     if (props.variant === 'JSON') {
-        return <pre className={className}>{JSON.stringify(children, null, 2)}</pre>;
+        return (
+            <pre className={className}>{children === undefined ? 'undefined' : JSON.stringify(children, null, 2)}</pre>
+        );
     }
 
     if (props.variant === 'section-title') {

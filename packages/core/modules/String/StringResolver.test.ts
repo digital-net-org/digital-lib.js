@@ -18,3 +18,14 @@ test('StringResolver.toCamelCase(), Should transform string in camel case', () =
         { test: 'SOME_TEST', result: 'someTest' },
     ].forEach(({ test, result }) => expect(StringResolver.toCamelCase(test)).toBe(result));
 });
+
+test('StringResolver.truncateString(), Should truncate the string and add "..." when exceeding max length', () => {
+    [
+        { test: { input: 'Too long sry lol!', maxLength: 6 }, result: 'Too...' },
+        { test: { input: 'Short', maxLength: 20 }, result: 'Short' },
+        { test: { input: 'lol', maxLength: 1 }, result: '...' },
+    ].forEach(({ test, result }) => {
+        const { input, maxLength } = test;
+        expect(StringResolver.truncateWithEllipsis(input, maxLength)).toBe(result);
+    });
+});

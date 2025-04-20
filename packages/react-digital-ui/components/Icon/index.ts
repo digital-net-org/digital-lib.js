@@ -1,6 +1,7 @@
 import Component from './BaseIcon';
 import { AccountIcon } from './icons/AccountIcon';
 import { AddIcon } from './icons/AddIcon';
+import { AddFileIcon } from './icons/AddFileIcon';
 import { ArrowIcon } from './icons/ArrowIcon';
 import { Asterisk } from './icons/Asterisk';
 import { BoxIcon } from './icons/BoxIcon';
@@ -40,6 +41,7 @@ export type { IconProps } from './BaseIcon';
 export const Icon = Object.assign(Component, {
     AccountIcon,
     AddIcon,
+    AddFileIcon,
     ArrowIcon,
     Asterisk,
     BoxIcon,
