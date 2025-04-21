@@ -8,7 +8,13 @@ export interface TableHeadProps<T extends Entity> extends Omit<TableProps<T>, 'c
     columns: Array<keyof T>;
 }
 
-export default function TableHead<T extends Entity>({ columns, renderHeader, onCreate }: TableHeadProps<T>) {
+export default function TableHead<T extends Entity>({
+    columns,
+    renderHeader,
+    onCreate,
+    loading,
+    disabled,
+}: TableHeadProps<T>) {
     const className = `${tableClassName}-Header-Cell`;
     return (
         <thead>
@@ -23,7 +29,12 @@ export default function TableHead<T extends Entity>({ columns, renderHeader, onC
                 {onCreate !== undefined && (
                     <th className={className}>
                         <Box className={`${tableClassName}-Create`} fullWidth align="end">
-                            <IconButton icon="AddIcon" onClick={onCreate} variant="icon-filled" />
+                            <IconButton
+                                icon="AddIcon"
+                                onClick={onCreate}
+                                variant="icon-filled"
+                                disabled={disabled || loading}
+                            />
                         </Box>
                     </th>
                 )}

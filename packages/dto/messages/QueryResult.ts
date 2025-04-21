@@ -1,6 +1,6 @@
 import { type Result } from './Result';
 
-export interface QueryResult<T> extends Result<Array<T>> {
+export interface Pagination {
     count: number;
     end: boolean;
     index: number;
@@ -8,3 +8,5 @@ export interface QueryResult<T> extends Result<Array<T>> {
     size: number;
     total: number;
 }
+
+export interface QueryResult<T> extends Result<Array<T>>, Pagination {}

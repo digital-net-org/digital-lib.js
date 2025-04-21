@@ -14,6 +14,7 @@ export default function TableRow<T extends Entity>({
     entity,
     onEdit,
     onDelete,
+    onCreate: _,
     renderRow,
     columns,
     ...props
@@ -32,7 +33,14 @@ export default function TableRow<T extends Entity>({
                         { cb: onDelete, critical: true, icon: 'TrashIcon' as const },
                     ].map(({ cb, ...action }) =>
                         cb !== undefined ? (
-                            <IconButton onClick={() => cb(entity.id)} variant="icon-filled" {...action} {...props} />
+                            <React.Fragment key={String(action.icon)}>
+                                <IconButton
+                                    onClick={() => cb(entity.id)}
+                                    variant="icon-filled"
+                                    {...action}
+                                    {...props}
+                                />
+                            </React.Fragment>
                         ) : null
                     )}
                 </Box>

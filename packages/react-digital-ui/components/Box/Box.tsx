@@ -1,5 +1,5 @@
 import React from 'react';
-import { useProps, useClassName } from '@digital-lib/core';
+import { useClassName } from '@digital-lib/core';
 import type { SafariNodeWithChildren } from '../types';
 import './Box.styles.css';
 

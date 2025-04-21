@@ -31,21 +31,23 @@ export default function Table<T extends Entity>({ loading, entities, columns, re
 
     return (
         <Box fullWidth fullHeight overflow="auto">
-            {(isEmpty || loading) && (
-                <Box fullWidth mt={3} align="center" justify="center">
-                    {isEmpty && <Text>{renderEmpty?.()}</Text>}
-                    {loading && <Loader size="large" />}
-                </Box>
-            )}
-            {!loading && !isEmpty && (
-                <table className={tableClassName}>
-                    <TableHead columns={columns ?? []} {...props} />
+            <table className={tableClassName}>
+                <TableHead columns={columns ?? []} loading={loading} {...props} />
+                {!loading && !isEmpty && (
                     <tbody className={`${tableClassName}-Body`}>
                         {entities.map(entity => (
-                            <TableRow entity={entity} columns={columns ?? []} {...props} />
+                            <React.Fragment key={entity.id}>
+                                <TableRow entity={entity} columns={columns ?? []} {...props} />
+                            </React.Fragment>
                         ))}
                     </tbody>
-                </table>
+                )}
+            </table>
+            {(isEmpty || loading) && (
+                <Box fullWidth fullHeight align="center" justify="center">
+                    {isEmpty && <Text>{renderEmpty?.()}</Text>}
+                    {loading && <Loader size="medium" />}
+                </Box>
             )}
         </Box>
     );
