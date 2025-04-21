@@ -17,18 +17,20 @@ export default function InputNav({ options, textDirection, onRender, onSelect, v
 
     return (
         <Box {...boxProps} className={className}>
-            {options.map(str => (
-                <Button
-                    key={str}
-                    variant="text"
-                    selected={str === value}
-                    align={textDirection ?? 'left'}
-                    onClick={() => (str !== value ? onSelect?.(str) : void 0)}
-                    fullWidth
-                >
-                    {onRender?.(str) ?? str}
-                </Button>
-            ))}
+            {options.map(str =>
+                str ? (
+                    <Button
+                        key={str}
+                        variant="text"
+                        selected={str === value}
+                        align={textDirection ?? 'left'}
+                        onClick={() => (str !== value ? onSelect?.(str) : void 0)}
+                        fullWidth
+                    >
+                        {onRender?.(str) ?? str}
+                    </Button>
+                ) : null
+            )}
         </Box>
     );
 }

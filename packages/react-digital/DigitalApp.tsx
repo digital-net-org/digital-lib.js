@@ -11,6 +11,7 @@ import { ToasterProvider } from './Toaster';
 import '@digital-lib/react-digital-ui/digital.net.defaults.css';
 
 interface DigitalConfig {
+    strictMode?: boolean;
     idbConfig: IDbConfig;
     router?: RouterProps['router'];
 }
@@ -26,30 +27,32 @@ export default class DigitalApp {
      * @param config.idbConfig - Indexed database configuration object
      * @param config.router - Application additional routes
      */
-    public static create(renderLayout: RouterProps['renderLayout'], { idbConfig, router }: DigitalConfig) {
+    public static create(renderLayout: RouterProps['renderLayout'], { strictMode, idbConfig, router }: DigitalConfig) {
         const appRoot = document.getElementById(APP_ROOT);
         if (appRoot === null) {
             throw new Error("ReactDigital: Root element not found. Please add a 'root' id to the root element");
         }
 
         return ReactDOM.createRoot(appRoot).render(
-            <React.StrictMode>
-                <ErrorBoundary>
-                    <LocalizationMiddleware />
-                    <ToasterProvider>
-                        <DigitalIdbProvider {...idbConfig}>
-                            <DigitalClientProvider>
-                                <AuthMiddleware />
-                                <UserProvider>
-                                    <ThemeProvider>
-                                        <Router renderLayout={renderLayout} router={router ?? []} />
-                                    </ThemeProvider>
-                                </UserProvider>
-                            </DigitalClientProvider>
-                        </DigitalIdbProvider>
-                    </ToasterProvider>
-                </ErrorBoundary>
-            </React.StrictMode>
+            React.createElement(strictMode ? React.StrictMode : React.Fragment, {
+                children: (
+                    <ErrorBoundary>
+                        <LocalizationMiddleware />
+                        <ToasterProvider>
+                            <DigitalIdbProvider {...idbConfig}>
+                                <DigitalClientProvider>
+                                    <AuthMiddleware />
+                                    <UserProvider>
+                                        <ThemeProvider>
+                                            <Router renderLayout={renderLayout} router={router ?? []} />
+                                        </ThemeProvider>
+                                    </UserProvider>
+                                </DigitalClientProvider>
+                            </DigitalIdbProvider>
+                        </ToasterProvider>
+                    </ErrorBoundary>
+                ),
+            })
         );
     }
 }

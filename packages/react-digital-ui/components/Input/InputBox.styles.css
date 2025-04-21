@@ -10,8 +10,11 @@
     border: 1px solid var(--palette-border);
     border-radius: var(--spacing-radius-1);
     background-color: var(--palette-paper);
-    color: var(--palette-text);
     padding: var(--input-padding);
+
+    & input, label {
+        color: var(--palette-text);
+    }
 
     &.DigitalUi-InputBox-fullWidth {
         width: 100%;
