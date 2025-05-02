@@ -23,7 +23,7 @@ export default function PopOver({ children, anchor, open, onOpen, onClose, ...pr
     const backgroundRef = React.useRef(null);
 
     useOnOpen(open, anchor, onOpen);
-    useAnchor(anchor, placeHolderRef.current, dialogRef.current, { ...props });
+    useAnchor(anchor, placeHolderRef.current, dialogRef.current, backgroundRef.current, { ...props });
 
     return (
         <React.Fragment>

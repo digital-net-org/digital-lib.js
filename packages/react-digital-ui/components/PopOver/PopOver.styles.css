@@ -1,10 +1,11 @@
 .DigitalUi-PopOver {
-    z-index: 1001;
+    position: fixed;
+    z-index: 1011;
     margin: unset;
-    padding: 0.75rem .75rem;
+    padding: 0.75rem 0.75rem;
     box-sizing: border-box;
     box-shadow: 0 2px 4px 0 var(--palette-shadow);
-    border: none;
+    border: solid 1px var(--palette-border);
     border-radius: var(--spacing-radius-1);
     background-color: var(--palette-paper);
     /*animation: grow 0.2s ease;*/
@@ -12,7 +13,7 @@
 
 .DigitalUi-PopOver-background {
     position: fixed;
-    z-index: 1000;
+    z-index: 1010;
     top: 0;
     left: 0;
     bottom: 0;

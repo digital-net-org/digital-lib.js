@@ -16,7 +16,7 @@ export const StateTests: Story = {
     decorators: () => {
         const [value, setValue] = React.useState<string>();
         return (
-            <Box gap={2}>
+            <Box gap={2} m={2}>
                 <InputText type="text" onChange={setValue} value={value} />
                 <Box>
                     State content:
@@ -37,6 +37,11 @@ export const StateTests: Story = {
 };
 
 export const Primary: Story = {
+    decorators: Story => (
+        <Box m={2}>
+            <Story />
+        </Box>
+    ),
     argTypes: {
         pattern: { control: 'select', options: ['[a-zA-Z0-9]+', '[0-9]+'] },
         type: { control: 'radio', options: ['text', 'password', 'email'] },
@@ -45,6 +50,8 @@ export const Primary: Story = {
         disabled: { control: 'boolean' },
         fullWidth: { control: 'boolean' },
         borderless: { control: 'boolean' },
+        label: { control: 'text' },
+        help: { control: 'text' },
     },
     args: {
         type: 'text',
@@ -54,5 +61,7 @@ export const Primary: Story = {
         disabled: false,
         fullWidth: false,
         borderless: false,
+        label: '',
+        help: '',
     },
 };

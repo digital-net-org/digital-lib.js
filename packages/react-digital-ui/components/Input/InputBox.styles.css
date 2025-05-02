@@ -12,7 +12,8 @@
     background-color: var(--palette-paper);
     padding: var(--input-padding);
 
-    & input, label {
+    & input,
+    label {
         color: var(--palette-text);
     }
 
@@ -38,7 +39,8 @@
     &.DigitalUi-InputBox-loading {
         outline: none;
 
-        & input, select {
+        & input,
+        select {
             color: var(--palette-text-disabled);
             caret-color: transparent;
             cursor: default;
@@ -63,9 +65,29 @@
     }
 }
 
+.DigitalUi-Input-help {
+    width: 200px;
+}
+
 .DigitalUi-Input-label {
     position: absolute;
+    display: flex;
+    flex-direction: row;
     top: -1.1rem;
     left: 0;
-    font-size: 0.7rem;
+    gap: 4px;
+
+    & .DigitalUi-Input-label-text {
+        font-size: 0.7rem;
+    }
+
+    & .DigitalUi-Input-label-help {
+        cursor: pointer;
+        & svg {
+            position: absolute;
+            transform: scale(0.9);
+            top: -0.1rem;
+            fill: var(--palette-primary);
+        }
+    }
 }

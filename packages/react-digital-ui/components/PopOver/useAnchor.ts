@@ -1,11 +1,14 @@
 import React from 'react';
-import { useElement, useWindow } from '../../../core';
+import { useElement, useWindow } from '@digital-lib/core';
 import { type PopOverProps } from './PopOver';
 
+type Element = HTMLElement | null;
+
 export function useAnchor(
-    anchor: HTMLElement | null,
-    placeholder: HTMLElement | null,
-    dialog: HTMLElement | null,
+    anchor: Element,
+    placeholder: Element,
+    dialog: Element,
+    background: Element,
     options?: {
         direction?: PopOverProps['direction'];
         includeAnchor?: PopOverProps['includeAnchor'];
@@ -14,6 +17,7 @@ export function useAnchor(
     const windowState = useWindow();
     const anchorState = useElement(anchor);
     const dialogState = useElement(dialog);
+    const backgroundState = useElement(background);
     const placeholderState = useElement(placeholder);
 
     React.useEffect(() => {
@@ -32,11 +36,12 @@ export function useAnchor(
             left: !options?.direction || options?.direction === 'left' ? `${anchorState.left}px` : 'unset',
             right: options?.direction === 'right' ? `${windowState.width - anchorState.right}px` : 'unset',
         });
-    }, [anchorState, dialogState, windowState, options]);
+    }, [anchorState, dialogState, backgroundState, windowState, options]);
 
     React.useLayoutEffect(() => {
         if (!options?.includeAnchor) return;
         dialogState.mutateStyle({
+            zIndex: `${anchorState.zIndex - 1}`,
             top: `${anchorState.top - dialogState.padding.top}px`,
             left:
                 !options?.direction || options?.direction === 'left'
@@ -47,5 +52,8 @@ export function useAnchor(
                     ? `${anchorState.right - (anchorState.width + dialogState.padding.right)}px`
                     : `${windowState.width - anchorState.right - dialogState.padding.right}px`,
         });
-    }, [anchorState, dialogState, options, windowState]);
+        backgroundState.mutateStyle({
+            zIndex: `${anchorState.zIndex - 2}`,
+        });
+    }, [anchorState, dialogState, backgroundState, windowState, options]);
 }
