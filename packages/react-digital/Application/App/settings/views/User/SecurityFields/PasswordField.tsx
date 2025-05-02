@@ -39,6 +39,9 @@ export default function PasswordField() {
                         value={newPassword}
                         onChange={setNewPassword}
                         label={Localization.translate('app:settings.user.account.form.security.password.label')}
+                        help={Localization.translate('app:settings.user.account.form.security.password.pattern', {
+                            symboles: allowedSymboles,
+                        })}
                         pattern={pattern}
                         disabled={!isEditing}
                         required
@@ -53,24 +56,17 @@ export default function PasswordField() {
                     )}
                 </Box>
                 {isEditing && (
-                    <React.Fragment>
-                        <InputText
-                            type="password"
-                            value={confirmPassword}
-                            onChange={setConfirmPassword}
-                            label={Localization.translate(
-                                'app:settings.user.account.form.security.password.labelConfirm'
-                            )}
-                            pattern={newPassword}
-                            disableAdornment
-                            required
-                        />
-                        <Text className="DigitalUi-AppSettings-Password-Tip" variant="span" size="xsmall" italic>
-                            {Localization.translate('app:settings.user.account.form.security.password.pattern', {
-                                symboles: allowedSymboles,
-                            })}
-                        </Text>
-                    </React.Fragment>
+                    <InputText
+                        value={confirmPassword}
+                        onChange={setConfirmPassword}
+                        label={Localization.translate('app:settings.user.account.form.security.password.labelConfirm')}
+                        help={Localization.translate('app:settings.user.account.form.security.password.pattern', {
+                            symboles: allowedSymboles,
+                        })}
+                        pattern={newPassword}
+                        disableAdornment
+                        required
+                    />
                 )}
             </Form>
         </React.Fragment>

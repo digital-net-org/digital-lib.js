@@ -6,7 +6,7 @@ import { IconButton } from '../../Button';
 import { Box } from '../../Box';
 import { Text } from '../../Text';
 import { Loader } from '../../Loader';
-import type { SafariInputNode } from '../types';
+import type { InputCustomError, SafariInputNode } from '../types';
 import type { MimeType } from './types';
 import InputBox from '../InputBox';
 import './InputFile.styles.css';
@@ -22,6 +22,7 @@ const baseClassName = 'DigitalUi-InputFile';
 
 export default function InputFile({ className, name, label, value, onChange, ...props }: InputFileProps) {
     const resolvedClassName = useClassName(props, baseClassName);
+    const [error, setError] = React.useState<InputCustomError>();
     const ref = React.useRef<HTMLInputElement>(null);
 
     React.useEffect(() => {
@@ -39,6 +40,11 @@ export default function InputFile({ className, name, label, value, onChange, ...
         ref.current.files = data.files;
     }, [value]);
 
+    React.useEffect(
+        () => (error && error !== 'GENERIC_ERROR' ? ref.current?.setCustomValidity(error) : void 0),
+        [error]
+    );
+
     const resolvedFileName = React.useMemo(() => {
         const name = value?.[0]?.name;
         if (!name) {
@@ -46,17 +52,6 @@ export default function InputFile({ className, name, label, value, onChange, ...
         }
         return StringResolver.truncateWithEllipsis(name, 28);
     }, [value]);
-
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        if (props.loading || props.disabled) {
-            return;
-        }
-        const resolved: Array<File> = [];
-        for (const file of e.target.files ?? []) {
-            resolved.push(file);
-        }
-        onChange(resolved.length > 0 ? resolved : undefined);
-    };
 
     const handleClick = (e: React.MouseEvent<HTMLElement>) => {
         e.preventDefault();
@@ -73,8 +68,33 @@ export default function InputFile({ className, name, label, value, onChange, ...
         onChange(undefined);
     };
 
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (props.loading || props.disabled) {
+            return;
+        }
+
+        const resolved: Array<File> = [];
+        for (const file of e.target.files ?? []) {
+            if (props.accept && !props.accept.includes(file.type as MimeType)) {
+                console.log(props.accept, file.type);
+                setError('MIME_TYPE');
+            } else {
+                setError(undefined);
+            }
+            resolved.push(file);
+        }
+        onChange(resolved.length > 0 ? resolved : undefined);
+        return resolved;
+    };
+
     return (
-        <InputBox id={props.id} className={baseClassName + className ? ` ${className}` : ''} label={label} {...props}>
+        <InputBox
+            id={props.id}
+            className={baseClassName + className ? ` ${className}` : ''}
+            label={label}
+            error={props.disabled ? false : Boolean(error)}
+            {...props}
+        >
             <div className={resolvedClassName}>
                 <label className={`${baseClassName}-label`} htmlFor={name} onClick={handleClick}>
                     <Text size="small">{resolvedFileName}</Text>
@@ -84,19 +104,28 @@ export default function InputFile({ className, name, label, value, onChange, ...
                     ref={ref}
                     type="file"
                     name={name}
-                    onChange={handleChange}
                     disabled={props.disabled || props.loading}
                     multiple={props.multiple}
                     required={props.required}
+                    accept={props.accept?.join(',')}
+                    onChange={handleChange}
+                    onError={() => setError('GENERIC_ERROR')}
+                    onInvalid={() => setError('GENERIC_ERROR')}
                 />
                 {props.loading ? (
                     <Loader size="small" />
                 ) : (
                     <Box direction="row" align="center" gap={1}>
                         {(value?.length ?? 0) > 0 ? (
-                            <IconButton variant="icon-filled" icon="CloseIcon" onClick={handleDelete} critical />
+                            <IconButton
+                                variant="icon-filled"
+                                icon="CloseIcon"
+                                onClick={handleDelete}
+                                type="button"
+                                critical
+                            />
                         ) : null}
-                        <IconButton variant="icon-filled" icon="AddFileIcon" onClick={handleClick} />
+                        <IconButton variant="icon-filled" icon="AddFileIcon" onClick={handleClick} type="button" />
                     </Box>
                 )}
             </div>

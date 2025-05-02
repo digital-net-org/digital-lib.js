@@ -5,16 +5,15 @@
     & .DigitalUi-Dialog-wrapper {
         height: 100%;
     }
+    & .DigitalUi-Dialog-content {
+        height: 100%;
+    }
 }
 
 .DigitalUi-AppSettings-NavSection {
     user-select: none;
     color: var(--palette-text-disabled);
     font-weight: var(--font-weight-bold);
-}
-
-.DigitalUi-AppSettings-Password-Tip {
-    max-width: 250px;
 }
 
 .AppVersion {

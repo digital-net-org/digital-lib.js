@@ -1,5 +1,7 @@
 import type { SafariNode } from '../types';
 
+export type InputCustomError = 'GENERIC_ERROR' | 'MIME_TYPE';
+
 export interface BaseInputProps {
     required?: boolean | undefined;
     requiredMessage?: string;

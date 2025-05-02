@@ -3,11 +3,14 @@ import { useClassName } from '@digital-lib/core';
 import { Localization } from '../../../react-digital/Localization';
 import { type SafariNode } from '../types';
 import { type BoxProps, Box } from '../Box';
+import type { InputCustomError } from '../Input/types';
 
 export interface FormProps extends SafariNode, Omit<BoxProps, 'onSubmit'> {
     label?: string;
     onSubmit?: (e: React.FormEvent) => void;
 }
+
+const getInputs = (ref: React.RefObject<HTMLFormElement>) => ref.current?.getElementsByTagName('input');
 
 export default function Form({
     children,
@@ -20,23 +23,25 @@ export default function Form({
     const className = useClassName({}, propsClassName);
 
     const handleError = () => {
-        const inputs = formRef.current?.getElementsByTagName('input');
+        const inputs = getInputs(formRef);
         for (let i = 0; i < (inputs?.length ?? 0); i++) {
-            let key: string | undefined;
-            const input = inputs?.[i];
+            const input = inputs?.[i] as HTMLInputElement & { validationMessage: InputCustomError };
+            let errorKey: string | undefined;
+
             if (!input || input.validity.valid) {
                 continue;
             }
             if (input.validity.valueMissing) {
-                key = 'required';
+                errorKey = 'required';
             }
             if (input.validity.patternMismatch) {
-                key = 'pattern';
+                errorKey = 'pattern';
             }
-            if (key) {
-                input.setCustomValidity(Localization.translate(`ui-form:validity.${key}`));
-                input.reportValidity();
-                break;
+            if (input.validity.customError && input.validationMessage === 'MIME_TYPE') {
+                errorKey = 'mimeType';
+            }
+            if (errorKey) {
+                input.setCustomValidity(Localization.translate(`ui-form:validity.${errorKey}`));
             }
         }
     };

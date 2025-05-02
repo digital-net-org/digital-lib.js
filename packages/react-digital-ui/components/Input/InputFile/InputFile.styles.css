@@ -8,7 +8,9 @@
     user-select: none;
 
     .DigitalUi-InputFile-input {
-        display: none;
+        position: absolute;
+        opacity: 0;
+        width: 0;
     }
 
     .DigitalUi-InputFile-label {
@@ -25,7 +27,8 @@
     }
 }
 
-.DigitalUi-InputFile-disabled, .DigitalUi-InputFile-loading {
+.DigitalUi-InputFile-disabled,
+.DigitalUi-InputFile-loading {
     & .DigitalUi-Text {
         color: var(--palette-text-disabled);
     }
@@ -38,7 +41,7 @@
         }
     }
     & .DigitalUi-Loader {
-        margin-right: .35rem;
-        margin-bottom: .35rem;
+        margin-right: 0.35rem;
+        margin-bottom: 0.35rem;
     }
 }
