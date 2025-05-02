@@ -30,5 +30,5 @@ export interface PatchOperation {
 }
 
 export type Method = 'POST' | 'PUT' | 'DELETE' | 'PATCH' | 'GET';
-export type ErrorCallback<E> = (error: E | any) => Promise<void> | void;
+export type ErrorCallback<E> = (error: { data: E | any; status: number }) => Promise<void> | void;
 export type SuccessCallback<T> = (data: T) => Promise<void> | void;

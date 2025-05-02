@@ -1,5 +1,4 @@
 import React from 'react';
-import { type AxiosError } from 'axios';
 import { useQuery } from '@tanstack/react-query';
 import { ObjectMatcher } from '../core';
 import { type QueryConfig } from './types';
@@ -12,7 +11,7 @@ export default function useDigitalQuery<T, E = unknown>(
         autoRefetch: true,
     }
 ) {
-    const { data: queryResult, ...response } = useQuery<T, AxiosError<E>>({
+    const { data: queryResult, ...response } = useQuery<T, E>({
         queryKey: key ? [key] : [],
         queryFn: async () => {
             if (!key) {
@@ -26,7 +25,7 @@ export default function useDigitalQuery<T, E = unknown>(
                 },
             });
             if (status >= 400) {
-                await onError?.(data);
+                await onError?.({ data, status });
             } else {
                 await onSuccess?.(data);
             }

@@ -1,5 +1,4 @@
 import { useMutation } from '@tanstack/react-query';
-import { type AxiosError } from 'axios';
 import { type MutationConfig, type MutationPayload } from './types';
 import { skipRefreshHeader } from './config';
 import DigitalClient from './DigitalClient';
@@ -8,7 +7,7 @@ export default function useDigitalMutation<T, P = object, E = unknown>(
     key: ((payload: P) => string) | string,
     { method, retry, onError, onSuccess, skipRefresh, ...options }: MutationConfig<T, E>
 ) {
-    const mutation = useMutation<T, AxiosError<E, any>, MutationPayload<P>>({
+    const mutation = useMutation<T, E | any, MutationPayload<P>>({
         mutationFn: async payload => {
             const url = key instanceof Function && payload.params ? key(payload.params) : (key as string);
             const { data, status } = await DigitalClient.request<T>({
@@ -22,7 +21,7 @@ export default function useDigitalMutation<T, P = object, E = unknown>(
                 ...options,
             });
             if (status >= 400) {
-                await onError?.(data);
+                await onError?.({ data, status });
             } else {
                 await onSuccess?.(data);
             }
