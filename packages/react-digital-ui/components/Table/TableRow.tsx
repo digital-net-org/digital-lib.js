@@ -23,7 +23,7 @@ export default function TableRow<T extends Entity>({
         <tr key={entity.id} className={`${tableClassName}-Body-Row`}>
             {columns.map(s => (
                 <td key={`${entity.id}_${String(s)}`} className={`${tableClassName}-Body-Cell`}>
-                    <Text>{renderRow?.(entity) ?? String(entity[s])}</Text>
+                    <Text>{renderRow?.(s, entity) ?? String(entity[s])}</Text>
                 </td>
             ))}
             <td className={`${tableClassName}-Body-Cell`}>

@@ -76,7 +76,6 @@ export default function InputFile({ className, name, label, value, onChange, ...
         const resolved: Array<File> = [];
         for (const file of e.target.files ?? []) {
             if (props.accept && !props.accept.includes(file.type as MimeType)) {
-                console.log(props.accept, file.type);
                 setError('MIME_TYPE');
             } else {
                 setError(undefined);

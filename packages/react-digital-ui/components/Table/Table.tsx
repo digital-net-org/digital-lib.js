@@ -9,7 +9,7 @@ import './Table.styles.css';
 
 export interface TableProps<T extends Entity> {
     entities: T[];
-    renderRow?: (row: T) => React.ReactNode;
+    renderRow?: (key: keyof T, row: T) => React.ReactNode;
     renderHeader?: (key: keyof T) => React.ReactNode;
     renderEmpty?: () => React.ReactNode;
     columns?: Array<keyof T>;
@@ -17,13 +17,21 @@ export interface TableProps<T extends Entity> {
     onEdit?: (id: T['id']) => void;
     onDelete?: (id: T['id']) => void;
     loading?: boolean;
+    loadingActions?: boolean;
     disabled?: boolean;
     pagination?: Pagination;
 }
 
 export const tableClassName = 'DigitalUi-Table';
 
-export default function Table<T extends Entity>({ loading, entities, columns, renderEmpty, ...props }: TableProps<T>) {
+export default function Table<T extends Entity>({
+    loading,
+    loadingActions,
+    entities,
+    columns,
+    renderEmpty,
+    ...props
+}: TableProps<T>) {
     const isEmpty = React.useMemo(
         () => !loading && !entities.length && renderEmpty,
         [entities.length, loading, renderEmpty]
@@ -37,14 +45,19 @@ export default function Table<T extends Entity>({ loading, entities, columns, re
                     <tbody className={`${tableClassName}-Body`}>
                         {entities.map(entity => (
                             <React.Fragment key={entity.id}>
-                                <TableRow entity={entity} columns={columns ?? []} {...props} />
+                                <TableRow
+                                    entity={entity}
+                                    columns={columns ?? []}
+                                    disabled={props.disabled || loadingActions}
+                                    {...props}
+                                />
                             </React.Fragment>
                         ))}
                     </tbody>
                 )}
             </table>
             {(isEmpty || loading) && (
-                <Box fullWidth fullHeight align="center" justify="center">
+                <Box className={`${tableClassName}-empty-content`} fullWidth align="center" justify="center">
                     {isEmpty && <Text>{renderEmpty?.()}</Text>}
                     {loading && <Loader size="medium" />}
                 </Box>

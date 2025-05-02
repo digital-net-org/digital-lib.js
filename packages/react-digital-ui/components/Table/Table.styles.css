@@ -6,17 +6,20 @@
     border-spacing: 0;
 }
 
+.DigitalUi-Table-empty-content {
+    margin-top: var(--spacing-3);
+}
+
 .DigitalUi-Table-Header-Cell {
     z-index: 1;
-    background-color: var(--palette-background);
     color: var(--palette-text);
-    border-bottom: 1px solid var(--palette-border);
+    /*border-bottom: 1px solid var(--palette-border);*/
     position: sticky;
     top: 0;
 }
 
 .DigitalUi-Table-Create {
-    padding-right: calc(var(--spacing-3) * 1.4);
+    /*padding-right: calc(var(--spacing-3) * 1.4);*/
 }
 
 .DigitalUi-Table-Header-Cell .DigitalUi-Text {

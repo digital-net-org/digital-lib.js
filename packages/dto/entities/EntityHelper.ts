@@ -1,3 +1,4 @@
+import { DateBuilder } from '@digital-lib/core';
 import type { Patch } from '../messages/Patch';
 import type { Entity } from './Entity';
 import type { EntityRaw } from './EntityRaw';
@@ -14,8 +15,8 @@ export default class EntityHelper {
     public static build<T extends Entity>(entity: EntityRaw): T {
         return {
             ...entity,
-            createdAt: new Date(entity.createdAt),
-            updatedAt: entity.updatedAt ? new Date(entity.updatedAt) : undefined,
+            createdAt: DateBuilder.build(entity.createdAt),
+            updatedAt: entity.updatedAt ? DateBuilder.build(entity.updatedAt) : undefined,
         } as T;
     }
 
