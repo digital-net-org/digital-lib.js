@@ -5,11 +5,11 @@ import type { ControlledHandler } from '../../types';
 import { IconButton } from '../../Button';
 import { Box } from '../../Box';
 import { Text } from '../../Text';
+import { Loader } from '../../Loader';
 import type { SafariInputNode } from '../types';
 import type { MimeType } from './types';
 import InputBox from '../InputBox';
 import './InputFile.styles.css';
-import { Loader } from '@digital-lib/react-digital-ui';
 
 export interface InputFileProps extends SafariInputNode {
     value: Array<File> | undefined;
@@ -40,7 +40,7 @@ export default function InputFile({ className, name, label, value, onChange, ...
     }, [value]);
 
     const resolvedFileName = React.useMemo(() => {
-        const name = value?.[0].name;
+        const name = value?.[0]?.name;
         if (!name) {
             return Localization.translate('ui-input:file.empty');
         }
@@ -58,7 +58,8 @@ export default function InputFile({ className, name, label, value, onChange, ...
         onChange(resolved.length > 0 ? resolved : undefined);
     };
 
-    const handleClick = () => {
+    const handleClick = (e: React.MouseEvent<HTMLElement>) => {
+        e.preventDefault();
         if (props.loading || props.disabled) {
             return;
         }
@@ -67,7 +68,10 @@ export default function InputFile({ className, name, label, value, onChange, ...
         }
     };
 
-    const handleDelete = () => onChange(undefined);
+    const handleDelete = (e: React.MouseEvent<HTMLElement>) => {
+        e.preventDefault();
+        onChange(undefined);
+    };
 
     return (
         <InputBox id={props.id} className={baseClassName + className ? ` ${className}` : ''} label={label} {...props}>
@@ -83,6 +87,7 @@ export default function InputFile({ className, name, label, value, onChange, ...
                     onChange={handleChange}
                     disabled={props.disabled || props.loading}
                     multiple={props.multiple}
+                    required={props.required}
                 />
                 {props.loading ? (
                     <Loader size="small" />
