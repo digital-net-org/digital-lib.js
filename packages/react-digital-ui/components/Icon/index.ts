@@ -3,6 +3,8 @@ import { AccountIcon } from './icons/AccountIcon';
 import { AddIcon } from './icons/AddIcon';
 import { AddFileIcon } from './icons/AddFileIcon';
 import { ArrowIcon } from './icons/ArrowIcon';
+import { ArrowThinIcon } from './icons/ArrowThinIcon';
+import { ArrowSquareIcon } from './icons/ArrowSquareIcon';
 import { Asterisk } from './icons/Asterisk';
 import { BoxIcon } from './icons/BoxIcon';
 import { CheckIcon } from './icons/CheckIcon';
@@ -43,6 +45,8 @@ export const Icon = Object.assign(Component, {
     AddIcon,
     AddFileIcon,
     ArrowIcon,
+    ArrowThinIcon,
+    ArrowSquareIcon,
     Asterisk,
     BoxIcon,
     CheckIcon,
