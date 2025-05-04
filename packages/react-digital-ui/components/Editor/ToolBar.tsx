@@ -1,7 +1,6 @@
 import React from 'react';
-import type { ValueOf } from '../../../core';
-import { useClassName } from '../../../core';
-import { Box, Button, type Icon } from '../../../react-digital-ui';
+import { useClassName, type ValueOf } from '@digital-lib/core';
+import { Box, Button, type Icon } from '@digital-lib/react-digital-ui';
 
 export interface ToolBarProps {
     tools?: Array<{

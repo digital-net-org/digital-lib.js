@@ -10,7 +10,7 @@ export interface FormProps extends SafariNode, Omit<BoxProps, 'onSubmit'> {
     onSubmit?: (e: React.FormEvent) => void;
 }
 
-const getInputs = (ref: React.RefObject<HTMLFormElement>) => ref.current?.getElementsByTagName('input');
+const getInputs = (ref: React.RefObject<HTMLFormElement | null>) => ref.current?.getElementsByTagName('input');
 
 export default function Form({
     children,

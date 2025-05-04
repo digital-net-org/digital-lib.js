@@ -5,7 +5,7 @@ export default function useChildren(children: React.ReactNode) {
         (type: React.ElementType, id?: string | null) =>
             React.Children.toArray(children).find(
                 c =>
-                    React.isValidElement(c) &&
+                    React.isValidElement<{ id?: string | undefined }>(c) &&
                     c.type === type &&
                     (id === undefined || id === null || (id && c.props.id === id))
             ),

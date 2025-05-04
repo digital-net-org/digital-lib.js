@@ -2,7 +2,9 @@ import React from 'react';
 import useElementSpacing from './useElementSpacing';
 import useElementPosition from './useElementPosition';
 
-export default function useElement<T extends HTMLElement>(element: React.RefObject<T> | HTMLElement | string | null) {
+export default function useElement<T extends HTMLElement>(
+    element: React.RefObject<T | null> | HTMLElement | string | null
+) {
     const [state, setState] = React.useState<T | null>(null);
 
     React.useLayoutEffect(() => {

@@ -12,7 +12,11 @@ export default class Property {
         const mapChild = (child: React.ReactNode): React.ReactNode => {
             if (!React.isValidElement(child)) return child;
             return child.type === React.Fragment
-                ? React.cloneElement(child, { key: child.key }, React.Children.map(child.props.children, mapChild))
+                ? React.cloneElement(
+                      child,
+                      { key: child.key },
+                      React.Children.map((child as any).props.children, mapChild)
+                  )
                 : React.cloneElement(child, { ...properties, key: child.key });
         };
         return React.Children.map(children, mapChild);
