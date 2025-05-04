@@ -14,7 +14,7 @@ export const RouterContext = React.createContext<Omit<RouterProps, 'renderLayout
     router: [],
 });
 
-export default function Router({ renderLayout, router }: RouterProps) {
+export function Router({ renderLayout, router }: RouterProps) {
     const resolved = React.useMemo(() => [...router, ...RouterBuilder.build(), ...DefaultRouter], [router]);
     return (
         <RouterContext.Provider value={{ router: resolved }}>
@@ -29,6 +29,9 @@ export default function Router({ renderLayout, router }: RouterProps) {
                         ),
                     }))
                 )}
+                future={{
+                    v7_startTransition: true,
+                }}
             />
         </RouterContext.Provider>
     );
