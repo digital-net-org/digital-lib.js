@@ -7,6 +7,8 @@ export default {
             unhandled: 'Une erreur est survenue',
         },
         actions: {
+            confirm: 'Confirmer',
+            import: 'Importer',
             validate: 'Valider',
             save: 'Enregistrer',
             cancel: 'Annuler',
@@ -17,12 +19,17 @@ export default {
                 logout: 'Déconnexion',
             },
         },
+        state: {
+            modified: 'Modifié',
+        },
     },
     en: {
         errors: {
             unhandled: 'Something went wrong',
         },
         actions: {
+            confirm: 'Confirm',
+            import: 'Import',
             validate: 'Confirm',
             save: 'Save',
             cancel: 'Cancel',
@@ -32,6 +39,9 @@ export default {
                 login: 'Login',
                 logout: 'Logout',
             },
+        },
+        state: {
+            modified: 'Modified',
         },
     },
 } satisfies Namespace;
