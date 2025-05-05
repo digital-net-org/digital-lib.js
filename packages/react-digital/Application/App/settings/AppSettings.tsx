@@ -12,7 +12,7 @@ export interface AppSettingsProps {
     onLabelRender?: (key: string) => string;
 }
 
-const defaultViews = {
+export function AppSettings({ onLabelRender, views, ...props }: AppSettingsProps) {
     account: <UserView />,
     preferences: <PreferencesView />,
 };

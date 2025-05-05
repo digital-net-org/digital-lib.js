@@ -2,7 +2,7 @@ import React from 'react';
 import { Box, Text } from '@digital-lib/react-digital-ui';
 import { Localization } from '../../../../../../Localization';
 
-export default function SecurityFields({ children }: React.PropsWithChildren) {
+export function SecurityFields({ children }: React.PropsWithChildren) {
     return (
         <Box gap={2} fullWidth>
             <Text variant="section-title">

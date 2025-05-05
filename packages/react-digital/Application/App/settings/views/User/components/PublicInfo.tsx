@@ -2,7 +2,7 @@ import { Avatar, Box, InputText } from '@digital-lib/react-digital-ui';
 import { Localization } from '../../../../../../Localization';
 import { useUser } from '../../../../../../User';
 
-export default function PublicInfo() {
+export function PublicInfo() {
     const { username } = useUser();
     return (
         <Box direction="row" gap={2}>

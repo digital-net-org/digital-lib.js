@@ -1,7 +1,7 @@
 import { Box, InputSelect } from '@digital-lib/react-digital-ui';
 import { Localization, useLocalization } from '../../../../../Localization';
 
-export default function PreferencesView() {
+export function PreferencesView() {
     const { currentLanguage, setLanguage } = useLocalization();
     return (
         <Box gap={2}>

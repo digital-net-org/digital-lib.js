@@ -11,7 +11,7 @@ interface SubmitDialogProps {
     open: boolean;
 }
 
-export default function SubmitDialog({ open, payload, onCancel }: SubmitDialogProps) {
+export function SubmitDialog({ open, payload, onCancel }: SubmitDialogProps) {
     const { toast } = useToaster();
     const { id } = useUser();
     const [currentPassword, setCurrentPassword] = React.useState<string | undefined>();

@@ -1,8 +1,8 @@
-import SecurityFields from './SecurityFields';
-import PasswordField from './PasswordField';
-import EmailField from './EmailField';
+import { SecurityFields as SecurityWrapper } from './SecurityFields';
+import { PasswordField } from './PasswordField';
+import { EmailField } from './EmailField';
 
-export default Object.assign(SecurityFields, {
+export const SecurityFields = Object.assign(SecurityWrapper, {
     Password: PasswordField,
     Email: EmailField,
 });

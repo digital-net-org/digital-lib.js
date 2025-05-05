@@ -17,7 +17,7 @@ export interface AppProps extends PropsWithChildren {
     };
 }
 
-export default function App({ children, settingsViews }: AppProps) {
+export function App({ children, settingsViews }: AppProps) {
     const { current } = useDigitalRouter();
     const { isLogged } = useUser();
 

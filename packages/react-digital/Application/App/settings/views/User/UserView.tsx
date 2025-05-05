@@ -1,8 +1,8 @@
 import { Box } from '../../../../../../react-digital-ui';
-import PublicInfo from './components/PublicInfo';
-import SecurityFields from './SecurityFields';
+import { PublicInfo } from './components/PublicInfo';
+import { SecurityFields } from './SecurityFields';
 
-export default function UserView() {
+export function UserView() {
     return (
         <Box gap={3} fullWidth>
             <PublicInfo />

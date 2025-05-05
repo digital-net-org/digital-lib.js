@@ -3,7 +3,7 @@ import { InputText } from '@digital-lib/react-digital-ui';
 import { Localization } from '../../../../../../Localization';
 import { useUser } from '../../../../../../User';
 
-export default function EmailField() {
+export function EmailField() {
     const { email } = useUser();
 
     return (
