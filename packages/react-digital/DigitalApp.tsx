@@ -9,6 +9,7 @@ import { ThemeProvider } from './Theme';
 import { Router, type RouterProps } from './Router';
 import { ToasterProvider } from './Toaster';
 import '@digital-lib/react-digital-ui/digital.net.defaults.css';
+import { AppSettingsProvider } from './Application/App/settings';
 
 interface DigitalConfig {
     strictMode?: boolean;
@@ -43,9 +44,11 @@ export default class DigitalApp {
                                 <DigitalClientProvider>
                                     <AuthMiddleware />
                                     <UserProvider>
-                                        <ThemeProvider>
-                                            <Router renderLayout={renderLayout} router={router ?? []} />
-                                        </ThemeProvider>
+                                        <AppSettingsProvider>
+                                            <ThemeProvider>
+                                                <Router renderLayout={renderLayout} router={router ?? []} />
+                                            </ThemeProvider>
+                                        </AppSettingsProvider>
                                     </UserProvider>
                                 </DigitalClientProvider>
                             </DigitalIdbProvider>

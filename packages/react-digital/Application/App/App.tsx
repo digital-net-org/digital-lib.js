@@ -9,19 +9,21 @@ import { AppSettings, type AppSettingsProps } from './settings';
 import './fontsources';
 import './App.styles.css';
 import './AppBar.styles.css';
+import { defaultViews } from './settings/views';
+import { useDigitalApp } from '@digital-lib/react-digital';
 
 export interface AppProps extends PropsWithChildren {
     settingsViews?: {
         views: AppSettingsProps['views'];
         onLabelRender: AppSettingsProps['onLabelRender'];
     };
+    settingsActions?: Array<React.ReactNode>;
 }
 
-export function App({ children, settingsViews }: AppProps) {
+export function App({ children, settingsViews, settingsActions }: AppProps) {
     const { current } = useDigitalRouter();
     const { isLogged } = useUser();
-
-    const [isSettingsOpen, setIsSettingsOpen] = React.useState(false);
+    const { openAppSettings } = useDigitalApp();
 
     return (
         <main className="Page">
@@ -33,14 +35,15 @@ export function App({ children, settingsViews }: AppProps) {
                             {Localization.translate(`router:page.title.${current?.path}`)}
                         </Box>
                         <Box>
+                            {settingsActions?.map(action => action)}
                             <Actions.User />
                             <ThemeSwitch />
-                            <Button variant="icon" onClick={() => setIsSettingsOpen(true)}>
+                            <Button variant="icon" onClick={() => openAppSettings(Object.keys(defaultViews)[0])}>
                                 <Icon.GearIcon variant="filled" />
                             </Button>
                         </Box>
                     </header>
-                    <AppSettings open={isSettingsOpen} onClose={() => setIsSettingsOpen(false)} {...settingsViews} />
+                    <AppSettings {...settingsViews} />
                 </React.Fragment>
             )}
             {children}
