@@ -1,9 +1,9 @@
 import React from 'react';
-import { Avatar, InputNavButton } from '../../../../react-digital-ui';
+import { Avatar, InputNavButton } from '@digital-lib/react-digital-ui';
 import { Localization } from '../../../Localization';
 import { useUser } from '../../../User';
 
-export default function UserActions() {
+export function UserActions() {
     const { isLoading, logout, username } = useUser();
 
     const options = React.useMemo(

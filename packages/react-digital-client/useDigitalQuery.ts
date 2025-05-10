@@ -4,9 +4,9 @@ import { ObjectMatcher } from '../core';
 import { type QueryConfig } from './types';
 import { skipRefreshHeader } from './config';
 import { ResponseHandler } from './ResponseHandler';
-import DigitalClient from './DigitalClient';
+import { DigitalClient } from './DigitalClient';
 
-export default function useDigitalQuery<T>(
+export function useDigitalQuery<T>(
     key: string | undefined,
     { onError, onSuccess, skipRefresh, ...options }: QueryConfig<T> = {
         autoRefetch: true,

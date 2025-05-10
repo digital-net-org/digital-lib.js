@@ -9,10 +9,12 @@ export interface IconButtonProps extends Omit<ButtonProps, 'variant' | 'children
     icon: IconVariant;
 }
 
-export default function IconButton({ variant = 'icon', icon, ...props }: IconButtonProps) {
-    return (
-        <Button variant={variant} {...props}>
-            {icon ? React.createElement(Icon[icon], { size: 'small' }) : null}
-        </Button>
-    );
-}
+export const IconButton = React.forwardRef<HTMLElement, IconButtonProps>(
+    ({ variant = 'icon', icon, ...props }, ref) => {
+        return (
+            <Button variant={variant} ref={ref} {...props}>
+                {icon ? React.createElement(Icon[icon], { size: 'small' }) : null}
+            </Button>
+        );
+    }
+);

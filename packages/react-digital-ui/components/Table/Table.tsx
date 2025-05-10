@@ -30,6 +30,8 @@ export default function Table<T extends Entity>({
     entities,
     columns,
     renderEmpty,
+    renderHeader,
+    renderRow,
     ...props
 }: TableProps<T>) {
     const isEmpty = React.useMemo(
@@ -40,7 +42,7 @@ export default function Table<T extends Entity>({
     return (
         <Box fullWidth fullHeight overflow="auto">
             <table className={tableClassName}>
-                <TableHead columns={columns ?? []} loading={loading} {...props} />
+                <TableHead columns={columns ?? []} loading={loading} renderHeader={renderHeader} {...props} />
                 {!loading && !isEmpty && (
                     <tbody className={`${tableClassName}-Body`}>
                         {entities.map(entity => (
@@ -49,6 +51,7 @@ export default function Table<T extends Entity>({
                                     entity={entity}
                                     columns={columns ?? []}
                                     disabled={props.disabled || loadingActions}
+                                    renderRow={renderRow}
                                     {...props}
                                 />
                             </React.Fragment>

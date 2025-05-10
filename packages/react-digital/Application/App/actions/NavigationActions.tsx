@@ -1,10 +1,10 @@
 import React from 'react';
-import { Box, Icon, InputNavButton } from '../../../../react-digital-ui';
+import { Box, Icon, InputNavButton } from '@digital-lib/react-digital-ui';
 import { Localization } from '../../../Localization';
 import { useDigitalRouter } from '../../../Router';
 import { AppLogo } from '../../AppLogo';
 
-export default function NavigationActions() {
+export function NavigationActions() {
     const { current, router } = useDigitalRouter();
     const filteredRouter = React.useMemo(
         () => router.filter(route => !route.isPublic && route.displayed).sort((a, b) => a.path.localeCompare(b.path)),

@@ -2,6 +2,7 @@ import type { AxiosRequestConfig } from 'axios';
 import type { Result } from '@digital-lib/dto';
 
 export type RequestConfig = Omit<AxiosRequestConfig, 'url' | 'baseURL'>;
+
 export type Method = 'POST' | 'PUT' | 'DELETE' | 'PATCH' | 'GET';
 
 export interface RequestCallbacks<T> {

@@ -1,17 +1,9 @@
 import React from 'react';
-import type { Result } from '../../dto';
-import type { MutationConfig } from '../types';
-import useDigitalMutation from '../useDigitalMutation';
+import type { Result } from '@digital-lib/dto';
+import type { RequestCallbacks } from '../types';
+import { useDigitalMutation } from '../useDigitalMutation';
 
-type Callback = MutationConfig<Result, null>;
-
-export default function useDelete(
-    endpoint: string,
-    options?: {
-        onSuccess?: Callback['onSuccess'];
-        onError?: Callback['onError'];
-    }
-) {
+export function useDelete(endpoint: string, options?: RequestCallbacks<Result>) {
     const { mutate, isPending: isDeleting } = useDigitalMutation<Result, { id: string }>(
         ({ id }) => `${endpoint}/${id}`,
         {

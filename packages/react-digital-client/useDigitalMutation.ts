@@ -2,9 +2,9 @@ import { useMutation } from '@tanstack/react-query';
 import { type MutationConfig, type MutationPayload } from './types';
 import { skipRefreshHeader } from './config';
 import { ResponseHandler } from './ResponseHandler';
-import DigitalClient from './DigitalClient';
+import { DigitalClient } from './DigitalClient';
 
-export default function useDigitalMutation<T, P = object>(
+export function useDigitalMutation<T, P = object>(
     key: ((payload: P) => string) | string,
     { method, retry, onError, onSuccess, skipRefresh, ...options }: MutationConfig<T>
 ) {

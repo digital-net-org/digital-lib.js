@@ -10,17 +10,18 @@ import './fontsources';
 import './App.styles.css';
 import './AppBar.styles.css';
 import { defaultViews } from './settings/views';
-import { useDigitalApp } from '@digital-lib/react-digital';
+import { type AppAlertsProps, AppAlerts } from './alerts';
+import { useDigitalApp } from './useDigitalApp';
 
 export interface AppProps extends PropsWithChildren {
     settingsViews?: {
         views: AppSettingsProps['views'];
         onLabelRender: AppSettingsProps['onLabelRender'];
     };
-    settingsActions?: Array<React.ReactNode>;
+    alerts?: AppAlertsProps['alerts'];
 }
 
-export function App({ children, settingsViews, settingsActions }: AppProps) {
+export function App({ children, settingsViews, alerts }: AppProps) {
     const { current } = useDigitalRouter();
     const { isLogged } = useUser();
     const { openAppSettings } = useDigitalApp();
@@ -35,7 +36,7 @@ export function App({ children, settingsViews, settingsActions }: AppProps) {
                             {Localization.translate(`router:page.title.${current?.path}`)}
                         </Box>
                         <Box>
-                            {settingsActions?.map(action => action)}
+                            <AppAlerts alerts={alerts ?? []} />
                             <Actions.User />
                             <ThemeSwitch />
                             <Button variant="icon" onClick={() => openAppSettings(Object.keys(defaultViews)[0])}>

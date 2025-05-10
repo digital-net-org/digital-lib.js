@@ -1,10 +1,8 @@
 import React from 'react';
-import { type Entity, EntityHelper, type EntityRaw, type Result } from '../../dto';
-import type { MutationConfig } from '../types';
-import DigitalClient from '../DigitalClient';
-import useDigitalQuery from '../useDigitalQuery';
-
-type Callback<T> = MutationConfig<Result<T>, null>;
+import { type Entity, EntityHelper, type EntityRaw, type Result } from '@digital-lib/dto';
+import type { RequestCallbacks } from '../types';
+import { DigitalClient } from '../DigitalClient';
+import { useDigitalQuery } from '../useDigitalQuery';
 
 /**
  * Hook to get an entity by its id.
@@ -14,13 +12,10 @@ type Callback<T> = MutationConfig<Result<T>, null>;
  *  - `onSuccess` The callback to be called on fetch success.
  *  - `onError` The callback to be called on fetch error.
  */
-export default function useGetById<T extends Entity>(
+export function useGetById<T extends Entity>(
     endpoint: string,
     id: string | number | undefined,
-    options?: {
-        onSuccess?: Callback<T>['onSuccess'];
-        onError?: Callback<T>['onError'];
-    }
+    options?: RequestCallbacks<Result<T>>
 ) {
     const { data, isLoading } = useDigitalQuery<Result<EntityRaw>>(!id ? undefined : `${endpoint}/${id}`, {
         onSuccess: async e => {

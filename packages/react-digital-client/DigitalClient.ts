@@ -3,7 +3,7 @@ import axios, { type AxiosInstance, type AxiosError, type AxiosResponse, type In
 
 type AugmentedRequestConfig = InternalAxiosRequestConfig<any> & { _retry: boolean | undefined };
 
-export default class DigitalClient {
+export class DigitalClient {
     public static axiosInstance = axios.create({
         withCredentials: true,
         headers: {
