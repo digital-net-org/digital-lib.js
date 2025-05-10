@@ -1,17 +1,20 @@
 import type { AxiosRequestConfig } from 'axios';
+import type { Result } from '@digital-lib/dto';
 
 export type RequestConfig = Omit<AxiosRequestConfig, 'url' | 'baseURL'>;
+export type Method = 'POST' | 'PUT' | 'DELETE' | 'PATCH' | 'GET';
 
-export interface QueryConfig<T, E> extends RequestConfig {
-    onSuccess?: SuccessCallback<T>;
-    onError?: ErrorCallback<E>;
+export interface RequestCallbacks<T> {
+    onError?: (error: Result & { status: number }) => Promise<void> | void;
+    onSuccess?: (data: T) => Promise<void> | void;
+}
+
+export interface QueryConfig<T> extends RequestConfig, RequestCallbacks<T> {
     autoRefetch?: boolean;
     skipRefresh?: boolean;
 }
 
-export interface MutationConfig<T, E> extends RequestConfig {
-    onSuccess?: SuccessCallback<T>;
-    onError?: ErrorCallback<E>;
+export interface MutationConfig<T> extends RequestConfig, RequestCallbacks<T> {
     method?: Method;
     retry?: number;
     skipRefresh?: boolean;
@@ -28,7 +31,3 @@ export interface PatchOperation {
     path: string;
     value: any;
 }
-
-export type Method = 'POST' | 'PUT' | 'DELETE' | 'PATCH' | 'GET';
-export type ErrorCallback<E> = (error: { data: E | any; status: number }) => Promise<void> | void;
-export type SuccessCallback<T> = (data: T) => Promise<void> | void;

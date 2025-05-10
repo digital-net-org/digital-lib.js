@@ -3,33 +3,31 @@ import { useQuery } from '@tanstack/react-query';
 import { ObjectMatcher } from '../core';
 import { type QueryConfig } from './types';
 import { skipRefreshHeader } from './config';
+import { ResponseHandler } from './ResponseHandler';
 import DigitalClient from './DigitalClient';
 
-export default function useDigitalQuery<T, E = unknown>(
+export default function useDigitalQuery<T>(
     key: string | undefined,
-    { onError, onSuccess, skipRefresh, ...options }: QueryConfig<T, E> = {
+    { onError, onSuccess, skipRefresh, ...options }: QueryConfig<T> = {
         autoRefetch: true,
     }
 ) {
-    const { data: queryResult, ...response } = useQuery<T, E>({
+    const { data: queryResult, ...response } = useQuery<T>({
         queryKey: key ? [key] : [],
         queryFn: async () => {
             if (!key) {
                 return {} as T;
             }
-            const { data, status } = await DigitalClient.get<T>(key, {
-                ...options,
-                headers: {
-                    ...options.headers,
-                    [skipRefreshHeader]: skipRefresh ? 'true' : 'false',
-                },
-            });
-            if (status >= 400) {
-                await onError?.({ data, status });
-            } else {
-                await onSuccess?.(data);
-            }
-            return data;
+            return ResponseHandler.handle(
+                await DigitalClient.get<T>(key, {
+                    ...options,
+                    headers: {
+                        ...options.headers,
+                        [skipRefreshHeader]: skipRefresh ? 'true' : 'false',
+                    },
+                }),
+                { onError, onSuccess }
+            );
         },
         ...options,
     });
