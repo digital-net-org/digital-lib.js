@@ -13,6 +13,7 @@ export interface RequestCallbacks<T> {
 export interface QueryConfig<T> extends RequestConfig, RequestCallbacks<T> {
     autoRefetch?: boolean;
     skipRefresh?: boolean;
+    trigger?: boolean;
 }
 
 export interface MutationConfig<T> extends RequestConfig, RequestCallbacks<T> {
