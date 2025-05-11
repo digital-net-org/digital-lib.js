@@ -3,22 +3,11 @@ import { useQuery } from '@tanstack/react-query';
 import { ObjectMatcher } from '@digital-lib/core';
 import { ResultBuilder } from '@digital-lib/dto';
 import { DigitalClient } from './DigitalClient';
-import { type QueryConfig } from './types';
+import { type QueryOptions, type RequestCallbacks } from './types';
 
-export function useDigitalImport<T>(
-    key: string,
-    {
-        trigger,
-        onError,
-        onSuccess,
-    }: {
-        trigger?: QueryConfig<T>['trigger'];
-        onError?: QueryConfig<T>['onError'];
-        onSuccess?: QueryConfig<T>['onSuccess'];
-    }
-) {
+export function useDigitalImport<T>(key: string, { trigger, onError, onSuccess }: RequestCallbacks<T> & QueryOptions) {
     const { data: content, ...response } = useQuery<T>({
-        queryKey: [key],
+        queryKey: trigger !== false ? [key] : [],
         queryFn: async () => {
             let result = {} as T;
             if (trigger === false) {

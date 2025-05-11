@@ -1,7 +1,7 @@
 import type { AxiosRequestConfig } from 'axios';
 import type { Result } from '@digital-lib/dto';
 
-export type RequestConfig = Omit<AxiosRequestConfig, 'url' | 'baseURL'>;
+export type RequestConfig = Omit<AxiosRequestConfig, 'url' | 'baseURL' | 'method'>;
 
 export type Method = 'POST' | 'PUT' | 'DELETE' | 'PATCH' | 'GET';
 
@@ -10,17 +10,21 @@ export interface RequestCallbacks<T> {
     onSuccess?: (data: T) => Promise<void> | void;
 }
 
-export interface QueryConfig<T> extends RequestConfig, RequestCallbacks<T> {
+export interface QueryOptions {
     autoRefetch?: boolean;
     skipRefresh?: boolean;
     trigger?: boolean;
 }
 
-export interface MutationConfig<T> extends RequestConfig, RequestCallbacks<T> {
+export interface QueryConfig<T> extends RequestConfig, QueryOptions, RequestCallbacks<T> {}
+
+export interface MutationOptions {
     method?: Method;
     retry?: number;
     skipRefresh?: boolean;
 }
+
+export interface MutationConfig<T> extends RequestConfig, MutationOptions, RequestCallbacks<T> {}
 
 export interface MutationPayload<T = object> {
     params?: T;

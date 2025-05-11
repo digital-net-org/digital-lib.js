@@ -1,18 +1,13 @@
 import React from 'react';
 import { type Entity, EntityHelper, type EntityRaw, type QueryResult } from '@digital-lib/dto';
-import { type RequestCallbacks } from '../types';
+import { type QueryOptions, type RequestCallbacks } from '../types';
+
 import { DigitalClient } from '../DigitalClient';
 import { useDigitalQuery } from '../useDigitalQuery';
 
-/**
- * Hook to get entities.
- * @param endpoint The API endpoint.
- * @param options The options of the hook.
- *  - `onSuccess` The callback to be called on fetch success.
- *  - `onError` The callback to be called on fetch error.
- */
-export function useGet<T extends Entity>(endpoint: string, options?: RequestCallbacks<QueryResult<T>>) {
+export function useGet<T extends Entity>(endpoint: string, options?: RequestCallbacks<QueryResult<T>> & QueryOptions) {
     const { data, isLoading } = useDigitalQuery<QueryResult<EntityRaw>>(endpoint, {
+        ...(options ?? {}),
         onSuccess: async e => {
             await options?.onSuccess?.({ ...e, value: e.value.map(EntityHelper.build<T>) });
         },
