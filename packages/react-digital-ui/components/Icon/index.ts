@@ -32,6 +32,7 @@ import { MemberRemoveIcon } from './icons/MemberRemoveIcon';
 import { MembersIcon } from './icons/MembersIcon';
 import { MenuIcon } from './icons/MenuIcon';
 import { PencilSquare } from './icons/PencilSquare';
+import { ReloadIcon } from './icons/ReloadIcon';
 import { SearchIcon } from './icons/SearchIcon';
 import { ThemeMoonIcon } from './icons/ThemeMoonIcon';
 import { ThemeSunIcon } from './icons/ThemeSunIcon';
@@ -74,6 +75,7 @@ export const Icon = Object.assign(Component, {
     MembersIcon,
     MenuIcon,
     PencilSquare,
+    ReloadIcon,
     SearchIcon,
     ThemeMoonIcon,
     ThemeSunIcon,
