@@ -16,6 +16,7 @@ export interface BoxProps extends BaseBoxProps {
     mt?: spacing;
     mb?: spacing;
     gap?: spacing;
+    visible?: boolean;
     resizable?: boolean;
     fullWidth?: boolean;
     fullHeight?: boolean;
@@ -35,6 +36,7 @@ export const Box = React.forwardRef<HTMLElement, BoxProps>(
             fullWidth = false,
             fullHeight = false,
             wrap = false,
+            visible = true,
             p = null,
             m = null,
             gap = null,
@@ -62,6 +64,14 @@ export const Box = React.forwardRef<HTMLElement, BoxProps>(
             },
             'DigitalUi-Box'
         );
-        return React.createElement(element, { ...props, style: { backgroundColor: color }, ref, className });
+        return React.createElement(element, {
+            ...props,
+            style: {
+                backgroundColor: color,
+                opacity: visible ? 1 : 0,
+            },
+            ref,
+            className,
+        });
     }
 );
