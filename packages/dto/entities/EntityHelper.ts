@@ -6,7 +6,7 @@ import type { EntityRaw } from './EntityRaw';
 /**
  * Helper class for **Entity**.
  */
-export default class EntityHelper {
+export class EntityHelper {
     /**
      * Builds an entity from a json object.
      * @param entity The entity to build.

@@ -1,5 +1,5 @@
 import React from 'react';
-import { type Entity, EntityHelper, type EntityRaw, type Result } from '@digital-lib/dto';
+import { EntityHelper, type Entity, type EntityRaw, type Result } from '@digital-lib/dto';
 import type { QueryOptions, RequestCallbacks } from '../types';
 import { DigitalClient } from '../DigitalClient';
 import { useDigitalQuery } from '../useDigitalQuery';
@@ -9,17 +9,18 @@ export function useGetById<T extends Entity>(
     id: string | number | undefined,
     options?: RequestCallbacks<Result<T>> & QueryOptions
 ) {
-    const { data, isLoading } = useDigitalQuery<Result<EntityRaw>>(!id ? undefined : `${endpoint}/${id}`, {
+    const [entity, setEntity] = React.useState<T | undefined>(undefined);
+    const { isLoading } = useDigitalQuery<Result<EntityRaw>>(!id ? undefined : `${endpoint}/${id}`, {
         ...(options ?? {}),
         onSuccess: async e => {
-            await options?.onSuccess?.({ ...e, value: EntityHelper.build<T>(e.value) });
+            const result = { ...e, value: EntityHelper.build<T>(e.value) };
+            setEntity(result.value);
+            await options?.onSuccess?.(result);
         },
         onError: async e => {
             await options?.onError?.(e);
         },
     });
-
-    const entity = React.useMemo(() => (data?.value ? EntityHelper.build<T>(data.value) : undefined), [data]);
 
     const invalidateQuery = React.useCallback(() => DigitalClient.invalidate(`${endpoint}/${id}`), [endpoint, id]);
 

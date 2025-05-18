@@ -1,5 +1,5 @@
 import { expect, test } from 'vitest';
-import EntityHelper from './EntityHelper';
+import { EntityHelper } from './EntityHelper';
 import type { Entity } from './Entity';
 
 test('EntityHelper: build(), Should build the entity correctly from the json object.', () => {

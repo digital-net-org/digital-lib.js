@@ -1,5 +1,5 @@
 import { expect, test } from 'vitest';
-import EntitySchemaHelper from './EntitySchemaHelper';
+import { EntitySchemaHelper } from './EntitySchemaHelper';
 
 test('EntitySchemaHelper.resolve, Should return Javascript type based on Schema types', () => {
     expect(EntitySchemaHelper.resolve('String')).toBe('string');
