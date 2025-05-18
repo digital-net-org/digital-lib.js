@@ -6,6 +6,7 @@ import { Box } from '@digital-lib/react-digital-ui';
 
 export interface TextProps extends SafariNode {
     children: any;
+    disabled?: boolean;
     bold?: boolean;
     light?: boolean;
     italic?: boolean;

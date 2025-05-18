@@ -57,3 +57,6 @@
     font-size: var(--font-size-xlarge);
 }
 
+.DigitalUi-Text-disabled {
+    color: var(--palette-text-disabled);
+}
