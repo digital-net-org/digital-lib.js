@@ -31,10 +31,7 @@ export function useDigitalImport<T>(key: string, { trigger, onError, onSuccess }
         },
     });
 
-    const data = React.useMemo(
-        () => (ObjectMatcher.deepEquality(content, {} as typeof content) ? undefined : content),
-        [content]
-    );
+    const data = React.useMemo(() => (ObjectMatcher.isEmptyObject(content) ? undefined : content), [content]);
 
     return { data, ...response };
 }

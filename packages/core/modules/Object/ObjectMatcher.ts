@@ -28,6 +28,15 @@ export default class ObjectMatcher {
     }
 
     /**
+     * Verify if a value is an empty object
+     * @param obj - Object to verify
+     * @return true if it is an empty object
+     */
+    public static isEmptyObject(obj: any): boolean {
+        return Boolean(obj && typeof obj === 'object' && !Array.isArray(obj) && Object.keys(obj).length === 0);
+    }
+
+    /**
      * Verify if one or more objects are null
      * @param obj - objects to verify
      * @returns true if object is null
@@ -113,7 +122,7 @@ export default class ObjectMatcher {
     public static deepEquality<T>(
         a: T | Partial<T> | undefined | null,
         b: T | Partial<T> | undefined | null,
-        ignoreKeys?: Array<keyof T>,
+        ignoreKeys?: Array<keyof T>
     ) {
         if (!this.isObject(a, b)) {
             return this.typeEquality(a, b);
@@ -136,5 +145,5 @@ export default class ObjectMatcher {
         }
 
         return true;
-    };
+    }
 }
