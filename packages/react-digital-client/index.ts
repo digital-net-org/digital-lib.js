@@ -1,6 +1,7 @@
 export { default as DigitalClientProvider } from './DigitalClientProvider';
 export { useDigitalMutation } from './useDigitalMutation';
 export { useDigitalQuery } from './useDigitalQuery';
+export { useDigitalImport } from './useDigitalImport';
 export { useGet } from './crud/useGet';
 export { useGetById } from './crud/useGetById';
 export { useCreate } from './crud/useCreate';
