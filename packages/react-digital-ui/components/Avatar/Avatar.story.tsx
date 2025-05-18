@@ -1,23 +1,21 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
-import Component, { type AvatarProps } from './Avatar';
+import { Avatar, type AvatarProps } from './Avatar';
 import { Box } from '../Box';
 
 const meta: Meta<AvatarProps> = {
     title: 'Images/Avatar',
     decorators: (_, { args }) =>
-        args.fullWidth
-            ? (
-                    <React.Fragment>
-                        <style>{`.DigitalUi-Box { border: 1px solid red; }`}</style>
-                        <Box resizable>
-                            <Component {...args} />
-                        </Box>
-                    </React.Fragment>
-                )
-            : (
-                    <Component {...args} onClick={() => 0} />
-                ),
+        args.fullWidth ? (
+            <React.Fragment>
+                <style>{`.DigitalUi-Box { border: 1px solid red; }`}</style>
+                <Box resizable>
+                    <Avatar {...args} />
+                </Box>
+            </React.Fragment>
+        ) : (
+            <Avatar {...args} onClick={() => 0} />
+        ),
 };
 type Story = StoryObj<typeof meta>;
 export default meta;

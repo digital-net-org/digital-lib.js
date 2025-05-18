@@ -14,7 +14,7 @@ export interface ToastProps extends SafariNodeWithChildren {
 
 export const animationDuration = 1000;
 
-export default function Toast({ id, children, onClose, ...props }: ToastProps) {
+export function Toast({ id, children, onClose, ...props }: ToastProps) {
     const ref = React.useRef<HTMLDivElement>(null);
     const className = useClassName(props, 'DigitalUi-Toast');
     const [internalHiddenState, setInternalHiddenState] = React.useState(Boolean(props.hidden));

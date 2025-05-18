@@ -2,7 +2,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import React from 'react';
 import { Box } from '../../Box';
-import InputText, { type InputTextProps } from './InputText';
+import { InputText, type InputTextProps } from './InputText';
 
 const meta: Meta<InputTextProps> = {
     title: 'Inputs/InputText',

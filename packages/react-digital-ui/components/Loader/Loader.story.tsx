@@ -1,6 +1,6 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
-import component from './Loader';
+import { Loader as component } from './Loader';
 import { Box } from '../Box';
 
 const meta: Meta = {

@@ -1,1 +1,1 @@
-export { default as Table, type TableProps } from './Table';
+export { Table, type TableProps } from './Table';

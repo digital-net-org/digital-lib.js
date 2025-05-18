@@ -27,7 +27,7 @@ export interface BoxProps extends BaseBoxProps {
     overflow?: 'hidden' | 'scroll' | 'auto';
 }
 
-const Box = React.forwardRef<HTMLElement, BoxProps>(
+export const Box = React.forwardRef<HTMLElement, BoxProps>(
     (
         {
             element = 'div',
@@ -65,5 +65,3 @@ const Box = React.forwardRef<HTMLElement, BoxProps>(
         return React.createElement(element, { ...props, style: { backgroundColor: color }, ref, className });
     }
 );
-
-export default Box;

@@ -1,1 +1,1 @@
-export { default as InputSelect, type InputSelectProps } from './InputSelect';
+export { InputSelect, type InputSelectProps } from './InputSelect';

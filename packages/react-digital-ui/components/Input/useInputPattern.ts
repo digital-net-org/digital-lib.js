@@ -5,7 +5,7 @@ export interface InputPatternProps {
     pattern?: string;
 }
 
-export default function useInputPattern({
+export function useInputPattern({
     onChange,
     loading,
     required,

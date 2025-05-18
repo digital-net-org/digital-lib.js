@@ -1,1 +1,1 @@
-export { default as InputText, type InputTextProps } from './InputText';
+export { InputText, type InputTextProps } from './InputText';

@@ -8,7 +8,7 @@ export interface InputSwitchProps extends BaseInputProps, SafariNode, Controlled
     name?: string;
 }
 
-export default function InputSwitch({ id, value, onChange, ...props }: InputSwitchProps) {
+export function InputSwitch({ id, value, onChange, ...props }: InputSwitchProps) {
     const className = useClassName(props, 'DigitalUi-InputSwitch');
     const { mapHtmlProps } = useProps(props);
 

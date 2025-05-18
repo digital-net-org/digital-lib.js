@@ -1,9 +1,7 @@
 /* eslint react-hooks/rules-of-hooks: 0 */
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
-import InputNav, { type InputNavProps } from './InputNav';
-import { Box } from '../../Box';
-import { Text } from '../../Text';
+import { InputNav, type InputNavProps } from './InputNav';
 
 const meta: Meta<InputNavProps> = {
     title: 'Inputs/InputNav',

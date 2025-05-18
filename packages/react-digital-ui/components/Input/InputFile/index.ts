@@ -1,1 +1,1 @@
-export { default as InputFile, type InputFileProps } from './InputFile';
+export { InputFile, type InputFileProps } from './InputFile';

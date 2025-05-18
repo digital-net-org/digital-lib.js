@@ -1,1 +1,1 @@
-export { default as InputNavButton, type InputNavButtonProps } from './InputNavButton';
+export { InputNavButton, type InputNavButtonProps } from './InputNavButton';

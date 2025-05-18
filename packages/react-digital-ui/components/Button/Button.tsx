@@ -14,7 +14,7 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
     align?: 'left' | 'right';
 }
 
-const Button = React.forwardRef<HTMLElement, ButtonProps>(({ children, variant = 'primary', ...props }, ref) => {
+export const Button = React.forwardRef<HTMLElement, ButtonProps>(({ children, variant = 'primary', ...props }, ref) => {
     const className = useClassName({ ...props, variant }, 'DigitalUi-Button');
     const { mapHtmlProps } = useProps({ ...props, variant, className });
 
@@ -30,5 +30,3 @@ const Button = React.forwardRef<HTMLElement, ButtonProps>(({ children, variant =
         })
     );
 });
-
-export default Button;

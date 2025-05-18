@@ -1,1 +1,1 @@
-export { default as InputSwitch, type InputSwitchProps } from './InputSwitch';
+export { InputSwitch, type InputSwitchProps } from './InputSwitch';

@@ -12,7 +12,7 @@ export interface InputNavProps extends Omit<BoxProps, 'onSelect' | 'children'> {
     onRender?: (value: string) => React.ReactNode;
 }
 
-export default function InputNav({ options, textDirection, onRender, onSelect, value, ...boxProps }: InputNavProps) {
+export function InputNav({ options, textDirection, onRender, onSelect, value, ...boxProps }: InputNavProps) {
     const className = useClassName({ textDirection }, 'DigitalUi-InputNav');
 
     return (

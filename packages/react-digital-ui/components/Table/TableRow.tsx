@@ -10,7 +10,7 @@ interface TableRowProps<T extends Entity> extends Omit<TableProps<T>, 'entities'
     columns: Array<keyof T>;
 }
 
-export default function TableRow<T extends Entity>({
+export function TableRow<T extends Entity>({
     entity,
     onEdit,
     onDelete,

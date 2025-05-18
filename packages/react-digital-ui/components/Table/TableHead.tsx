@@ -8,13 +8,7 @@ export interface TableHeadProps<T extends Entity> extends Omit<TableProps<T>, 'c
     columns: Array<keyof T>;
 }
 
-export default function TableHead<T extends Entity>({
-    columns,
-    renderHeader,
-    onCreate,
-    loading,
-    disabled,
-}: TableHeadProps<T>) {
+export function TableHead<T extends Entity>({ columns, renderHeader, onCreate, loading, disabled }: TableHeadProps<T>) {
     const className = `${tableClassName}-Header-Cell`;
     return (
         <thead>

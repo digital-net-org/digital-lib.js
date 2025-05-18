@@ -2,8 +2,8 @@ import React from 'react';
 import { useClassName } from '../../../../core';
 import type { ControlledHandler } from '../../types';
 import type { SafariInputNode } from '../types';
-import useInputRef from '../useInputRef';
-import InputBox from '../InputBox';
+import { useInputRef } from '../useInputRef';
+import { InputBox } from '../InputBox';
 import './InputSelect.styles.css';
 
 export interface InputSelectProps<T = any> extends SafariInputNode {
@@ -16,7 +16,7 @@ export interface InputSelectProps<T = any> extends SafariInputNode {
     onBlur?: ControlledHandler<T>;
 }
 
-export default function InputSelect<T>({
+export function InputSelect<T>({
     className,
     name,
     label,

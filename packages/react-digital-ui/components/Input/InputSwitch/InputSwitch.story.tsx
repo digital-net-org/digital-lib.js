@@ -2,7 +2,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import React from 'react';
 import { Box } from '../../Box';
-import InputSwitch, { type InputSwitchProps } from './InputSwitch';
+import { InputSwitch, type InputSwitchProps } from './InputSwitch';
 
 const meta: Meta<InputSwitchProps> = {
     title: 'Inputs/InputSwitch',
@@ -43,9 +43,7 @@ export const StateTests: Story = {
                 <InputSwitch value={value} onChange={onChange} />
                 <Box>
                     State content:
-                    <pre>
-                        {JSON.stringify(value, null, 2)}
-                    </pre>
+                    <pre>{JSON.stringify(value, null, 2)}</pre>
                 </Box>
             </Box>
         );

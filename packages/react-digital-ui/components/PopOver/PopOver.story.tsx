@@ -5,7 +5,7 @@ import { Color } from '../../../core';
 import { Box } from '../Box';
 import { Button } from '../Button';
 import { Icon } from '../Icon';
-import PopOver, { type PopOverProps } from './PopOver';
+import { PopOver, type PopOverProps } from './PopOver';
 
 const meta: Meta<PopOverProps> = {
     title: 'Layout/PopOver',

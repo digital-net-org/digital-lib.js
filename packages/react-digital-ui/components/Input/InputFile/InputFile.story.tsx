@@ -1,10 +1,9 @@
 /* eslint react-hooks/rules-of-hooks: 0 */
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
-import InputFile, { type InputFileProps } from './InputFile';
+import { InputFile, type InputFileProps } from './InputFile';
 import { Box } from '../../Box';
 import { Text } from '../../Text';
-import InputSelect from '../InputSelect/InputSelect';
 
 const meta: Meta<InputFileProps> = {
     title: 'Inputs/InputFile',

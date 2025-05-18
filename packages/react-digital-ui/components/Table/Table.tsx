@@ -3,8 +3,8 @@ import type { Entity, Pagination } from '@digital-lib/dto';
 import { Box } from '../Box';
 import { Loader } from '../Loader';
 import { Text } from '../Text';
-import TableHead from './TableHead';
-import TableRow from './TableRow';
+import { TableHead } from './TableHead';
+import { TableRow } from './TableRow';
 import './Table.styles.css';
 
 export interface TableProps<T extends Entity> {
@@ -24,7 +24,7 @@ export interface TableProps<T extends Entity> {
 
 export const tableClassName = 'DigitalUi-Table';
 
-export default function Table<T extends Entity>({
+export function Table<T extends Entity>({
     loading,
     loadingActions,
     entities,

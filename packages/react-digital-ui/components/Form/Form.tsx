@@ -12,13 +12,7 @@ export interface FormProps extends SafariNode, Omit<BoxProps, 'onSubmit'> {
 
 const getInputs = (ref: React.RefObject<HTMLFormElement | null>) => ref.current?.getElementsByTagName('input');
 
-export default function Form({
-    children,
-    className: propsClassName = 'DigitalUi-Form',
-    id,
-    onSubmit,
-    ...boxProps
-}: FormProps) {
+export function Form({ children, className: propsClassName = 'DigitalUi-Form', id, onSubmit, ...boxProps }: FormProps) {
     const formRef = React.useRef<HTMLFormElement>(null);
     const className = useClassName({}, propsClassName);
 

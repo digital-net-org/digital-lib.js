@@ -1,4 +1,5 @@
 import React from 'react';
+import { Loader } from '@digital-lib/react-digital-ui';
 import { useChildren, useClassName } from '../../../core';
 import type { SafariNodeWithChildren } from '../types';
 import { Button } from '../Button';
@@ -6,7 +7,6 @@ import { Box } from '../Box';
 import { Icon } from '../Icon';
 import { Text } from '../Text';
 import './Dialog.styles.css';
-import { Loader } from '@digital-lib/react-digital-ui';
 
 export interface DialogProps extends SafariNodeWithChildren {
     open: boolean;
@@ -24,7 +24,7 @@ const Header = ({ children }: React.PropsWithChildren) => (
 const Panel = ({ children }: React.PropsWithChildren) => <Box className={`${className}-panel`}>{children}</Box>;
 const Content = ({ children }: React.PropsWithChildren) => <Box className={`${className}-content`}>{children}</Box>;
 
-function Dialog({ children, loading, className: propsClassName, ...props }: DialogProps) {
+function DialogComponent({ children, loading, className: propsClassName, ...props }: DialogProps) {
     const resolvedClassName = useClassName(props, className);
     const { mapTypeOf } = useChildren(children);
     return (
@@ -54,7 +54,7 @@ function Dialog({ children, loading, className: propsClassName, ...props }: Dial
     );
 }
 
-export default Object.assign(Dialog, {
+export const Dialog = Object.assign(DialogComponent, {
     Header,
     Panel,
     Content,

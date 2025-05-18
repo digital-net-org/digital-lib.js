@@ -11,7 +11,7 @@ export interface InputNavButtonProps
     icon: React.ReactNode;
 }
 
-export default function InputNavButton({ loading, direction, icon, children, ...props }: InputNavButtonProps) {
+export function InputNavButton({ loading, direction, icon, children, ...props }: InputNavButtonProps) {
     const [isMenuOpen, setIsMenuOpen] = React.useState(false);
     const buttonRef = React.useRef<HTMLButtonElement>(null);
     const handleMenu = () => setIsMenuOpen(!isMenuOpen);

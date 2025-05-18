@@ -7,13 +7,7 @@ import type { InputBoxProps } from './types';
 import './InputBox.styles.css';
 import { PopOver } from '../PopOver';
 
-export default function InputBox({
-    children,
-    id,
-    label,
-    help,
-    ...props
-}: PropsWithChildren<InputBoxProps & SafariNode>) {
+export function InputBox({ children, id, label, help, ...props }: PropsWithChildren<InputBoxProps & SafariNode>) {
     const className = useClassName(props, 'DigitalUi-InputBox');
     const [isHelpOpen, setIsHelpOpen] = React.useState(false);
     const boxRef = React.useRef<HTMLDivElement>(null);

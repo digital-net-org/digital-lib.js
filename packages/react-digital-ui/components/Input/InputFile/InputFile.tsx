@@ -6,9 +6,9 @@ import { IconButton } from '../../Button';
 import { Box } from '../../Box';
 import { Text } from '../../Text';
 import { Loader } from '../../Loader';
+import { InputBox } from '../InputBox';
 import type { InputCustomError, SafariInputNode } from '../types';
 import type { MimeType } from './types';
-import InputBox from '../InputBox';
 import './InputFile.styles.css';
 
 export interface InputFileProps extends SafariInputNode {
@@ -20,7 +20,7 @@ export interface InputFileProps extends SafariInputNode {
 
 const baseClassName = 'DigitalUi-InputFile';
 
-export default function InputFile({ className, name, label, value, onChange, ...props }: InputFileProps) {
+export function InputFile({ className, name, label, value, onChange, ...props }: InputFileProps) {
     const resolvedClassName = useClassName(props, baseClassName);
     const [error, setError] = React.useState<InputCustomError>();
     const ref = React.useRef<HTMLInputElement>(null);

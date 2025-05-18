@@ -1,7 +1,7 @@
 /* eslint react-hooks/rules-of-hooks: 0 */
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
-import InputSelect, { type InputSelectProps } from './InputSelect';
+import { InputSelect, type InputSelectProps } from './InputSelect';
 import { Box } from '../../Box';
 import { Text } from '../../Text';
 
@@ -56,9 +56,7 @@ export const StringSelector: Story = {
                     onAccess={value => value}
                     onRender={value => value ?? '-'}
                 />
-                <Text variant="JSON">
-                    {stringValue}
-                </Text>
+                <Text variant="JSON">{stringValue}</Text>
             </Box>
         );
     },
@@ -66,7 +64,11 @@ export const StringSelector: Story = {
 
 export const RecordSelector: Story = {
     decorators: () => {
-        const options = [{ id: 1, value: 'value 1' }, { id: 2, value: 'value 2' }, { id: 3, value: 'value 3' }];
+        const options = [
+            { id: 1, value: 'value 1' },
+            { id: 2, value: 'value 2' },
+            { id: 3, value: 'value 3' },
+        ];
         const [objValue, setObjValue] = React.useState<Record<string, any>>();
 
         return (

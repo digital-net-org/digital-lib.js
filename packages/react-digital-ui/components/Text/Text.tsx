@@ -13,7 +13,7 @@ export interface TextProps extends SafariNode {
     size?: 'xsmall' | 'small' | 'regular' | 'medium' | 'large' | 'xlarge';
 }
 
-export default function Text({ children, ...props }: TextProps) {
+export function Text({ children, ...props }: TextProps) {
     const className = useClassName(props, 'DigitalUi-Text');
 
     const tag = React.useMemo(() => {

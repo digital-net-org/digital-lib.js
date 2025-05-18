@@ -2,10 +2,10 @@ import React from 'react';
 import { useClassName } from '@digital-lib/core';
 import { Icon } from '../../Icon';
 import { type ControlledState } from '../../types';
-import InputBox from '../InputBox';
+import { InputBox } from '../InputBox';
 import { type SafariInputNode } from '../types';
-import useInputPattern, { type InputPatternProps } from '../useInputPattern';
-import useInputRef from '../useInputRef';
+import { useInputPattern, type InputPatternProps } from '../useInputPattern';
+import { useInputRef } from '../useInputRef';
 import './InputText.styles.css';
 
 export interface InputTextProps extends SafariInputNode, InputPatternProps, ControlledState<string | undefined> {
@@ -16,7 +16,7 @@ export interface InputTextProps extends SafariInputNode, InputPatternProps, Cont
     focusOnMount?: boolean;
 }
 
-export default function InputText({
+export function InputText({
     type = 'text',
     pattern,
     name,

@@ -1,7 +1,7 @@
 /* eslint react-hooks/rules-of-hooks: 0 */
 import type { Meta, StoryObj } from '@storybook/react';
 import React from 'react';
-import Dialog, { type DialogProps } from './Dialog';
+import { Dialog, type DialogProps } from './Dialog';
 import { Button } from '../Button';
 
 const meta: Meta<DialogProps> = {

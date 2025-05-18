@@ -14,7 +14,7 @@ export interface PopOverProps extends SafariNodeWithChildren {
     onOpen?: () => void;
 }
 
-export default function PopOver({ children, anchor, open, onOpen, onClose, ...props }: PopOverProps) {
+export function PopOver({ children, anchor, open, onOpen, onClose, ...props }: PopOverProps) {
     const className = useClassName({ ...props }, 'DigitalUi-PopOver');
     const { mapHtmlProps } = useProps(props);
 

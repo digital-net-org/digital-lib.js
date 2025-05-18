@@ -10,7 +10,7 @@ export interface LoaderProps extends BaseLoaderProps {
     size?: 'small' | 'medium' | 'large';
 }
 
-export default function Loader({ color = 'text', size = 'medium', ...props }: LoaderProps) {
+export function Loader({ color = 'text', size = 'medium', ...props }: LoaderProps) {
     const className = useClassName({ ...props, color, size }, 'DigitalUi-Loader');
     return (
         <div className={className}>

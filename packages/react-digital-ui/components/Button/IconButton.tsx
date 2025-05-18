@@ -1,6 +1,6 @@
 import React from 'react';
 import { Icon } from '../Icon';
-import Button, { type ButtonProps } from './Button';
+import { Button, type ButtonProps } from './Button';
 
 type IconVariant = keyof typeof Icon;
 

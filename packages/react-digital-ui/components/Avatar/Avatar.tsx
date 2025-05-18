@@ -12,7 +12,7 @@ export interface AvatarProps extends SafariNode {
     fullWidth?: boolean;
 }
 
-export default function Avatar({ src, color = 'text', size = 'small', fullWidth = false, ...props }: AvatarProps) {
+export function Avatar({ src, color = 'text', size = 'small', fullWidth = false, ...props }: AvatarProps) {
     const classNames = useClassName({ color, size, fullWidth, ...props }, 'DigitalUi-Avatar');
     const svgProps = React.useMemo(() => ({ color, size, fullWidth }), [color, size, fullWidth]);
     const { hasError } = useImage(src);

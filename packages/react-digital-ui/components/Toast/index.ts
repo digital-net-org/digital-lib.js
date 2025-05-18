@@ -1,1 +1,1 @@
-export { default as Toast, type ToastProps, animationDuration } from './Toast';
+export { Toast, type ToastProps, animationDuration } from './Toast';
