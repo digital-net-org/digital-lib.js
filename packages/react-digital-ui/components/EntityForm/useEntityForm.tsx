@@ -20,7 +20,7 @@ export default function useEntityForm<T extends Entity>(endpoint: string, redire
     const [payload, setPayload] = React.useState<T>();
     const [isMutated, setIsMutated] = React.useState(false);
 
-    const { entity, isQuerying, invalidateQuery: invalidate } = useGetById<T>(endpoint, id);
+    const { entity, isQuerying } = useGetById<T>(endpoint, id);
     const { schema, isLoading: isSchemaLoading } = useSchema(endpoint);
 
     React.useEffect(() => (entity ? setPayload(entity) : void 0), [entity]);
@@ -36,11 +36,11 @@ export default function useEntityForm<T extends Entity>(endpoint: string, redire
     const isLoading = React.useMemo(() => isSchemaLoading || isQuerying, [isSchemaLoading, isQuerying]);
 
     const { patch, isPatching } = usePatch<T>(endpoint, {
-        onSuccess: async () => await invalidate(),
+        // onSuccess: async () => await invalidate(),
     });
 
     const { delete: _delete, isDeleting } = useDelete(endpoint, {
-        onSuccess: async () => await invalidate(),
+        // onSuccess: async () => await invalidate(),
     });
 
     const handlePatch = React.useCallback(async () => {

@@ -22,11 +22,8 @@ export function useGetById<T extends Entity>(
         },
     });
 
-    const invalidateQuery = React.useCallback(() => DigitalClient.invalidate(`${endpoint}/${id}`), [endpoint, id]);
-
     return {
         entity,
         isQuerying: isLoading,
-        invalidateQuery,
     };
 }
