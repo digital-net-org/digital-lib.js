@@ -13,7 +13,7 @@ export function useDigitalImport<T>(key: string, { trigger, onError, onSuccess }
             if (trigger === false) {
                 return result;
             }
-            const { data, status } = await DigitalClient.get<string>(key, {
+            const { data, status } = await DigitalClient.get(key, {
                 headers: {
                     'Content-Type': 'application/javascript',
                 },
@@ -22,10 +22,16 @@ export function useDigitalImport<T>(key: string, { trigger, onError, onSuccess }
             if (status >= 400 || !data || typeof data !== 'string') {
                 await onError?.({ ...ResultBuilder.buildError(data), status });
             } else {
-                const module = {} as { default: T; exports?: T };
-                new Function('module', data)(module);
-                result = module.exports || module.default;
-                await onSuccess?.(result);
+                try {
+                    const blob = new Blob([data], { type: 'application/javascript' });
+                    const url = URL.createObjectURL(blob);
+                    result = (await import(url)).default as T;
+                    URL.revokeObjectURL(url);
+                    await onSuccess?.(result);
+                } catch (e) {
+                    console.error('useImport: Could not load Javascript file, only ESM is supported.', e);
+                    await onError?.({ ...ResultBuilder.buildError(data), status });
+                }
             }
             return result;
         },
