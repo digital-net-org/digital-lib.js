@@ -1,22 +1,31 @@
 import React from 'react';
-import { type EntityRaw, type Result, type UserModel, EntityHelper } from '@digital-lib/dto';
-import { DigitalClient, useDigitalQuery } from '@digital-lib/react-digital-client';
+import { type EntityRaw, type Result, EntityHelper, type User } from '@digital-net/dto';
+import { DigitalClient, useDigitalQuery } from '@digital-net/react-digital-client';
 import { useToaster } from '../../Toaster';
-import useJwt from './useJwt';
+import { useJwt } from './useJwt';
 
-interface UserContextState extends Partial<UserModel> {
+interface ApplicationUserContextState extends User {
     isLoading: boolean;
     refresh: () => void;
 }
 
-export const UserContext = React.createContext<UserContextState>({
+const defaultState = {
     isLoading: false,
     refresh: () => void 0,
-});
+    username: '',
+    login: '',
+    email: '',
+    isActive: false,
+    id: '',
+    createdAt: new Date(),
+    updatedAt: undefined,
+};
 
-const getSelfUrl = `${CORE_API_URL}/user/self`;
+export const UserContext = React.createContext<ApplicationUserContextState>(defaultState);
 
-export default function UserProvider({ children }: React.PropsWithChildren) {
+const getSelfUrl = `${DIGITAL_API_URL}/user/self`;
+
+export function ApplicationUserProvider({ children }: React.PropsWithChildren) {
     const { toast } = useToaster();
     const [token, _] = useJwt();
     const {
@@ -28,7 +37,7 @@ export default function UserProvider({ children }: React.PropsWithChildren) {
     });
 
     const user = React.useMemo(
-        () => (userData?.value ? EntityHelper.build<UserModel>(userData.value) : undefined),
+        () => (userData?.value ? EntityHelper.build<User>(userData.value) : defaultState),
         [userData]
     );
 

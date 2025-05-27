@@ -1,10 +1,10 @@
 import React from 'react';
 import { Avatar, InputNavButton } from '@digital-lib/react-digital-ui';
 import { Localization } from '../../../Localization';
-import { useUser } from '../../../User';
+import { useApplicationUser } from '../../../User';
 
 export function UserActions() {
-    const { isLoading, logout, username } = useUser();
+    const { isLoading, logout, username } = useApplicationUser();
 
     const options = React.useMemo(
         () => [

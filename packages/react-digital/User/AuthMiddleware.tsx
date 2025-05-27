@@ -3,7 +3,7 @@ import { type Result } from '@digital-lib/dto';
 import { skipRefreshHeader, DigitalClient } from '@digital-lib/react-digital-client';
 import { useJwt } from './User';
 
-const refreshTokenUrl = `${CORE_API_URL}/authentication/user/refresh`;
+const refreshTokenUrl = `${DIGITAL_API_URL}/authentication/user/refresh`;
 
 export default function AuthMiddleware() {
     const [token, setToken] = useJwt();

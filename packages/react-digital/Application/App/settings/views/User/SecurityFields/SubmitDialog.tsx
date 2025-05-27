@@ -3,7 +3,7 @@ import { Box, Button, Dialog, Form, InputText } from '@digital-lib/react-digital
 import { useDigitalMutation } from '@digital-lib/react-digital-client';
 import { useToaster } from '../../../../../../Toaster';
 import { Localization } from '../../../../../../Localization';
-import { useUser } from '../../../../../../User';
+import { useApplicationUser } from '../../../../../../User';
 
 interface SubmitDialogProps {
     payload: string | undefined;
@@ -13,9 +13,9 @@ interface SubmitDialogProps {
 
 export function SubmitDialog({ open, payload, onCancel }: SubmitDialogProps) {
     const { toast } = useToaster();
-    const { id } = useUser();
+    const { id } = useApplicationUser();
     const [currentPassword, setCurrentPassword] = React.useState<string | undefined>();
-    const { mutate, isPending } = useDigitalMutation(`${CORE_API_URL}/user/${id}/password`, {
+    const { mutate, isPending } = useDigitalMutation(`${DIGITAL_API_URL}/user/${id}/password`, {
         method: 'PUT',
         onSuccess: () => {
             onCancel();

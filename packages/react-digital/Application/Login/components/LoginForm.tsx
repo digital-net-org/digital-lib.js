@@ -1,13 +1,13 @@
 import React from 'react';
 import { Button, Box, InputText, Form } from '@digital-lib/react-digital-ui';
-import { useUser } from '../../../User';
+import { useApplicationUser } from '../../../User';
 import { Localization } from '../../../Localization';
 import { AppLogo } from '../../AppLogo';
 import './LoginForm.styles.css';
 
 export default function LoginForm() {
     const [body, setBody] = React.useState({ login: '', password: '' });
-    const { login, isLoading } = useUser();
+    const { authenticate: login, isLoading } = useApplicationUser();
 
     return (
         <Box className="DigitalUi-LoginForm" p={3} fullWidth>

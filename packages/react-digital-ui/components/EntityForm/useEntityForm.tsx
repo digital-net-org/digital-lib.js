@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useDelete, useGetById, usePatch, useSchema } from '../../../react-digital-client';
-import type { Entity } from '../../../dto';
+import type { Entity } from '@digital-net/dto';
 import { ObjectMatcher } from '@digital-lib/core';
 
 /* TODO: @horameus

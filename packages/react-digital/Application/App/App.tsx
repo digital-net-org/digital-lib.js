@@ -1,7 +1,7 @@
 import React, { type PropsWithChildren } from 'react';
 import { Box, Button, Icon } from '@digital-lib/react-digital-ui';
 import { Localization } from '../../Localization';
-import { useUser } from '../../User';
+import { useApplicationUser } from '../../User';
 import { ThemeSwitch } from '../../Theme';
 import { useDigitalRouter } from '../../Router';
 import { Actions } from './actions';
@@ -23,7 +23,7 @@ export interface AppProps extends PropsWithChildren {
 
 export function App({ children, settingsViews, alerts }: AppProps) {
     const { current } = useDigitalRouter();
-    const { isLogged } = useUser();
+    const { isLogged } = useApplicationUser();
     const { openAppSettings } = useDigitalApp();
 
     return (

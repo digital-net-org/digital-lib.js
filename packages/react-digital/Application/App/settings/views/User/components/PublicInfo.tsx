@@ -1,9 +1,9 @@
 import { Avatar, Box, InputText } from '@digital-lib/react-digital-ui';
 import { Localization } from '../../../../../../Localization';
-import { useUser } from '../../../../../../User';
+import { useApplicationUser } from '../../../../../../User';
 
 export function PublicInfo() {
-    const { username } = useUser();
+    const { username } = useApplicationUser();
     return (
         <Box direction="row" gap={2}>
             <Avatar size="large" />

@@ -1,5 +1,5 @@
 import React from 'react';
-import type { Entity } from '../../dto';
+import type { Entity } from '@digital-net/dto';
 import { DigitalIdbContext, type DigitalIdbContextState } from './DigitalIdbContext';
 import IDbStore from './IDbStore';
 

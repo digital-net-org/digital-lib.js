@@ -8,7 +8,7 @@ const defaultState = '*********';
 const allowedSymboles = '!"#$%&\'()*+-./:;<=>?@[\\]^_{|}~';
 
 export function PasswordField() {
-    const { data: pattern } = useDigitalQuery<string>(`${CORE_API_URL}/validation/pattern/password`);
+    const { data: pattern } = useDigitalQuery<string>(`${DIGITAL_API_URL}/validation/pattern/password`);
 
     const [newPassword, setNewPassword] = React.useState<string | undefined>(defaultState);
     const [confirmPassword, setConfirmPassword] = React.useState<string | undefined>();

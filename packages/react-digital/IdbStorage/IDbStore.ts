@@ -1,4 +1,4 @@
-import type { Entity } from '../../dto';
+import type { Entity } from '@digital-net/dto';
 
 /**
  * Indexed database store accessor utilities

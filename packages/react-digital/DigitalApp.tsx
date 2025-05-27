@@ -4,7 +4,7 @@ import { ErrorBoundary } from '@digital-lib/core';
 import { DigitalClientProvider } from '@digital-lib/react-digital-client';
 import { LocalizationMiddleware } from './Localization';
 import { DigitalIdbProvider, type IDbConfig } from './IdbStorage';
-import { UserProvider, AuthMiddleware } from './User';
+import { ApplicationUserProvider, AuthMiddleware } from './User';
 import { ThemeProvider } from './Theme';
 import { Router, type RouterProps } from './Router';
 import { ToasterProvider } from './Toaster';
@@ -43,13 +43,13 @@ export default class DigitalApp {
                             <DigitalIdbProvider {...idbConfig}>
                                 <DigitalClientProvider>
                                     <AuthMiddleware />
-                                    <UserProvider>
+                                    <ApplicationUserProvider>
                                         <AppSettingsProvider>
                                             <ThemeProvider>
                                                 <Router renderLayout={renderLayout} router={router ?? []} />
                                             </ThemeProvider>
                                         </AppSettingsProvider>
-                                    </UserProvider>
+                                    </ApplicationUserProvider>
                                 </DigitalClientProvider>
                             </DigitalIdbProvider>
                         </ToasterProvider>

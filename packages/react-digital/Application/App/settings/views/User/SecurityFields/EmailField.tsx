@@ -1,10 +1,10 @@
 import React from 'react';
 import { InputText } from '@digital-lib/react-digital-ui';
 import { Localization } from '../../../../../../Localization';
-import { useUser } from '../../../../../../User';
+import { useApplicationUser } from '../../../../../../User';
 
 export function EmailField() {
-    const { email } = useUser();
+    const { email } = useApplicationUser();
 
     return (
         <React.Fragment>
