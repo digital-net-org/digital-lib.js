@@ -3,6 +3,7 @@ import { type DigitalCrudEndpoint, type Entity, type EntityRaw, type Result, Ent
 import { type CrudQueryConfig } from './CrudConfig';
 import { useDigitalQuery } from '../useDigitalQuery';
 
+
 export function useGetById<T extends Entity>(
     endpoint: DigitalCrudEndpoint,
     id: string | number | undefined,
@@ -10,13 +11,16 @@ export function useGetById<T extends Entity>(
 ) {
     const { isLoading, data } = useDigitalQuery<Result<EntityRaw>>(`${endpoint}/:id`, {
         ...options,
-        onSuccess: async e => await onSuccess?.({ ...e, value: EntityHelper.build<T>(e.value) }),
+        onSuccess: async e => (e.value ? await onSuccess?.({ ...e, value: EntityHelper.build<T>(e.value) }) : void 0),
         onError: async e => await onError?.(e),
         slugs: { ...(slugs ?? {}), id: String(id) },
-        enabled: !!id,
+        enabled: Boolean(id),
     });
 
-    const entity = React.useMemo(() => (id && data ? EntityHelper.build<T>(data.value) : undefined), [data, id]);
+    const entity = React.useMemo(
+        () => (id && !data?.hasError && data?.value ? EntityHelper.build<T>(data.value) : undefined),
+        [data, id]
+    );
 
     return {
         entity,
