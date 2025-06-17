@@ -9,3 +9,11 @@
 _@digital-net-org/digital-lib.js_
 
 A collection of packages that provide a set of tools and utilities to build **React/NextJs** applications.
+
+**🚧 This version is kept as an archive️ 🚧**
+
+The main goal of this POC was to save the compiled puck configuration in the database. This solution is no longer
+supported as it's too complex to use.
+
+This version should be used with the following POC of the Digital.Net API:
+https://github.com/digital-net-org/Digital.Net.Api/tree/poc/db_puck_config
